@@ -2,6 +2,6 @@
 
 **Team members**:
 
-Huang Hongzhi (ZLELGH)
-Phommachanh Sayalath (FMXDL2)
-Yukihira Kenichi (UU43P9)
+Huang Hongzhi (ZLELGH)<br/>
+Phommachanh Sayalath (FMXDL2)<br/>
+Yukihira Kenichi (UU43P9)<br/>
