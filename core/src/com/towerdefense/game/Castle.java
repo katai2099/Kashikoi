@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Castle extends Sprite{
-	int hp = 2;
+	int hp = 100;
 	Texture texture;
 	float x;
 	float y;
@@ -71,18 +71,47 @@ public class Castle extends Sprite{
 		this.startTile = startTile;
 	}
 	
-	public void gotattacked(Monster monster)
+	/*public void gotattacked(Monster monster)
 	{
 		if(monster.getX()==this.getX() && monster.getY()==this.getY())
 		{
 			hp -= monster.getAtk();
 			System.out.println("I am dead " + hp +" "+ x + " " + y );
 		}
+	} */
+	
+	public boolean gotattacked(Monster monster)
+	{
+		return this.x <= monster.getX()
+				&& monster.getX()+monster.getWidth() < this.x+this.width 
+				&& this.y <= monster.getY()
+				&& monster.getY()+monster.getHeight() < this.y+this.height;
 	}
+	
+	public void decreasehp(Monster monster)
+	{
+		this.hp -= monster.getAtk();
+	}
+	
+	public boolean isDestroy()
+	{
+		return hp <= 0;
+	}
+	
 	
 	public void draw(Batch b)
 	{
 		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
 	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	
 	
 }

@@ -9,8 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new towerDefense(), config);
 		config.fullscreen = false;
-		config.width = 1280;
-		config.height = 960;
+		config.width = 1280;//1280;
+		config.height = 1024;//960;
 		
 	}
 }

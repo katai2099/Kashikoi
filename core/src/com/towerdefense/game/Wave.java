@@ -14,18 +14,20 @@ public class Wave {
 	 long start = System.currentTimeMillis();
 	float previousSpawnTime=0;
 	Random random = new Random();
+	Map map;
 	
 	
 	public float getTimeSinceLastSpawn() {
 		return timeSinceLastSpawn;
 	}
 
-	public Wave(float spawnTime,Monster[] monster)
+	public Wave(float spawnTime,Monster[] monster,Map map)
 	{
 		this.spawnTime = spawnTime;
 		timeSinceLastSpawn = 0;
 		monsters = new ArrayList<Monster>();
 		this.monster = monster;
+		this.map = map;
 	}
 	
 	
@@ -49,7 +51,7 @@ public class Wave {
 	public void Spawn()
 	{
 		int n=random.nextInt(2);
-		monsters.add(new Monster(monster[n].getTexture(),monster[n].getStartile(),monster[n].getHeight(),monster[n].getWidth(),monster[n].getAtk(),monster[n].getSpeed()));
+		monsters.add(new Monster(monster[n].getTexture(),monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth(),monster[n].getAtk(),monster[n].getSpeed()));
 	}
 	
 	public void setTimeSinceLastSpawn(float timeSinceLastSpawn) {

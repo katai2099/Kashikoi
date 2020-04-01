@@ -31,11 +31,11 @@ public class Map  {
 			{
 				if(newmap[i][j]==0)
 				{
-				map[i][j]= new Tile(texture = new Texture("concrete.png"),i*64,j*64,64,64);
+				map[i][j]= new Tile(texture = new Texture("concrete.png"),i*64,(j+1)*64,64,64);
 				}
 				else if(newmap[i][j]==1)
 				{
-					map[i][j] = new Tile(texture = new Texture("grass.png"),i*64,j*64,64,64);
+					map[i][j] = new Tile(texture = new Texture("grass.png"),i*64,(j+1)*64,64,64);
 				}
 				else if(newmap[i][j]==2)
 				{

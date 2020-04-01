@@ -15,8 +15,22 @@ public class Monster extends Sprite{
 	int hp;
 	Texture texture;
 	Tile startile;
+	Tile currentTile;
 	boolean attack;
+	Map map;
 	
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
+	public void setCurrentTile(Tile currentTile) {
+		this.currentTile = currentTile;
+	}
+
 	public Tile getStartile() {
 		return startile;
 	}
@@ -24,8 +38,12 @@ public class Monster extends Sprite{
 	public void setStartile(Tile startile) {
 		this.startile = startile;
 	}
-
-	Monster(Texture texture,Tile startile,float height,float width,int atk,int speed)
+	public void updateCurrentTile()
+	{
+		currentTile = map.getTile((int)this.x/64, (int)this.y/64);
+	}
+	
+	Monster(Texture texture,Tile startile,Map map,float height,float width,int atk,int speed)
 	{
 		this.texture=texture;
 		this.x = startile.getX();
@@ -36,6 +54,7 @@ public class Monster extends Sprite{
 		this.speed = speed;
 		this.startile=startile;
 		this.hp = 10;
+		this.map = map;
 	}
 
 	public float getX() {
@@ -96,16 +115,16 @@ public class Monster extends Sprite{
 	
 	public void move()
 	{
-		if(x<=1280 && y<=1080)
+		if(x<=1280 && y<=1024 && y>=64)
 		{
 			x = x+speed;
 		}
-		
+		updateCurrentTile();
 	}
 	
 	public boolean attackYet(Castle castle)
 	{
-		return castle.getX()<=this.getX() && castle.getY()<=this.getY();
+		return castle.getX()==this.getX() && castle.getY()==this.getY();
 	}
 
 	public void moveUp() {
@@ -162,6 +181,11 @@ public class Monster extends Sprite{
 	public void draw(Batch b)
 	{
 		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
+	}
+
+	public void current()
+	{
+		System.out.println(currentTile.getX() + " " + currentTile.getY() );
 	}
 
 	
