@@ -2,6 +2,8 @@ package com.towerdefense.game;
 
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -26,7 +28,7 @@ public class GameScreen extends ScreenAdapter{
 	float barWidth=2680;
 	
 	Map map;
-	Castle castle;
+	//Castle castle;
 	Monster monster;
 	boolean lose = false;
 	Wave wave;
@@ -36,7 +38,7 @@ public class GameScreen extends ScreenAdapter{
 	ShapeRenderer shapeDebugger;
 	
 	
-	int [][] size ={
+	/*int [][] size ={
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -56,18 +58,16 @@ public class GameScreen extends ScreenAdapter{
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-					
-				
-					
-			};
+					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},		
+			}; */
 	
-	public GameScreen(Game game,SpriteBatch batch) {
+	public GameScreen(Game game,SpriteBatch batch) throws FileNotFoundException, IOException {
 		this.game = game; 
 		this.batch = batch;
 		shapeDebugger = new ShapeRenderer();
-		map = new Map(size);
-		castle = new Castle(texture = new Texture("castle3.png"),map.getTile(18,3),70,70);
+		//map = new Map(size);
+		map = new Map("C:/Users/KaTaizZ/Documents/libGDX/core/assets/level1.txt");
+		//castle = new Castle(texture = new Texture("castle3.png"),map.getTile(18,3),70,70);
 		monster = new Monster(texture = new Texture("enemy.png"),map.getTile(0, 3),map,40,40,2,2);
 		monsterwave = new Monster[2];
 		monsterwave[0] = new Monster(texture = new Texture("enemy.png"),map.getTile(0, 3),map,60,60,10,1);
@@ -80,7 +80,7 @@ public class GameScreen extends ScreenAdapter{
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		
-		if(castle.isDestroy()) lose = true;
+		if(map.castle.isDestroy()) lose = true;
 		int n = ran.nextInt(2);
 		//System.out.println(n);
 		if(!lose) {
@@ -101,11 +101,11 @@ public class GameScreen extends ScreenAdapter{
 						(wave.getMonsters().get(i).getY()+wave.getMonsters().get(i).getHeight()) < (castle.getY() + castle.getHeight()))
 						{lose=true;
 						wave.getMonsters().remove(i);} */
-				if(castle.gotattacked(wave.getMonsters().get(i)))
+				if(map.castle.gotattacked(wave.getMonsters().get(i)))
 				{
-					castle.decreasehp(wave.getMonsters().get(i));
+					map.castle.decreasehp(wave.getMonsters().get(i));
 					barWidth -= ((wave.getMonsters().get(i).getAtk() * 2680)/100) ;
-					System.out.println(castle.getHp());
+					System.out.println(map.castle.getHp());
 					wave.getMonsters().remove(i);
 				}
 			}
@@ -118,26 +118,13 @@ public class GameScreen extends ScreenAdapter{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.enableBlending();
 		batch.begin();
-		
-		
-		for(int i=0;i<map.map.length;i++)
-		{
-			for(int j=0;j<map.map[i].length;j++)
-			{
-				Tile tmp = map.map[i][j];
-				tmp.draw(batch);
-			}
-		}
-		for(int i=0;i<wave.getMonsters().size();i++)
-		{
-			wave.getMonsters().get(i).draw(batch);
-		} 
+		map.draw(batch);
+		wave.draw(batch);
 		tower.draw(batch);
-		castle.draw(batch);
+		map.castle.draw(batch);
 		for(int i=0;i<tower.getAmmos().size();i++)
 		{
 			tower.getAmmos().get(i).draw(batch);
-			//batch.draw(tower.getAmmos().get(i).getTexture(),tower.getAmmos().get(i).getX(),tower.getAmmos().get(i).getY(),tower.getAmmos().get(i).getWidth()/2+5,tower.getAmmos().get(i).getHeight()/2+5);
 		}
 		if(lose)
 		{
@@ -154,7 +141,6 @@ public class GameScreen extends ScreenAdapter{
 //		shapeDebugger.setColor(255,0,0,1);
 //		shapeDebugger.end();
 //		}
-		//System.out.println(map.getTile(2, 2).getX() + " " + map.getTile(2, 2).getY());
 		batch.end();
 		
 	}

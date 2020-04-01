@@ -23,6 +23,14 @@ public class Castle extends Sprite{
 		this.height = height;
 	}
 
+	public Castle(Texture texture, int x, int y, int width, int height) {
+		this.texture=texture;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height= height;
+	}
+
 	public Texture getTexture() {
 		return texture;
 	}

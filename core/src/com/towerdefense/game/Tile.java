@@ -12,7 +12,8 @@ public class Tile extends Sprite{
 	private Texture texture; 
 	private TileType tiletype;
 	
-	public Tile(Texture texture,int x,int y,int width,int height)
+	public Tile(Texture texture,TileType tiletype,int x,int y,int width,int height)
+	//public Tile(Texture texture,int x,int y,int width,int height,)
 	{
 		super(texture);
 		this.texture = texture;
@@ -20,6 +21,7 @@ public class Tile extends Sprite{
 		this.y = y;
 		this.width = width; 
 		this.height = height;
+		this.tiletype = tiletype;
 	
 	}
 	public TileType getTiletype() {
@@ -27,10 +29,6 @@ public class Tile extends Sprite{
 	}
 	public void setTiletype(TileType tiletype) {
 		this.tiletype = tiletype;
-	}
-	public Tile(Texture texture)
-	{
-		super(texture);
 	}
 
 	public float getX() {

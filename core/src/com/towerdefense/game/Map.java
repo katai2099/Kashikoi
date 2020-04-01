@@ -1,16 +1,32 @@
 package com.towerdefense.game;
 
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.imageio.IIOException;
+import javax.swing.ImageIcon;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Map  {
+
+public class Map extends Sprite {
 	
 	public Tile [][] map;
 	public Texture texture ;
-	SpriteBatch batch;
+	public Castle castle;
 	
-	public Map()
+	public Map(String level) throws FileNotFoundException, IOException
+	{
+		loadMap(level);
+	}
+	
+	/*public Map()
 	{
 		map = new Tile[20][15];
 		for(int i=0;i<map.length;i++)
@@ -43,14 +59,68 @@ public class Map  {
 				}
 			}
 		}
+	}*/
+	
+	public void loadMap(String Level) throws FileNotFoundException, IOException
+	{
+		map = new Tile[20][15];
+		BufferedReader br = new BufferedReader(new FileReader(Level));
+		int x=0;
+		String line;
+		while((line=br.readLine())!=null)
+		{
+			int y=0;
+			for (char file : line.toCharArray()) {
+
+                if (file=='0') {
+                    
+                	map[x][y]= new Tile(texture = new Texture("concrete.png"),TileType.Concrete,x*64,(y+1)*64,64,64);
+                }
+                else if(file=='1')
+				{
+					map[x][y] = new Tile(texture = new Texture("grass.png"),TileType.Grass,x*64,(y+1)*64,64,64);
+				}
+				else if(file=='2')
+				{
+					map[x][y] = new Tile(texture = new Texture("grass.png"),TileType.Castle,x*64,(y+1)*64,64,64);
+					castle = new Castle(texture = new Texture("castle3.png"),x*64,(y+1)*64,70,70);
+				}
+                y++;
+		}
+			x++;
+	}
 	}
 	
+	public Tile[][] getMap() {
+		return map;
+	}
+
+	public void setMap(Tile[][] map) {
+		this.map = map;
+	}
+
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+
+	public Castle getCastle() {
+		return castle;
+	}
+
+	public void setCastle(Castle castle) {
+		this.castle = castle;
+	}
+
 	public Tile getTile(int x,int y)
 	{
 		return map[x][y];
 	}
 	
-	public void update()
+	public void draw(Batch b)
 	{
 		for(int i=0;i<map.length;i++)
 		{
@@ -58,7 +128,7 @@ public class Map  {
 			{
 				Tile tmp = map[i][j];
 				
-				batch.draw(tmp.getTexture(),tmp.getX(),tmp.getY(),tmp.getHeight(),tmp.getWidth());
+				b.draw(tmp.getTexture(),tmp.getX(),tmp.getY(),tmp.getHeight(),tmp.getWidth());
 			}
 		}
 	}

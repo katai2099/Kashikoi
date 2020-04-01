@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 
-public class Wave {
+public class Wave extends Sprite {
 	private float timeSinceLastSpawn,spawnTime;
 	private Monster[] monster;
 	private ArrayList<Monster> monsters;
@@ -80,6 +82,14 @@ public class Wave {
 
 	public void setMonsters(ArrayList<Monster> monsters) {
 		this.monsters = monsters;
+	}
+	
+	public void draw(Batch b)
+	{
+		for(int i=0;i<monsters.size();i++)
+		{
+			monsters.get(i).draw(b);
+		} 
 	}
 	
 }
