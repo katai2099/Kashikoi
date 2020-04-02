@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,6 +31,7 @@ public class GameScreen extends ScreenAdapter{
 	Map map;
 	//Castle castle;
 	Monster monster;
+	boolean pause=false;
 	boolean lose = false;
 	Wave wave;
 	Random ran = new Random();
@@ -68,25 +70,32 @@ public class GameScreen extends ScreenAdapter{
 		//map = new Map(size);
 		map = new Map("C:/Users/KaTaizZ/Documents/libGDX/core/assets/level1.txt");
 		//castle = new Castle(texture = new Texture("castle3.png"),map.getTile(18,3),70,70);
-		monster = new Monster(texture = new Texture("enemy.png"),map.getTile(0, 3),map,40,40,2,2);
 		monsterwave = new Monster[2];
-		monsterwave[0] = new Monster(texture = new Texture("enemy.png"),map.getTile(0, 3),map,60,60,10,1);
-		monsterwave[1] = new Monster(texture = new Texture("enemy2.png"),map.getTile(0, 3),map,60,60,10,1);
+		monsterwave[0] = new Monster(texture = new Texture("enemy.png"),map.getTile(3, 3),map,60,60,10,1);
+		monsterwave[1] = new Monster(texture = new Texture("enemy2.png"),map.getTile(3, 3),map,60,60,10,1);
 		wave = new Wave(2,monsterwave,map);
 		tower = new FireTower(texture=new Texture("fire tower.jpg"),wave,map.getTile(5, 5),70,70);	
 	}
+	
 	long start = System.currentTimeMillis();
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		
+		//System.out.println(pause);
+	//	monsterwave[0].FindDirection(map.getTile(3, 3),);
+	//	monsterwave[0].FindDirection(map.getTile(3, 6));
+	//	monsterwave[0].FindDirection(map.getTile(5, 3));
+	//	monsterwave[0].FindDirection(map.getTile(5, 6),0,1);
+		// TODO Auto-generated method stub
+		if(Gdx.input.isKeyPressed(Keys.SPACE)) pause = ! pause;
 		if(map.castle.isDestroy()) lose = true;
 		int n = ran.nextInt(2);
 		//System.out.println(n);
-		if(!lose) {
-		wave.Update();
-		tower.update(wave);
-		if((System.currentTimeMillis()-start)/1000>4 )
+		if(!lose&&!pause ) {
+		//wave.Update();
+			monsterwave[0].move();
+		//tower.update(wave);
+		/*if((System.currentTimeMillis()-start)/1000>4 )
 		{
 			//System.out.println(wave.getMonsters().get(0).getHp() + " " +wave.getMonsters().get(0).isDead());
 			for(int i=0;i<wave.getMonsters().size();i++)
@@ -95,12 +104,12 @@ public class GameScreen extends ScreenAdapter{
 				{
 					wave.getMonsters().remove(i);
 				}
-				/*if(castle.getX() <= wave.getMonsters().get(i).getX() && 
+				if(castle.getX() <= wave.getMonsters().get(i).getX() && 
 						(wave.getMonsters().get(i).getX() + wave.getMonsters().get(i).getWidth()) < (castle.getX() + castle.getWidth()) && 
 						castle.getY()<=wave.getMonsters().get(i).getY() &&
 						(wave.getMonsters().get(i).getY()+wave.getMonsters().get(i).getHeight()) < (castle.getY() + castle.getHeight()))
 						{lose=true;
-						wave.getMonsters().remove(i);} */
+						wave.getMonsters().remove(i);} 
 				if(map.castle.gotattacked(wave.getMonsters().get(i)))
 				{
 					map.castle.decreasehp(wave.getMonsters().get(i));
@@ -112,20 +121,21 @@ public class GameScreen extends ScreenAdapter{
 			//System.out.println(wave.getMonsters().get(0).getX()+" "+wave.getMonsters().get(0).getY());
 		//	wave.getMonsters().get(0).updateCurrentTile();
 		//	wave.getMonsters().get(0).current();
-		}
+		}*/
 		}
 		Gdx.gl.glClearColor(160,160 ,160 , 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.enableBlending();
 		batch.begin();
 		map.draw(batch);
-		wave.draw(batch);
+		monsterwave[0].draw(batch);
+		//wave.draw(batch);
 		tower.draw(batch);
 		map.castle.draw(batch);
-		for(int i=0;i<tower.getAmmos().size();i++)
+	/*	for(int i=0;i<tower.getAmmos().size();i++)
 		{
 			tower.getAmmos().get(i).draw(batch);
-		}
+		}*/
 		if(lose)
 		{
 			batch.draw(texture = new Texture("gameOver.png"),1280/2,960/2,texture.getWidth()/2,texture.getHeight()/2);

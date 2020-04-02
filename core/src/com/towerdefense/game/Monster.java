@@ -1,5 +1,7 @@
 package com.towerdefense.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,6 +20,9 @@ public class Monster extends Sprite{
 	Tile currentTile;
 	boolean attack;
 	Map map;
+	int dir[] ;
+	ArrayList<Checkpoint> checkpoints;
+	int currentCheckpoint;
 	
 	public Map getMap() {
 		return map;
@@ -40,7 +45,7 @@ public class Monster extends Sprite{
 	}
 	public void updateCurrentTile()
 	{
-		currentTile = map.getTile((int)this.x/64, (int)this.y/64);
+		currentTile = map.getTile((int)this.x/64, (int)(this.y-64)/64);
 	}
 	
 	Monster(Texture texture,Tile startile,Map map,float height,float width,int atk,int speed)
@@ -55,6 +60,14 @@ public class Monster extends Sprite{
 		this.startile=startile;
 		this.hp = 10;
 		this.map = map;
+		this.dir = new int[2];
+		this.checkpoints = new ArrayList<Checkpoint>();
+		dir[0]=1;
+		dir[1]=0;
+	 	dir = findDirection(startile);
+	 	this.currentCheckpoint = 0 ;
+	 	populateCheckpointList();
+	 	
 	}
 
 	public float getX() {
@@ -115,9 +128,34 @@ public class Monster extends Sprite{
 	
 	public void move()
 	{
-		if(x<=1280 && y<=1024 && y>=64)
+		if(x<=1280 && y<=1024 )
 		{
-			x = x+speed;
+			if(checkpointReached()) 
+			{
+				if(currentCheckpoint+1==checkpoints.size())
+				{
+					System.out.println("Monster enter tower");
+				}
+				else
+					currentCheckpoint++;
+			}else {
+				System.out.println(checkpoints.get(currentCheckpoint).getTile().getmapX()+" "+checkpoints.get(currentCheckpoint).getTile().getmapY()+" "
+			+checkpoints.get(currentCheckpoint).getX()+" "+checkpoints.get(currentCheckpoint).getY());
+		//	x = x+speed;
+		/*	if(dir[0]==1&&dir[1]==0)x=x+speed;
+			else if(dir[0]==-1&&dir[1]==0)x=x-speed;
+			else if(dir[0]==0&&dir[1]==1)y=y+speed;
+			else if(dir[0]==0&&dir[1]==-1)y=y-speed;  */
+				//System.out.println(checkpoints.get(currentCheckpoint).getX()+" "+checkpoints.get(currentCheckpoint).getY());
+			if(checkpoints.get(currentCheckpoint).getX()==1
+					&&checkpoints.get(currentCheckpoint).getY()==0) x=x+speed;
+			else if (checkpoints.get(currentCheckpoint).getX()==-1
+					&&checkpoints.get(currentCheckpoint).getY()==0) x=x-speed;
+			else if (checkpoints.get(currentCheckpoint).getX()==0
+					&&checkpoints.get(currentCheckpoint).getY()==1) y=y+speed;
+			else if (checkpoints.get(currentCheckpoint).getX()==0
+					&&checkpoints.get(currentCheckpoint).getY()==-1) y=y-speed;
+			}
 		}
 		updateCurrentTile();
 	}
@@ -126,12 +164,155 @@ public class Monster extends Sprite{
 	{
 		return castle.getX()==this.getX() && castle.getY()==this.getY();
 	}
-
-	public void moveUp() {
+	
+	private boolean checkpointReached()
+	{
+		boolean reached = false;
+		Tile t = checkpoints.get(currentCheckpoint).getTile();
+		if(x>=t.getX()-3 && x<=t.getX()+3 &&
+				y>=t.getY()-3 && y<=t.getY()+3)
 		{
-			y = y+speed;
+			reached = true;
+			x=t.getX();
+			y=t.getY();
+		}
+		return reached;
+	}
+	
+	private void populateCheckpointList() 
+	{
+		
+		checkpoints.add(findNextC(startile,dir =findDirection(startile)));
+		int cnt = 0 ;
+		boolean continuee = true;
+		while(continuee)
+		{
+			int[] currentD = findDirection(checkpoints.get(cnt).getTile());
+			//check if the next direction exist
+			if(currentD[0]==2 || cnt == 20 || currentD[1]==2)
+			{
+				continuee = false;
+				System.out.println(currentD[0]+" "+currentD[1]+" "+cnt);
+			}
+			else
+			{
+				
+				checkpoints.add(findNextC(checkpoints.get(cnt).getTile(),currentD));
+					//	dir=findDirection(checkpoints.get(cnt).getTile())));
+			}
+			cnt++;
+		}
+	}
+	
+	private Checkpoint findNextC(Tile start,int[] dir)
+	{
+		Tile next = null;
+		Checkpoint c = null;
+		
+		//Boolean to decide if next checkpoint is found
+		boolean found = false;
+		// int to increase map(x,y)
+		int cnt = 1;
+		
+		while(!found)
+		{
+			if(start.getTiletype() !=
+					map.getTile(start.getmapX()+dir[0]*cnt, 
+							start.getmapY()+dir[1]*cnt).getTiletype())
+			{
+				found = true;
+				//move cnt back to get the latest tiletype
+				cnt-=1;
+				next = map.getTile(start.getmapX()+dir[0]*cnt, 
+						start.getmapY()+dir[1]*cnt);
+			}
+			cnt++;
 		}
 		
+		c = new Checkpoint(next,dir[0],dir[1]);
+		
+		return c;
+	}
+	
+
+	public int[] findDirection(Tile ntile)
+	{
+		//dir = new int[2];
+		Tile u = map.getTile(ntile.getmapX(),ntile.getmapY()+1);
+		Tile d = map.getTile(ntile.getmapX(),ntile.getmapY()-1);
+		Tile r = map.getTile(ntile.getmapX()+1,ntile.getmapY());
+		Tile l = map.getTile(ntile.getmapX()-1,ntile.getmapY());
+		
+		
+		  if(r.getTiletype()==ntile.getTiletype()&&dir[0]!=-1 )
+			{
+				dir[0]=1;
+				dir[1]=0;
+			}
+		 
+		 else if(d.getTiletype()==ntile.getTiletype()&&dir[1] != 1)
+			{
+				dir[0]=0;
+				dir[1]=-1;
+			}
+		 
+		 else if( u.getTiletype()==ntile.getTiletype()  && dir[1] != -1 )
+			{
+				dir[0]=0;
+				dir[1]=1;
+			}
+		 
+		 else if(l.getTiletype()==ntile.getTiletype()&&dir[0]!=1)
+			{
+				dir[0]=-1;
+				dir[1]=0;
+			}
+
+		
+		else {dir[0]=2;dir[1]=2;}
+		return dir;
+	
+	}
+	
+	public void FindDirection(Tile ntile,int x,int y)
+	{
+		//dir = new int[2];
+		int tmpx=x;
+		int tmpy=y;
+		Tile u = map.getTile(ntile.getmapX(),ntile.getmapY()+1);
+		Tile d = map.getTile(ntile.getmapX(),ntile.getmapY()-1);
+		Tile r = map.getTile(ntile.getmapX()+1,ntile.getmapY());
+		Tile l = map.getTile(ntile.getmapX()-1,ntile.getmapY());
+		
+		
+		  if(r.getTiletype()==ntile.getTiletype()&&x!=-1 )
+			{
+				tmpx=1;
+				tmpy=0;
+			}
+		 
+		 else if(d.getTiletype()==ntile.getTiletype()&& y!=1)
+			{
+				tmpx=0;
+				tmpy=-1;
+			}
+		 
+		 else if( u.getTiletype()==ntile.getTiletype()  && y != -1 )
+			{
+				tmpx=0;
+				tmpy=1;
+			}
+		 
+		 else if(l.getTiletype()==ntile.getTiletype()&&x!=1)
+			{
+				tmpx=-1;
+				tmpy=0;
+			}
+
+		
+		else {tmpx=2;tmpy=2;}
+		System.out.println(tmpx);
+		System.out.println(tmpy);
 	}
 	
 	public boolean isDead()

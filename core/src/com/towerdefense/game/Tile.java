@@ -43,6 +43,16 @@ public class Tile extends Sprite{
 	public float getY() {
 		return y;
 	}
+	
+	public int getmapX()
+	{
+		return (int) x/64;
+	}
+	
+	public int getmapY()
+	{
+		return (int) (y-64)/64;
+	}
 
 	public void setY(int y) {
 		this.y = y;
