@@ -29,6 +29,7 @@ public class Castle extends Sprite{
 		this.y = y;
 		this.width = width;
 		this.height= height;
+		
 	}
 
 	public Texture getTexture() {
@@ -90,10 +91,15 @@ public class Castle extends Sprite{
 	
 	public boolean gotattacked(Monster monster)
 	{
-		return this.x <= monster.getX()
+		/*return this.x <= monster.getX()
 				&& monster.getX()+monster.getWidth() < this.x+this.width 
 				&& this.y <= monster.getY()
-				&& monster.getY()+monster.getHeight() < this.y+this.height;
+				&& monster.getY()+monster.getHeight() < this.y+this.height;*/
+	/*	return (int)(this.x/64)-1 == monster.getCurrentTile().getmapX()&&(int)(this.y-64)/64==monster.getCurrentTile().getmapY()
+				|| (int) ((this.y/64)-64)-1 == monster.getCurrentTile().getmapY()  && (int) (this.x/64) == monster.getCurrentTile().getmapX() 
+				|| (int) (this.x/64)+1 == monster.getCurrentTile().getmapX() && (int) ((this.y)-64/64) == monster.getCurrentTile().getmapX() 
+				|| (int)((this.y-64)/64)+1 == monster.getCurrentTile().getmapY() && (int) (this.x/64) == monster.getCurrentTile().getmapX() ;*/
+		return false;
 	}
 	
 	public void decreasehp(Monster monster)

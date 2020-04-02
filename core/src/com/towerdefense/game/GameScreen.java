@@ -9,6 +9,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,7 +22,7 @@ public class GameScreen extends ScreenAdapter{
 	Button k;
 	public static final int GAME_HEIGHT=234;
 	public static final int GAME_WIDTH=256;
-	
+	FileHandle handle;
 	private Game game;
 	private SpriteBatch batch;
 	Texture texture;
@@ -38,7 +39,6 @@ public class GameScreen extends ScreenAdapter{
 	Monster [] monsterwave = new Monster[2];
 	BaseTower tower;
 	ShapeRenderer shapeDebugger;
-	
 	
 	/*int [][] size ={
 					{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -68,19 +68,22 @@ public class GameScreen extends ScreenAdapter{
 		this.batch = batch;
 		shapeDebugger = new ShapeRenderer();
 		//map = new Map(size);
-		map = new Map("C:/Users/KaTaizZ/Documents/libGDX/core/assets/level1.txt");
+		//map = new Map("C:/Users/KaTaizZ/Documents/LibGDX/core/assets/level1.txt");
+		map = new Map("level1.txt");
 		//castle = new Castle(texture = new Texture("castle3.png"),map.getTile(18,3),70,70);
 		monsterwave = new Monster[2];
 		monsterwave[0] = new Monster(texture = new Texture("enemy.png"),map.getTile(3, 3),map,60,60,10,1);
 		monsterwave[1] = new Monster(texture = new Texture("enemy2.png"),map.getTile(3, 3),map,60,60,10,1);
 		wave = new Wave(2,monsterwave,map);
 		tower = new FireTower(texture=new Texture("fire tower.jpg"),wave,map.getTile(5, 5),70,70);	
+		//handle=Gdx.files.internal("level1.txt");
+		
 	}
 	
 	long start = System.currentTimeMillis();
 	@Override
 	public void render(float delta) {
-		
+	//	System.out.println(handle.read());
 		//System.out.println(pause);
 	//	monsterwave[0].FindDirection(map.getTile(3, 3),);
 	//	monsterwave[0].FindDirection(map.getTile(3, 6));
@@ -92,24 +95,25 @@ public class GameScreen extends ScreenAdapter{
 		int n = ran.nextInt(2);
 		//System.out.println(n);
 		if(!lose&&!pause ) {
-		//wave.Update();
+		wave.Update();
 			monsterwave[0].move();
 		//tower.update(wave);
-		/*if((System.currentTimeMillis()-start)/1000>4 )
+		if((System.currentTimeMillis()-start)/1000>4 )
 		{
 			//System.out.println(wave.getMonsters().get(0).getHp() + " " +wave.getMonsters().get(0).isDead());
 			for(int i=0;i<wave.getMonsters().size();i++)
 			{
+				wave.getMonsters().get(i).current();
 				if(wave.getMonsters().get(i).isDead())
 				{
 					wave.getMonsters().remove(i);
 				}
-				if(castle.getX() <= wave.getMonsters().get(i).getX() && 
+			/*	if(castle.getX() <= wave.getMonsters().get(i).getX() && 
 						(wave.getMonsters().get(i).getX() + wave.getMonsters().get(i).getWidth()) < (castle.getX() + castle.getWidth()) && 
 						castle.getY()<=wave.getMonsters().get(i).getY() &&
 						(wave.getMonsters().get(i).getY()+wave.getMonsters().get(i).getHeight()) < (castle.getY() + castle.getHeight()))
 						{lose=true;
-						wave.getMonsters().remove(i);} 
+						wave.getMonsters().remove(i);} */
 				if(map.castle.gotattacked(wave.getMonsters().get(i)))
 				{
 					map.castle.decreasehp(wave.getMonsters().get(i));
@@ -119,17 +123,16 @@ public class GameScreen extends ScreenAdapter{
 				}
 			}
 			//System.out.println(wave.getMonsters().get(0).getX()+" "+wave.getMonsters().get(0).getY());
-		//	wave.getMonsters().get(0).updateCurrentTile();
 		//	wave.getMonsters().get(0).current();
-		}*/
+		}
 		}
 		Gdx.gl.glClearColor(160,160 ,160 , 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.enableBlending();
 		batch.begin();
 		map.draw(batch);
-		monsterwave[0].draw(batch);
-		//wave.draw(batch);
+		//monsterwave[0].draw(batch);
+		wave.draw(batch);
 		tower.draw(batch);
 		map.castle.draw(batch);
 	/*	for(int i=0;i<tower.getAmmos().size();i++)
@@ -151,6 +154,7 @@ public class GameScreen extends ScreenAdapter{
 //		shapeDebugger.setColor(255,0,0,1);
 //		shapeDebugger.end();
 //		}
+		System.out.println(map.castle.getX()/64 +" "+ map.castle.getY()/64);
 		batch.end();
 		
 	}

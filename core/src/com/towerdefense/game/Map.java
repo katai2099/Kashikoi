@@ -1,18 +1,16 @@
 package com.towerdefense.game;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
-import javax.imageio.IIOException;
-import javax.swing.ImageIcon;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class Map extends Sprite {
@@ -20,10 +18,12 @@ public class Map extends Sprite {
 	public Tile [][] map;
 	public Texture texture ;
 	public Castle castle;
+	FileHandle handle ;
 	
 	public Map(String level) throws FileNotFoundException, IOException
 	{
-		loadMap(level);
+		//loadMap(level);
+		loadMapInternal(level);
 	}
 	
 	/*public Map()
@@ -89,6 +89,41 @@ public class Map extends Sprite {
 		}
 			x++;
 	}
+		br.close();
+	}
+	
+	public void loadMapInternal(String Level)
+	{
+		map = new Tile[20][15];
+		FileHandle handle = Gdx.files.internal(Level);
+		String line = handle.readString();
+		Scanner sc = new Scanner(line);
+		int x=0;
+		while(sc.hasNext())
+		{
+			int y=0;
+			String tmp = sc.nextLine();
+			tmp.trim();
+			for (char file : tmp.toCharArray()) {
+
+                if (file=='0') {
+                    
+                	map[x][y]= new Tile(texture = new Texture("concrete.png"),TileType.Concrete,x*64,(y+1)*64,64,64);
+                }
+                else if(file=='1')
+				{
+					map[x][y] = new Tile(texture = new Texture("grass.png"),TileType.Grass,x*64,(y+1)*64,64,64);
+				}
+				else if(file=='2')
+				{
+					map[x][y] = new Tile(texture = new Texture("grass.png"),TileType.Castle,x*64,(y+1)*64,64,64);
+					castle = new Castle(texture = new Texture("castle3.png"),x*64,(y+1)*64,70,70);
+				}
+                y++;
+			}
+			x++;
+		}
+		sc.close();
 	}
 	
 	public Tile[][] getMap() {
@@ -132,6 +167,25 @@ public class Map extends Sprite {
 			}
 		}
 	}
+	
+	public void loadMapInternalShow(String Level)
+	{
+		FileHandle handle = Gdx.files.internal(Level);
+		String line = handle.readString();
+		Scanner sc = new Scanner(line);
+		int x=0;
+		while(sc.hasNext())
+		{
+			int y=0;
+			String tmp = sc.nextLine();
+			System.out.println(tmp);
+			for (char file : tmp.toCharArray()) {
+				System.out.println(file);
+			}
+		}
+		sc.close();
+	}
+	
 	
 	
 

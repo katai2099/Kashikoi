@@ -45,7 +45,7 @@ public class Monster extends Sprite{
 	}
 	public void updateCurrentTile()
 	{
-		currentTile = map.getTile((int)this.x/64, (int)(this.y-64)/64);
+		currentTile = map.getTile((int)(this.x/64), (int)(this.y-64)/64);
 	}
 	
 	Monster(Texture texture,Tile startile,Map map,float height,float width,int atk,int speed)
@@ -58,16 +58,16 @@ public class Monster extends Sprite{
 		this.atk = atk;
 		this.speed = speed;
 		this.startile=startile;
+		this.currentTile=startile;
 		this.hp = 10;
 		this.map = map;
 		this.dir = new int[2];
 		this.checkpoints = new ArrayList<Checkpoint>();
-		dir[0]=1;
+		dir[0]=0;
 		dir[1]=0;
 	 	dir = findDirection(startile);
 	 	this.currentCheckpoint = 0 ;
 	 	populateCheckpointList();
-	 	
 	}
 
 	public float getX() {
@@ -135,12 +135,13 @@ public class Monster extends Sprite{
 				if(currentCheckpoint+1==checkpoints.size())
 				{
 					System.out.println("Monster enter tower");
+					System.out.println(this.x +" "+this.y);
 				}
 				else
 					currentCheckpoint++;
 			}else {
-				System.out.println(checkpoints.get(currentCheckpoint).getTile().getmapX()+" "+checkpoints.get(currentCheckpoint).getTile().getmapY()+" "
-			+checkpoints.get(currentCheckpoint).getX()+" "+checkpoints.get(currentCheckpoint).getY());
+		//		System.out.println(checkpoints.get(currentCheckpoint).getTile().getmapX()+" "+checkpoints.get(currentCheckpoint).getTile().getmapY()+" "
+		//	+checkpoints.get(currentCheckpoint).getX()+" "+checkpoints.get(currentCheckpoint).getY());
 		//	x = x+speed;
 		/*	if(dir[0]==1&&dir[1]==0)x=x+speed;
 			else if(dir[0]==-1&&dir[1]==0)x=x-speed;
@@ -366,8 +367,14 @@ public class Monster extends Sprite{
 
 	public void current()
 	{
-		System.out.println(currentTile.getX() + " " + currentTile.getY() );
+		System.out.println(currentTile.getmapX()+ " " + currentTile.getmapY() );
 	}
+	
+	public Tile getCurrentTile() {
+		return currentTile;
+	}
+	
+	
 
 	
 }
