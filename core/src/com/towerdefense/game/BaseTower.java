@@ -40,6 +40,17 @@ public class BaseTower {
 		this.target = target;
 	}
 	
+	BaseTower(Texture texture,Tile tile,int width,int height)
+	{
+		this.texture = texture ;
+		this.x = tile.getX();
+		this.y = tile.getY();
+		this.width = width;
+		this.height = height;
+		this.tile = tile;
+		this.exp = 0;
+	}
+	
 	public float getX() {
 		return x;
 	}
@@ -134,12 +145,6 @@ public class BaseTower {
 	
 	public void update()
 	{
-		
-	}
-	
-	public void update(Wave e)
-	{
-		
 	}
 	
 	public void draw(Batch b)

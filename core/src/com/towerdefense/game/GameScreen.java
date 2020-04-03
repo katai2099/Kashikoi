@@ -38,6 +38,7 @@ public class GameScreen extends ScreenAdapter{
 	Random ran = new Random();
 	Monster [] monsterwave = new Monster[2];
 	BaseTower tower;
+	Player player;
 	ShapeRenderer shapeDebugger;
 	
 	/*int [][] size ={
@@ -74,46 +75,33 @@ public class GameScreen extends ScreenAdapter{
 		monsterwave = new Monster[2];
 		monsterwave[0] = new Monster(texture = new Texture("enemy.png"),map.getTile(3, 3),map,60,60,10,1);
 		monsterwave[1] = new Monster(texture = new Texture("enemy2.png"),map.getTile(3, 3),map,60,60,10,1);
-		wave = new Wave(2,monsterwave,map);
+		wave = new Wave(2,monsterwave[0],5);
 		tower = new FireTower(texture=new Texture("fire tower.jpg"),wave,map.getTile(5, 5),70,70);	
-		//handle=Gdx.files.internal("level1.txt");
+		player = new Player(map);
 		
 	}
 	
 	long start = System.currentTimeMillis();
 	@Override
 	public void render(float delta) {
-	//	System.out.println(handle.read());
-		//System.out.println(pause);
-	//	monsterwave[0].FindDirection(map.getTile(3, 3),);
-	//	monsterwave[0].FindDirection(map.getTile(3, 6));
-	//	monsterwave[0].FindDirection(map.getTile(5, 3));
-	//	monsterwave[0].FindDirection(map.getTile(5, 6),0,1);
 		// TODO Auto-generated method stub
+		player.update();
 		if(Gdx.input.isKeyPressed(Keys.SPACE)) pause = ! pause;
 		if(map.castle.isDestroy()) lose = true;
 		int n = ran.nextInt(2);
-		//System.out.println(n);
+		
 		if(!lose&&!pause ) {
-		wave.Update();
-			monsterwave[0].move();
+			wave.Update();
 		//tower.update(wave);
 		if((System.currentTimeMillis()-start)/1000>4 )
 		{
-			//System.out.println(wave.getMonsters().get(0).getHp() + " " +wave.getMonsters().get(0).isDead());
+			
 			for(int i=0;i<wave.getMonsters().size();i++)
 			{
-				wave.getMonsters().get(i).current();
 				if(wave.getMonsters().get(i).isDead())
 				{
 					wave.getMonsters().remove(i);
 				}
-			/*	if(castle.getX() <= wave.getMonsters().get(i).getX() && 
-						(wave.getMonsters().get(i).getX() + wave.getMonsters().get(i).getWidth()) < (castle.getX() + castle.getWidth()) && 
-						castle.getY()<=wave.getMonsters().get(i).getY() &&
-						(wave.getMonsters().get(i).getY()+wave.getMonsters().get(i).getHeight()) < (castle.getY() + castle.getHeight()))
-						{lose=true;
-						wave.getMonsters().remove(i);} */
 				if(map.castle.gotattacked(wave.getMonsters().get(i)))
 				{
 					map.castle.decreasehp(wave.getMonsters().get(i));
@@ -122,8 +110,6 @@ public class GameScreen extends ScreenAdapter{
 					wave.getMonsters().remove(i);
 				}
 			}
-			//System.out.println(wave.getMonsters().get(0).getX()+" "+wave.getMonsters().get(0).getY());
-		//	wave.getMonsters().get(0).current();
 		}
 		}
 		Gdx.gl.glClearColor(160,160 ,160 , 1);
@@ -131,10 +117,10 @@ public class GameScreen extends ScreenAdapter{
 		batch.enableBlending();
 		batch.begin();
 		map.draw(batch);
-		//monsterwave[0].draw(batch);
 		wave.draw(batch);
 		tower.draw(batch);
 		map.castle.draw(batch);
+		player.draw(batch);
 	/*	for(int i=0;i<tower.getAmmos().size();i++)
 		{
 			tower.getAmmos().get(i).draw(batch);
@@ -154,7 +140,7 @@ public class GameScreen extends ScreenAdapter{
 //		shapeDebugger.setColor(255,0,0,1);
 //		shapeDebugger.end();
 //		}
-		System.out.println(map.castle.getX()/64 +" "+ map.castle.getY()/64);
+		//System.out.println(map.castle.getX()/64 +" "+ map.castle.getY()/64);
 		batch.end();
 		
 	}

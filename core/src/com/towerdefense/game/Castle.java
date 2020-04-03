@@ -80,15 +80,6 @@ public class Castle extends Sprite{
 		this.startTile = startTile;
 	}
 	
-	/*public void gotattacked(Monster monster)
-	{
-		if(monster.getX()==this.getX() && monster.getY()==this.getY())
-		{
-			hp -= monster.getAtk();
-			System.out.println("I am dead " + hp +" "+ x + " " + y );
-		}
-	} */
-	
 	public boolean gotattacked(Monster monster)
 	{
 		/*return this.x <= monster.getX()
@@ -99,7 +90,7 @@ public class Castle extends Sprite{
 				|| (int) ((this.y/64)-64)-1 == monster.getCurrentTile().getmapY()  && (int) (this.x/64) == monster.getCurrentTile().getmapX() 
 				|| (int) (this.x/64)+1 == monster.getCurrentTile().getmapX() && (int) ((this.y)-64/64) == monster.getCurrentTile().getmapX() 
 				|| (int)((this.y-64)/64)+1 == monster.getCurrentTile().getmapY() && (int) (this.x/64) == monster.getCurrentTile().getmapX() ;*/
-		return false;
+		return this.x/64==monster.getCurrentTile().getmapX() && (this.y-64)/64 == monster.getCurrentTile().getmapY();
 	}
 	
 	public void decreasehp(Monster monster)

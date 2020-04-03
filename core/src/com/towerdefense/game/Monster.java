@@ -135,7 +135,7 @@ public class Monster extends Sprite{
 				if(currentCheckpoint+1==checkpoints.size())
 				{
 					System.out.println("Monster enter tower");
-					System.out.println(this.x +" "+this.y);
+					
 				}
 				else
 					currentCheckpoint++;
@@ -193,7 +193,7 @@ public class Monster extends Sprite{
 			if(currentD[0]==2 || cnt == 20 || currentD[1]==2)
 			{
 				continuee = false;
-				System.out.println(currentD[0]+" "+currentD[1]+" "+cnt);
+			//	System.out.println(currentD[0]+" "+currentD[1]+" "+cnt);
 			}
 			else
 			{
@@ -275,46 +275,6 @@ public class Monster extends Sprite{
 	
 	}
 	
-	public void FindDirection(Tile ntile,int x,int y)
-	{
-		//dir = new int[2];
-		int tmpx=x;
-		int tmpy=y;
-		Tile u = map.getTile(ntile.getmapX(),ntile.getmapY()+1);
-		Tile d = map.getTile(ntile.getmapX(),ntile.getmapY()-1);
-		Tile r = map.getTile(ntile.getmapX()+1,ntile.getmapY());
-		Tile l = map.getTile(ntile.getmapX()-1,ntile.getmapY());
-		
-		
-		  if(r.getTiletype()==ntile.getTiletype()&&x!=-1 )
-			{
-				tmpx=1;
-				tmpy=0;
-			}
-		 
-		 else if(d.getTiletype()==ntile.getTiletype()&& y!=1)
-			{
-				tmpx=0;
-				tmpy=-1;
-			}
-		 
-		 else if( u.getTiletype()==ntile.getTiletype()  && y != -1 )
-			{
-				tmpx=0;
-				tmpy=1;
-			}
-		 
-		 else if(l.getTiletype()==ntile.getTiletype()&&x!=1)
-			{
-				tmpx=-1;
-				tmpy=0;
-			}
-
-		
-		else {tmpx=2;tmpy=2;}
-		System.out.println(tmpx);
-		System.out.println(tmpy);
-	}
 	
 	public boolean isDead()
 	{
