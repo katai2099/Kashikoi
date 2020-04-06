@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 public class Wave extends Sprite {
@@ -21,18 +22,16 @@ public class Wave extends Sprite {
 	Map map;
 	boolean waveCompleted;
 	
-	public float getTimeSinceLastSpawn() {
-		return timeSinceLastSpawn;
-	}
 
-	public Wave(float spawnTime,Monster[] monster,Map map)
+/*	public Wave(float spawnTime,Monster[] monster,Map map)
 	{
 		this.spawnTime = spawnTime;
 		timeSinceLastSpawn = 0;
 		monsters = new ArrayList<Monster>();
 		this.monster = monster;
 		this.map = map;
-	}
+		
+	} */
 	
 	public Wave(float spawnTime,Monster monster,int monstersPerWave)
 	{
@@ -55,18 +54,18 @@ public class Wave extends Sprite {
 		{
 			Spawn();
 			previousSpawnTime = timeSinceLastSpawn;
-			//System.out.println(previousSpawnTime);
 			timeSinceLastSpawn = 0;
 		}
 		}
 		
 		for(int i=0;i<monsters.size();i++)
 		{
-			//if(!(monsters.get(i).isDead()))
-			//{
-				//allDead = false;
-			monsters.get(i).move();
-			//}
+			
+			if(monsters.get(i).isAlive())
+			{
+				allDead = false;
+				monsters.get(i).update();
+			}
 		}
 		if(allDead) waveCompleted = true;
 
@@ -77,6 +76,10 @@ public class Wave extends Sprite {
 	//	int n=random.nextInt(2);
 	//	monsters.add(new Monster(monster[n].getTexture(),monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth(),monster[n].getAtk(),monster[n].getSpeed()));
 		monsters.add(new Monster(monster1.getTexture(),monster1.getStartile(),monster1.getMap(),64,64,monster1.getAtk(),monster1.getSpeed()));
+	}
+	
+	public float getTimeSinceLastSpawn() {
+		return timeSinceLastSpawn;
 	}
 	
 	public void setTimeSinceLastSpawn(float timeSinceLastSpawn) {

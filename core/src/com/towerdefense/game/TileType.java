@@ -2,7 +2,7 @@ package com.towerdefense.game;
 
 public enum TileType {
 	
-	Land("Land",true) , Concrete("Concrete",true) , Castle("Castle",false), Grass("Grass",false);
+	Land("Land",true) , Concrete("Concrete",true) , Castle("Castle",false), Grass("Grass",false), Outsider("Edge",false);
 	
 	String name;
 	boolean buildable;

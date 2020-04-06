@@ -13,8 +13,10 @@ public class Ammo {
 	int width;
 	int height;
 	Monster target;
+	boolean alive;
+	int damage;
 	
-	public Ammo(Texture texture,Monster target,float x,float y,int width,int height)
+	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,int damage)
 	{
 		this.texture = texture;
 		this.x = x;
@@ -22,16 +24,18 @@ public class Ammo {
 		this.width = width;
 		this.height=height;
 		this.target = target;
+		this.damage = damage;
 		this.xVelocity=0f;
 		this.xVelocity=0f;
 		calculateDirection() ;
+		this.alive = true;
 	}
 
 	public void calculateDirection() 
 	{
 		float totalAllowedMovement = 1.0f;
-		float xDistanceFromTarget = Math.abs(target.getX()-x);
-		float yDistanceFromTarget = Math.abs(target.getY()-y);
+		float xDistanceFromTarget = Math.abs(target.getX()-x+25);
+		float yDistanceFromTarget = Math.abs(target.getY()-y+25);
 		float totalDistanceFromTarget = xDistanceFromTarget + yDistanceFromTarget;
 		xVelocity = xDistanceFromTarget / totalDistanceFromTarget;
 		yVelocity = totalAllowedMovement - (xDistanceFromTarget / totalDistanceFromTarget);
@@ -47,10 +51,6 @@ public class Ammo {
 	
 	public Texture getTexture() {
 		return texture;
-	}
-
-	public void setTexture(Texture texture) {
-		this.texture = texture;
 	}
 
 	public float getX() {
@@ -73,22 +73,24 @@ public class Ammo {
 		return width;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
 	public int getHeight() {
 		return height;
 	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
 	
-	public void move(float speed,float timeSinceShoot)
+	public void update(float speed,float timeSinceShoot)
 	{
 		x += xVelocity*speed*timeSinceShoot;
 		y += yVelocity*speed*timeSinceShoot;
+		
+		if(this.x + this.width >= target.getX()
+				&& target.getX()+target.getWidth() >= this.x
+				&& this.y + this.height >= target.getY()
+				&& target.getY()+target.getHeight() > this.y )
+		{
+			target.damage(damage);
+			this.alive = false;
+		}
+		
 	}
 
 	public float getxVelocity() {
@@ -111,14 +113,11 @@ public class Ammo {
 		return target;
 	}
 
-	public void setTarget(Monster target) {
-		this.target = target;
-	}
-	
-	
+		
 	public void draw(Batch b)
 	{
-		b.draw(getTexture(),getX(),getY(),getWidth()/2+5,getHeight()/2+5);
+		if(this.alive)
+		b.draw(getTexture(),getX(),getY(),getWidth()/2+8,getHeight()/2+8);
 	}
 
 }

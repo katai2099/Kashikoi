@@ -1,6 +1,9 @@
 package com.towerdefense.game;
 
-public class WaveManager {
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+public class WaveManager extends Sprite {
 	
 	float timeSinceLastWave;
 	float timeBetweenMonster;
@@ -35,6 +38,17 @@ public class WaveManager {
 	{
 		currentWave = new Wave(timeBetweenMonster,monster,monstersPerWave);
 		waveNumber++;
+		System.out.println("wave " +waveNumber);
+	}
+	
+	public void draw(Batch b)
+	{
+		currentWave.draw(b);
+	}
+	
+
+	public Wave getCurrentWave() {
+		return currentWave;
 	}
 	
 	

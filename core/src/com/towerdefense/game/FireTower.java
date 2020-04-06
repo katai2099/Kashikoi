@@ -20,16 +20,14 @@ public class FireTower extends BaseTower{
 		if(timeSinceShoot-previousShootTime > attackSpeed)
 		{
 			shoot();
-			shot = true;
 			previousShootTime = timeSinceShoot;
 			//System.out.println(previousSpawnTime);
 			timeSinceShoot = 0;
-			shot = false; 
 			m.getMonsters().get(0).gotShot(5);
 		}
 		for(int i=0;i<ammos.size();i++)
 		{
-			ammos.get(i).move(attackSpeed,previousShootTime);
+			ammos.get(i).update(attackSpeed,previousShootTime);
 		}
 		
 	
@@ -37,7 +35,7 @@ public class FireTower extends BaseTower{
 	
 	public void shoot()
 	{
-		ammos.add(new Ammo(firetexture,target.getMonsters().get(0),x,y,width,height));
+		//ammos.add(new Ammo(firetexture,target.getMonsters().get(0),x,y,width,height));
 	}
 //	public void shoot(Wave m)
 //	{

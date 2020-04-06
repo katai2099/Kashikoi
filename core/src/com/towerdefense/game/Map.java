@@ -152,7 +152,9 @@ public class Map extends Sprite {
 
 	public Tile getTile(int x,int y)
 	{
-		return map[x][y];
+		if(x<20 && y <15 && x >-1 && y >-1) 
+			return map[x][y];
+		else return new Tile(texture=new Texture("badlogic.jpg"),TileType.Outsider,0,0,0,0);
 	}
 	
 	public void draw(Batch b)
@@ -166,6 +168,7 @@ public class Map extends Sprite {
 			//	b.draw(tmp.getTexture(),tmp.getX(),tmp.getY(),tmp.getHeight(),tmp.getWidth());
 			}
 		}
+		castle.draw(b);
 	}
 	
 	

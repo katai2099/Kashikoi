@@ -2,6 +2,7 @@ package com.towerdefense.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,6 +20,7 @@ public class Monster extends Sprite{
 	Tile startile;
 	Tile currentTile;
 	boolean attack;
+	boolean alive;
 	Map map;
 	int dir[] ;
 	ArrayList<Checkpoint> checkpoints;
@@ -56,10 +58,10 @@ public class Monster extends Sprite{
 		this.height = height;
 		this.width = width;
 		this.atk = atk;
+		this.hp = 30;
 		this.speed = speed;
 		this.startile=startile;
 		this.currentTile=startile;
-		this.hp = 10;
 		this.map = map;
 		this.dir = new int[2];
 		this.checkpoints = new ArrayList<Checkpoint>();
@@ -67,6 +69,7 @@ public class Monster extends Sprite{
 		dir[1]=0;
 	 	dir = findDirection(startile);
 	 	this.currentCheckpoint = 0 ;
+	 	this.alive = true;
 	 	populateCheckpointList();
 	}
 
@@ -90,16 +93,18 @@ public class Monster extends Sprite{
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
+	public int getmapX()
+	{
+		return (int) x/64;
+	}
+	
+	public int getmapY()
+	{
+		return (int) (y-64)/64;
 	}
 
 	public float getWidth() {
 		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
 	}
 
 	public int getSpeed() {
@@ -126,34 +131,26 @@ public class Monster extends Sprite{
 		this.texture = texture;
 	}
 	
-	public void move()
+	public void update()
 	{
-		if(x<=1280 && y<=1024 )
+		if(x<=1280 && y<=1024 && x>=0 && y >=64)
 		{
 			if(checkpointReached()) 
 			{
 				if(currentCheckpoint+1==checkpoints.size())
 				{
-					System.out.println("Monster enter tower");
-					
+					map.castle.decreasehp(atk);
+					die();
 				}
 				else
 					currentCheckpoint++;
 			}else {
-		//		System.out.println(checkpoints.get(currentCheckpoint).getTile().getmapX()+" "+checkpoints.get(currentCheckpoint).getTile().getmapY()+" "
-		//	+checkpoints.get(currentCheckpoint).getX()+" "+checkpoints.get(currentCheckpoint).getY());
-		//	x = x+speed;
-		/*	if(dir[0]==1&&dir[1]==0)x=x+speed;
-			else if(dir[0]==-1&&dir[1]==0)x=x-speed;
-			else if(dir[0]==0&&dir[1]==1)y=y+speed;
-			else if(dir[0]==0&&dir[1]==-1)y=y-speed;  */
-				//System.out.println(checkpoints.get(currentCheckpoint).getX()+" "+checkpoints.get(currentCheckpoint).getY());
 			if(checkpoints.get(currentCheckpoint).getX()==1
-					&&checkpoints.get(currentCheckpoint).getY()==0) x=x+speed;
+					&&checkpoints.get(currentCheckpoint).getY()==0)x=x+speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==-1
 					&&checkpoints.get(currentCheckpoint).getY()==0) x=x-speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==0
-					&&checkpoints.get(currentCheckpoint).getY()==1) y=y+speed;
+					&&checkpoints.get(currentCheckpoint).getY()==1)y=y+speed;//y=y+Gdx.graphics.getDeltaTime()*speed; //y=y+speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==0
 					&&checkpoints.get(currentCheckpoint).getY()==-1) y=y-speed;
 			}
@@ -217,7 +214,9 @@ public class Monster extends Sprite{
 		
 		while(!found)
 		{
-			if(start.getTiletype() !=
+			if(	start.getmapX()+dir[0]*cnt == 20||
+					start.getmapY()+dir[1]*cnt == 15 ||
+					start.getTiletype() !=
 					map.getTile(start.getmapX()+dir[0]*cnt, 
 							start.getmapY()+dir[1]*cnt).getTiletype())
 			{
@@ -276,16 +275,11 @@ public class Monster extends Sprite{
 	}
 	
 	
-	public boolean isDead()
+	public boolean isAlive()
 	{
-		return hp<=0;
+		return alive;
 	}
 	
-	public void gotShot(int atk)
-	{
-		this.hp -= atk;
-	}
-
 	public int getArmor() {
 		return armor;
 	}
@@ -310,18 +304,10 @@ public class Monster extends Sprite{
 		this.y = y;
 	}
 	
-	public void attack(Castle castle)
-	{
-		
-	}
-	
-	public Boolean isAttack()
-	{
-		return attack;
-	}
 	
 	public void draw(Batch b)
 	{
+		if(alive)
 		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
 	}
 
@@ -333,6 +319,22 @@ public class Monster extends Sprite{
 	public Tile getCurrentTile() {
 		return currentTile;
 	}
+	
+	public void damage(int amount)
+	{
+		this.hp -= amount;
+		if(hp<=0) 
+			die();
+	}
+	
+	public void die()
+	{
+		alive = false;
+	}
+	
+	
+	
+	
 	
 	
 

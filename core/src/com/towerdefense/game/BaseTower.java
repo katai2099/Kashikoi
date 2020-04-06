@@ -14,20 +14,25 @@ public class BaseTower {
 	protected int height;
 	protected Texture texture;
 	protected int attack;
-	protected String attackType;
 	protected int exp;
 	protected int level; 
 	protected int cost; 
 	protected int range; 
+	protected int damage;
 	protected int attackSpeed;
 	protected ArrayList<Ammo> ammos;
+	protected ArrayList<Monster>monsters;
 	protected Tile tile;
 	protected float timeSinceShoot;
 	protected float previousShootTime;
 	long start = System.currentTimeMillis();
-	protected Wave target;
-	public boolean shot=false;
-	BaseTower(Texture texture,Wave target,Tile tile,int width,int height)
+	protected Monster target;
+	protected Boolean lockOn;
+	protected Texture cannon;
+	
+	
+	
+	BaseTower(Texture texture,Tile tile,int width,int height,int damage,ArrayList<Monster>monsters)
 	{
 		this.texture = texture ;
 		this.x = tile.getX();
@@ -37,20 +42,17 @@ public class BaseTower {
 		this.tile = tile;
 		this.exp = 0;
 		ammos = new ArrayList<Ammo>();
-		this.target = target;
+		this.timeSinceShoot=0;
+		this.monsters = monsters;
+		this.attackSpeed = 2;
+		this.cannon = new Texture("fire1.png");
+		this.lockOn = false;
+		this.range = 1000;
+		this.damage = damage;
+		
 	}
 	
-	BaseTower(Texture texture,Tile tile,int width,int height)
-	{
-		this.texture = texture ;
-		this.x = tile.getX();
-		this.y = tile.getY();
-		this.width = width;
-		this.height = height;
-		this.tile = tile;
-		this.exp = 0;
-	}
-	
+
 	public float getX() {
 		return x;
 	}
@@ -94,24 +96,12 @@ public class BaseTower {
 	public ArrayList<Ammo> getAmmos() {
 		return ammos;
 	}
-
-	public void setAmmos(ArrayList<Ammo> ammos) {
-		this.ammos = ammos;
-	}
+	
 		
 	public int getAttack() {
 		return attack;
 	}
-	public void setAttack(int attack) {
-		this.attack = attack;
-	}
 	
-	public String getAttackType() {
-		return attackType;
-	}
-	public void setAttackType(String attackType) {
-		this.attackType = attackType;
-	}
 	public int getExp() {
 		return exp;
 	}
@@ -139,27 +129,100 @@ public class BaseTower {
 	public int getAttckSpeed() {
 		return attackSpeed;
 	}
-	public void setAttckSpeed(int attckSpeed) {
-		this.attackSpeed = attckSpeed;
+	
+	public int getmapX()
+	{
+		return (int) x/64;
 	}
+	
+	public int getmapY()
+	{
+		return (int) (y-64)/64;
+	}
+	
+	Monster aimTarget()
+	{
+		Monster closest = null;
+		float closestDistance = 10000;
+		for(Monster m:monsters)
+		{
+			if (isInRange(m)&&findDistance(m) < closestDistance && m.isAlive())
+			{
+				closestDistance = findDistance(m);
+				closest = m;
+			}
+		}
+		if(closest != null)
+			lockOn = true;
+		return closest;
+	}
+	
+	
+	public boolean isInRange(Monster m)
+	{
+		float xDistance = Math.abs(m.getX()-this.x);
+		float yDistance = Math.abs(m.getY()-this.y);
+		if(xDistance < range && yDistance < range)
+			return true;
+		return false;
+	}
+	
+	public float findDistance(Monster m)
+	{
+		float xDistance = Math.abs(m.getX()-this.x);
+		float yDistance = Math.abs(m.getY()-this.y);
+		return xDistance + yDistance;
+	}
+	
+	public void updateMonsterList(ArrayList<Monster>list)
+	{
+		monsters = list;
+	}
+	
+	
 	
 	public void update()
 	{
-	}
+		if(!lockOn)
+		{
+			target = aimTarget();
+		}
+		if(target == null || target.isAlive() == false)
+		{
+			lockOn = false; 
+		}
+		timeSinceShoot = ((System.currentTimeMillis()-start)/1000);
+		if(timeSinceShoot-previousShootTime > attackSpeed)
+		{
+			shoot();
+			previousShootTime = timeSinceShoot;
+			timeSinceShoot = 0;
+		
+		}
+		for(int i=0;i<ammos.size();i++)
+		{
+			ammos.get(i).update(attackSpeed,previousShootTime);
+			if(ammos.get(i).alive==false) ammos.remove(i);
+		}
+		
 	
-	public void draw(Batch b)
-	{
-		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
 	}
 	
 	public void shoot()
 	{
-		
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage));
 	}
-	public void shoot(Wave m)
+
+	
+	public void draw(Batch b)
 	{
-		m.getMonsters().get(0).gotShot(this.attack);
+		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
+		for(int i=0;i<ammos.size();i++)
+		{
+			ammos.get(i).draw(b);
+		}
 	}
+	
 	
 
 }

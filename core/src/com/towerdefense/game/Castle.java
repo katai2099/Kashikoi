@@ -5,25 +5,30 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Castle extends Sprite{
-	int hp = 100;
+	int hp;
 	Texture texture;
 	float x;
 	float y;
 	int width;
 	int height;
 	Tile startTile;
+	float barWidth ;
 	
 	
-	public Castle(Texture texture,Tile startTile,int width,int height)
+/*	public Castle(Texture texture,Tile startTile,int width,int height)
 	{
+		this.hp = 100;
 		this.texture = texture;
 		this.x = startTile.getX();
 		this.y = startTile.getY();
 		this.width = width;
 		this.height = height;
-	}
+		this.barWidth = 2680;
+	} */
 
-	public Castle(Texture texture, int x, int y, int width, int height) {
+	public Castle(Texture texture, int x, int y, int width, int height) {	
+		this.hp = 100;
+		this.barWidth = 2680;
 		this.texture=texture;
 		this.x = x;
 		this.y = y;
@@ -93,9 +98,10 @@ public class Castle extends Sprite{
 		return this.x/64==monster.getCurrentTile().getmapX() && (this.y-64)/64 == monster.getCurrentTile().getmapY();
 	}
 	
-	public void decreasehp(Monster monster)
+	public void decreasehp(int atk)
 	{
-		this.hp -= monster.getAtk();
+		this.hp -= atk;
+		barWidth -= (atk*2680)/100;
 	}
 	
 	public boolean isDestroy()
@@ -115,6 +121,11 @@ public class Castle extends Sprite{
 
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	
+	public float getBarWidth()
+	{
+		return barWidth;
 	}
 
 	
