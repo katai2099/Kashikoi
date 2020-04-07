@@ -12,7 +12,7 @@ public class Fugu extends Monster{
 	Fugu(Tile startile,Map map,float height,float width)
 	{
 		super(startile, map, height, width);
-		this.texture = new Texture("fuguleft.jpg");
+		this.texture = new Texture("fugu.png");
 		this.x = startile.getX();
 		this.y = startile.getY();
 		this.height = height;

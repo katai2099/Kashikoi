@@ -66,11 +66,11 @@ public class GameScreen extends ScreenAdapter{
 		wavemanager= new WaveManager(monsterwave,5,4);
 		player = new Player(map,wavemanager);
 		font = new BitmapFont();
-		font.setColor(Color.BLACK);
+		font.setColor(Color.MAGENTA);
 		setupUI();
 		ui = new TextButtonStyle();
 		ui.font = font;
-		ui.fontColor = Color.RED;
+		ui.fontColor = Color.MAGENTA;
 		k = new TextButton("Level up",ui);
 		k.setText("Level up");
 		k.setPosition(1344, 594);
@@ -109,7 +109,7 @@ public class GameScreen extends ScreenAdapter{
 		}
 		}
 		if(map.castle.isDestroy()) lose = true;
-		Gdx.gl.glClearColor(.179f,.179f ,.179f , 1);
+		Gdx.gl.glClearColor(.192f,.192f ,.200f , 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.enableBlending();
 		batch.begin();
