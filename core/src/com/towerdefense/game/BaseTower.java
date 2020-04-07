@@ -210,6 +210,7 @@ public class BaseTower {
 	
 	public void shoot()
 	{
+		if(target!=null)
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage));
 	}
 

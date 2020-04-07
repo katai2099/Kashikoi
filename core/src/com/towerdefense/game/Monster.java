@@ -1,20 +1,20 @@
 package com.towerdefense.game;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Monster extends Sprite{
+	public static float dt ;
 	float x;
 	float y;
 	float height;
 	float width;
 	int speed;
 	int atk;
-	int armor;
+	int def;
 	int hp;
 	Texture texture;
 	Tile startile;
@@ -60,6 +60,27 @@ public class Monster extends Sprite{
 		this.atk = atk;
 		this.hp = 30;
 		this.speed = speed;
+		this.startile=startile;
+		this.currentTile=startile;
+		this.map = map;
+		this.dir = new int[2];
+		this.checkpoints = new ArrayList<Checkpoint>();
+		dir[0]=0;
+		dir[1]=0;
+	 	dir = findDirection(startile);
+	 	this.currentCheckpoint = 0 ;
+	 	this.alive = true;
+	 	populateCheckpointList();
+	 	dt = Gdx.graphics.getDeltaTime();
+	}
+	
+	Monster(Tile startile,Map map,float height,float width)
+	{
+		this.x = startile.getX();
+		this.y = startile.getY();
+		this.height = height;
+		this.width = width;
+		this.hp = 30;
 		this.startile=startile;
 		this.currentTile=startile;
 		this.map = map;
@@ -145,14 +166,17 @@ public class Monster extends Sprite{
 				else
 					currentCheckpoint++;
 			}else {
+				dt = Gdx.graphics.getDeltaTime()*60;
+				if(dt > 1.5) dt = 1.0f;
+				System.out.println(dt);
 			if(checkpoints.get(currentCheckpoint).getX()==1
-					&&checkpoints.get(currentCheckpoint).getY()==0)x=x+speed;
+					&&checkpoints.get(currentCheckpoint).getY()==0)x+= speed*dt;//x=x+speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==-1
-					&&checkpoints.get(currentCheckpoint).getY()==0) x=x-speed;
+					&&checkpoints.get(currentCheckpoint).getY()==0) x-=speed*dt;//x=x-speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==0
-					&&checkpoints.get(currentCheckpoint).getY()==1)y=y+speed;//y=y+Gdx.graphics.getDeltaTime()*speed; //y=y+speed;
+					&&checkpoints.get(currentCheckpoint).getY()==1)y+=speed*dt;//y=y+speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==0
-					&&checkpoints.get(currentCheckpoint).getY()==-1) y=y-speed;
+					&&checkpoints.get(currentCheckpoint).getY()==-1) y-=speed*dt; //y=y-speed;
 			}
 		}
 		updateCurrentTile();
@@ -163,7 +187,7 @@ public class Monster extends Sprite{
 		return castle.getX()==this.getX() && castle.getY()==this.getY();
 	}
 	
-	private boolean checkpointReached()
+	protected boolean checkpointReached()
 	{
 		boolean reached = false;
 		Tile t = checkpoints.get(currentCheckpoint).getTile();
@@ -177,7 +201,7 @@ public class Monster extends Sprite{
 		return reached;
 	}
 	
-	private void populateCheckpointList() 
+	protected void populateCheckpointList() 
 	{
 		
 		checkpoints.add(findNextC(startile,dir =findDirection(startile)));
@@ -202,7 +226,7 @@ public class Monster extends Sprite{
 		}
 	}
 	
-	private Checkpoint findNextC(Tile start,int[] dir)
+	protected Checkpoint findNextC(Tile start,int[] dir)
 	{
 		Tile next = null;
 		Checkpoint c = null;
@@ -235,7 +259,7 @@ public class Monster extends Sprite{
 	}
 	
 
-	public int[] findDirection(Tile ntile)
+	protected int[] findDirection(Tile ntile)
 	{
 		//dir = new int[2];
 		Tile u = map.getTile(ntile.getmapX(),ntile.getmapY()+1);
@@ -281,11 +305,11 @@ public class Monster extends Sprite{
 	}
 	
 	public int getArmor() {
-		return armor;
+		return def;
 	}
 
 	public void setArmor(int armor) {
-		this.armor = armor;
+		this.def = armor;
 	}
 
 	public int getHp() {
@@ -324,7 +348,10 @@ public class Monster extends Sprite{
 	{
 		this.hp -= amount;
 		if(hp<=0) 
+		{
 			die();
+			Player.modifyCash(10);
+		}
 	}
 	
 	public void die()

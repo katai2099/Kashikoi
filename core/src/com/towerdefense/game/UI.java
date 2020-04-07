@@ -17,10 +17,11 @@ public class UI {
 	Player player;
 	Button button;
 	
-	public UI()
+	public UI(Player player)
 	{
 		buttons = new ArrayList<myButton>();
 		awtFont = new Font("Times New Roman",Font.BOLD,14);
+		this.player = player;
 	}
 	
 	public void addButton(String name,Texture texture,int x,int y)
@@ -55,7 +56,10 @@ public class UI {
 	{
 		for(myButton bu:buttons)
 		{
+			if(!bu.name.equals("Levelup"))
 			b.draw(bu.getTexture(), bu.getX(), bu.getY(), bu.getWidth(), bu.getHeight());
+			if(bu.name.equals("Levelup") && player.isTowerClick())
+				b.draw(bu.getTexture(), bu.getX(), bu.getY(), bu.getWidth(), bu.getHeight());
 		}
 	}
 	

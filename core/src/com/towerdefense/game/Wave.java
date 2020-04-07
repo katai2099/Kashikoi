@@ -23,15 +23,18 @@ public class Wave extends Sprite {
 	boolean waveCompleted;
 	
 
-/*	public Wave(float spawnTime,Monster[] monster,Map map)
+	public Wave(float spawnTime,Monster[] monster,int monstersPerWave)
 	{
 		this.spawnTime = spawnTime;
 		timeSinceLastSpawn = 0;
 		monsters = new ArrayList<Monster>();
+		this.monstersPerWave = monstersPerWave;
+		this.waveCompleted = false;
 		this.monster = monster;
-		this.map = map;
+		Spawn();
 		
-	} */
+		
+	} 
 	
 	public Wave(float spawnTime,Monster monster,int monstersPerWave)
 	{
@@ -73,9 +76,16 @@ public class Wave extends Sprite {
 	
 	public void Spawn()
 	{
-	//	int n=random.nextInt(2);
+		int n=random.nextInt(5);
 	//	monsters.add(new Monster(monster[n].getTexture(),monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth(),monster[n].getAtk(),monster[n].getSpeed()));
-		monsters.add(new Monster(monster1.getTexture(),monster1.getStartile(),monster1.getMap(),64,64,monster1.getAtk(),monster1.getSpeed()));
+		//monsters.add(new Monster(monster1.getTexture(),monster1.getStartile(),monster1.getMap(),64,64,monster1.getAtk(),monster1.getSpeed()));
+		if(n==0)  	  monsters.add(new Giant(monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth()));
+		else if(n==1) monsters.add(new Fugu(monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth()));
+		else if(n==2) monsters.add(new Squirrel(monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth()));
+		else if(n==3) monsters.add(new Onion(monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth()));
+		else if(n==4) monsters.add(new SekiroDieTwice(monster[n].getStartile(),monster[n].getMap(),monster[n].getHeight(),monster[n].getWidth()));
+		
+		
 	}
 	
 	public float getTimeSinceLastSpawn() {

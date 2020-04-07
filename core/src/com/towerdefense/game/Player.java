@@ -18,6 +18,7 @@ public class Player {
 	public static int cash;
 	WaveManager waveManager;
 	Boolean TowerSelected;
+	BaseTower tmpSelectedTower;
 	
 	public Player(Map map,WaveManager waveManager)
 	{
@@ -36,7 +37,7 @@ public class Player {
 		return cash;
 	}
 
-	public boolean modifyCash(int cost)
+	public static boolean modifyCash(int cost)
 	{
 		if(cash + cost>= 0)
 		{
@@ -73,9 +74,15 @@ public class Player {
 		{
 			if(Gdx.input.isButtonJustPressed(0)&&!leftMousePressed)
 			{
+				if(modifyCash(-50)) {
 				towers.add(tmpTower);
 				holdingTower = false;
-				tmpTower = null;
+				tmpTower = null;}
+				else 
+					{
+					holdingTower = false;
+					tmpTower = null;
+					}
 			}
 		}
 		leftMousePressed = Gdx.input.isButtonJustPressed(0);
@@ -89,7 +96,11 @@ public class Player {
 		for(BaseTower t:towers)
 		{
 			if(MouseX > t.getX() && MouseX < t.getX() + t.getWidth() &&
-					MouseY > t.getY() && MouseY < t.getY() + t.getHeight()) return true;
+					MouseY > t.getY() && MouseY < t.getY() + t.getHeight()) 
+				{
+				tmpSelectedTower = t;
+				return true;
+				}
 		}
 		return false;
 	}

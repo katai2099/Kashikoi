@@ -17,13 +17,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 
 public class GameScreen extends ScreenAdapter{
 	
-	Button k;
+	TextButton k;
 	public static final int GAME_HEIGHT=234;
 	public static final int GAME_WIDTH=256;
 	FileHandle handle;
@@ -46,27 +49,41 @@ public class GameScreen extends ScreenAdapter{
 	BaseTower tower;
 	Player player;
 	ShapeRenderer shapeDebugger;
-	
+	Stage uiStage;
+	TextButtonStyle ui;
 	
 	public GameScreen(Game game,SpriteBatch batch) throws FileNotFoundException, IOException {
 		this.game = game; 
 		this.batch = batch;
 		map = new Map("level1.txt");
 		
-		monsterwave = new Monster[2];
-		monsterwave[0] = new Monster(texture = new Texture("enemy.png"),map.getTile(3, 0),map,60,60,10,1);
-		wavemanager= new WaveManager(monsterwave[0],5,4);
+		monsterwave = new Monster[5];
+		monsterwave[4] = new SekiroDieTwice(map.getTile(3, 0),map,64,64);
+		monsterwave[0] = new Giant(map.getTile(3, 0),map,64,64);
+		monsterwave[1] = new Fugu(map.getTile(3, 0),map,64,64);
+		monsterwave[2] = new Squirrel(map.getTile(3,0),map,64,64);
+		monsterwave[3] = new Onion(map.getTile(3, 0),map,64,64);
+		wavemanager= new WaveManager(monsterwave,5,4);
 		player = new Player(map,wavemanager);
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		setupUI();
+		ui = new TextButtonStyle();
+		ui.font = font;
+		ui.fontColor = Color.RED;
+		k = new TextButton("Level up",ui);
+		k.setText("Level up");
+		k.setPosition(1344, 594);
+		k.setVisible(true);
+		uiStage = new Stage();
+		uiStage.addActor(k);
 	}
 	void setupUI() {
-		towerui = new UI();
+		towerui = new UI(player);
 		towerui.addButton("fireTower", new Texture("fire tower.jpg"), 1344 , 896); 
 		towerui.addButton("iceTower",new Texture("ice tower.jpg"), 1344 , 768);
 		towerui.addButton("poisonTower",new Texture("poison tower.jpg"), 1344, 640);
-		
+		towerui.addButton("Levelup", new Texture("levelupbutton.png"), 1344, 264);
 	}
 	
 	long start = System.currentTimeMillis();
@@ -74,57 +91,33 @@ public class GameScreen extends ScreenAdapter{
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		player.update();
-		//wavemanager.update();
 		
 		if(Gdx.input.isKeyPressed(Keys.SPACE)) pause = ! pause;
 		boolean tmp = Gdx.input.isButtonJustPressed(0);
 		if(tmp) {
 		if(towerui.isButtonClicked("fireTower"))
 		{
-			player.pickTower(new BaseTower(new Texture("fire tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,5,wavemanager.getCurrentWave().getMonsters()));
+			player.pickTower(new BaseTower(new Texture("fire tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,10,wavemanager.getCurrentWave().getMonsters()));
 		}
 		if(towerui.isButtonClicked("iceTower"))
 		{
-			player.pickTower(new BaseTower(new Texture("ice tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,5,wavemanager.getCurrentWave().getMonsters()));
+			player.pickTower(new BaseTower(new Texture("ice tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,10,wavemanager.getCurrentWave().getMonsters()));
 		}
 		if(towerui.isButtonClicked("poisonTower"))
 		{
-			player.pickTower(new BaseTower(new Texture("poison tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,5,wavemanager.getCurrentWave().getMonsters()));
+			player.pickTower(new BaseTower(new Texture("poison tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,10,wavemanager.getCurrentWave().getMonsters()));
 		}
-		
 		}
 		if(map.castle.isDestroy()) lose = true;
-	//	int n = ran.nextInt(2);
-		
-		/*if(!lose&&!wavemanager.currentWave.isCompleted() ) {
-		
-		
-			
-			for(int i=0;i<wavemanager.getCurrentWave().getMonsters().size();i++)
-			{
-				if(map.castle.gotattacked(wavemanager.getCurrentWave().getMonsters().get(i)))
-				{
-					map.castle.decreasehp(wave.getMonsters().get(i));
-					barWidth -= ((wavemanager.getCurrentWave().getMonsters().get(i).getAtk() * 2680)/100) ;
-					System.out.println(map.castle.getHp());
-					wavemanager.getCurrentWave().getMonsters().get(i).die();
-				}
-			}
-		
-		} */
-		//System.out.println(wavemanager.getCurrentWave().getMonsters().get(0).getHp());
-	//	System.out.println(Gdx.graphics.getDeltaTime()*60);
-		Gdx.gl.glClearColor(160,160 ,160 , 1);
+		Gdx.gl.glClearColor(.179f,.179f ,.179f , 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.enableBlending();
 		batch.begin();
 		map.draw(batch);
 		towerui.draw(batch);
-		//wavemanager.draw(batch);
-		//ui.draw(batch);
-		//tower.draw(batch);
 		player.draw(batch);
-		font.draw(batch,String.valueOf(player.getCash()),1344,200);
+		
+		font.draw(batch,String.valueOf(Player.cash),1344,200);
 		if(lose)
 		{
 			batch.draw(texture = new Texture("gameOver.png"),1280/2,960/2,texture.getWidth()/2,texture.getHeight()/2);
@@ -132,7 +125,6 @@ public class GameScreen extends ScreenAdapter{
 		
 		batch.draw(texture = new Texture("bar-background.png"),0,0,1935,texture.getHeight()); 
 		batch.draw(texture = new Texture("bar.png"),-10,0,map.getCastle().getBarWidth(),texture.getHeight());
-		//System.out.println((System.currentTimeMillis()-start)/1000);
 		batch.end();
 		
 	}
