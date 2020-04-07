@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Onion extends Monster{
 	
-	boolean isRevive ;
+	//boolean isRevive ;
 	int originalHp;
 	Onion(Texture texture, Tile startile,Map map, int height, int width, int atk, int speed) {
 		super(texture, startile, map, height, width, atk, speed);
@@ -12,7 +12,7 @@ public class Onion extends Monster{
 		originalHp = this.hp;
 		this.hp = 10;
 	}
-
+	/*
 	public void revive()
 	{
 		if(isDead()&&!(isRevive))
@@ -20,6 +20,13 @@ public class Onion extends Monster{
 			hp = originalHp/2;
 			isRevive = true;
 		}
+	}*/
+
+	public void damage(int amount)
+	{
+		this.hp -= 1;
+		if(hp<=0) 
+			die();
 	}
 	
 }
