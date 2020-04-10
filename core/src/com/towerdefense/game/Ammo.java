@@ -15,8 +15,10 @@ public class Ammo {
 	Monster target;
 	boolean alive;
 	int damage;
-	
-	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,int damage)
+	float speed;
+	float dt;
+	BaseTower tower;
+	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,int damage,int speed)
 	{
 		this.texture = texture;
 		this.x = x;
@@ -27,15 +29,35 @@ public class Ammo {
 		this.damage = damage;
 		this.xVelocity=0f;
 		this.xVelocity=0f;
-		calculateDirection() ;
+		//calculateDirection() ;
 		this.alive = true;
+		this.speed = speed;
+		dt = Gdx.graphics.getDeltaTime();
 	}
+	
+	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,int damage,int speed,BaseTower tower)
+	{
+		this.texture = texture;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height=height;
+		this.target = target;
+		this.damage = damage;
+		this.xVelocity=0f;
+		this.xVelocity=0f;
+		//calculateDirection() ;
+		this.alive = true;
+		this.speed = speed;
+		dt = Gdx.graphics.getDeltaTime();
+		this.tower = tower;
+	} 	
 
 	public void calculateDirection() 
 	{
 		float totalAllowedMovement = 1.0f;
-		float xDistanceFromTarget = Math.abs(target.getX()-x+25);
-		float yDistanceFromTarget = Math.abs(target.getY()-y+25);
+		float xDistanceFromTarget = Math.abs(target.getX()-x);
+		float yDistanceFromTarget = Math.abs(target.getY()-y);
 		float totalDistanceFromTarget = xDistanceFromTarget + yDistanceFromTarget;
 		xVelocity = xDistanceFromTarget / totalDistanceFromTarget;
 		yVelocity = totalAllowedMovement - (xDistanceFromTarget / totalDistanceFromTarget);
@@ -76,9 +98,12 @@ public class Ammo {
 	public int getHeight() {
 		return height;
 	}
-	
+	//old version
+	/*
 	public void update(float speed,float timeSinceShoot)
 	{
+		if(alive) {
+			calculateDirection();
 		x += xVelocity*speed*timeSinceShoot;
 		y += yVelocity*speed*timeSinceShoot;
 		
@@ -89,8 +114,33 @@ public class Ammo {
 		{
 			target.damage(damage);
 			this.alive = false;
-		}
+		}}
 		
+	} */
+	
+	public void update()
+	{
+		dt = Gdx.graphics.getDeltaTime()*60;
+		if(dt>1.5f) dt = 1;
+		//if(target.alive) {
+		if(alive) {
+			calculateDirection();
+		x += xVelocity*speed*dt;
+		y += yVelocity*speed*dt;
+		
+		if(this.x + this.width >= target.getX()
+				&& target.getX()+target.getWidth() >= this.x
+				&& this.y + this.height >= target.getY()
+				&& target.getY()+target.getHeight() > this.y )
+		{
+			if(target.alive)
+		//	target.damage(damage);
+			tower.damageMonster(target);
+			this.alive = false;
+		}
+		}
+		//}
+		//else this.alive = false;
 	}
 
 	public float getxVelocity() {
@@ -113,11 +163,17 @@ public class Ammo {
 		return target;
 	}
 
+	
 		
+	public boolean isAlive() {
+		return alive;
+	}
+
+
 	public void draw(Batch b)
 	{
 		if(this.alive)
-		b.draw(getTexture(),getX(),getY(),getWidth()/2+8,getHeight()/2+8);
+		b.draw(getTexture(),getX()+30,getY()+25,getWidth()/2,getHeight()/2);
 	}
 
 }

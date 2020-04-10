@@ -2,24 +2,27 @@ package com.towerdefense.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class BaseTower {
+public class BaseTower extends Sprite{
 	
 	protected float x;
 	protected float y;
 	protected int width;
 	protected int height;
 	protected Texture texture;
-	protected int attack;
 	protected int exp;
 	protected int level; 
 	protected int cost; 
 	protected int range; 
 	protected int damage;
-	protected int attackSpeed;
+	protected int refund;
+	protected float attackSpeed;
 	protected ArrayList<Ammo> ammos;
 	protected ArrayList<Monster>monsters;
 	protected Tile tile;
@@ -27,10 +30,13 @@ public class BaseTower {
 	protected float previousShootTime;
 	long start = System.currentTimeMillis();
 	protected Monster target;
-	protected Boolean lockOn;
+	protected boolean lockOn;
 	protected Texture cannon;
+	protected float dt;
+	protected boolean shootOnce;
+	protected BitmapFont attackValue;
 	
-	
+
 	
 	BaseTower(Texture texture,Tile tile,int width,int height,int damage,ArrayList<Monster>monsters)
 	{
@@ -44,11 +50,34 @@ public class BaseTower {
 		ammos = new ArrayList<Ammo>();
 		this.timeSinceShoot=0;
 		this.monsters = monsters;
-		this.attackSpeed = 2;
+		this.attackSpeed = 3;
 		this.cannon = new Texture("fire1.png");
 		this.lockOn = false;
 		this.range = 1000;
 		this.damage = damage;
+		dt = Gdx.graphics.getDeltaTime();
+	}
+	
+	BaseTower(Texture texture,Tile tile,int width,int height,ArrayList<Monster>monsters)
+	{
+		this.texture = texture ;
+		this.x = tile.getX();
+		this.y = tile.getY();
+		this.width = width;
+		this.height = height;
+		this.tile = tile;
+		this.exp = 0;
+		ammos = new ArrayList<Ammo>();
+		this.timeSinceShoot=0;
+		this.monsters = monsters;
+		this.attackSpeed = 3;
+		this.cannon = new Texture("fire1.png");
+		this.lockOn = false;
+		this.range = 1000;
+		dt = Gdx.graphics.getDeltaTime();
+		this.shootOnce = false; 
+		attackValue = new BitmapFont();
+		attackValue.setColor(Color.RED);
 		
 	}
 	
@@ -69,7 +98,7 @@ public class BaseTower {
 		this.y = y;
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return width;
 	}
 
@@ -77,7 +106,7 @@ public class BaseTower {
 		this.width = width;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 
@@ -97,10 +126,6 @@ public class BaseTower {
 		return ammos;
 	}
 	
-		
-	public int getAttack() {
-		return attack;
-	}
 	
 	public int getExp() {
 		return exp;
@@ -126,7 +151,7 @@ public class BaseTower {
 	public void setRange(int range) {
 		this.range = range;
 	}
-	public int getAttckSpeed() {
+	public float getAttckSpeed() {
 		return attackSpeed;
 	}
 	
@@ -146,7 +171,7 @@ public class BaseTower {
 		float closestDistance = 10000;
 		for(Monster m:monsters)
 		{
-			if (isInRange(m)&&findDistance(m) < closestDistance && m.isAlive())
+			if (isInRange(m)&&findDistance(m) < closestDistance && m.getHiddenHealth()>0)// m.isAlive())
 			{
 				closestDistance = findDistance(m);
 				closest = m;
@@ -183,6 +208,8 @@ public class BaseTower {
 	
 	public void update()
 	{
+		if(monsters.size()!=0)
+		{
 		if(!lockOn)
 		{
 			target = aimTarget();
@@ -191,39 +218,68 @@ public class BaseTower {
 		{
 			lockOn = false; 
 		}
-		timeSinceShoot = ((System.currentTimeMillis()-start)/1000);
-		if(timeSinceShoot-previousShootTime > attackSpeed)
+		if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100)
+		{
+			this.exp += target.giveExp;
+			if(exp>100) exp = 100;
+			shootOnce = false;
+		}	
+		
+		dt = Gdx.graphics.getDeltaTime();
+		if(dt>1.5f) dt = 1 ;
+		timeSinceShoot += dt;
+		if(timeSinceShoot>attackSpeed)
 		{
 			shoot();
-			previousShootTime = timeSinceShoot;
-			timeSinceShoot = 0;
-		
+			shootOnce = true ;
+		}
 		}
 		for(int i=0;i<ammos.size();i++)
 		{
-			ammos.get(i).update(attackSpeed,previousShootTime);
+			ammos.get(i).update();
 			if(ammos.get(i).alive==false) ammos.remove(i);
 		}
-		
-	
 	}
 	
 	public void shoot()
-	{
-		if(target!=null)
-		ammos.add(new Ammo(cannon,target,x,y,40,40,damage));
+	{	
+		timeSinceShoot = 0;
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5));
+		target.reduceHiddenHealth(damage);
 	}
 
 	
 	public void draw(Batch b)
 	{
-		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
+		b.draw(this.getTexture(),getX(),getY(),getWidth(),getHeight());
+		attackValue.draw(b, String.valueOf(this.damage),getX()+25,getY()+80);
 		for(int i=0;i<ammos.size();i++)
 		{
 			ammos.get(i).draw(b);
 		}
 	}
+
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
 	
+	public void damageMonster(Monster monster)
+	{
+		
+	}
+
+	public int getRefund() {
+		return refund;
+	}
+
+	
+	
+	
+
 	
 
 }

@@ -11,14 +11,15 @@ public class Onion extends Monster{
 	Onion(Tile startile,Map map,float height,float width)
 	{
 		super(startile,map,height,width);
+		Monster.id++;
+		this.idNumber = id;
 		this.texture= new Texture("Onion.png");
-		this.x = startile.getX();
-		this.y = startile.getY();
-		this.height = height;
-		this.width = width;
+		this.giveGold = 5;
+		this.giveExp = 3;
 		this.atk = 10;
 		this.hp = 3;
-		this.speed = 2;
+		this.hiddenhealth = 3;
+		this.speed = 10;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];
@@ -31,14 +32,21 @@ public class Onion extends Monster{
 	 	populateCheckpointList();
 	}
 	
+	@Override
 	public void damage(int amount)
 	{
 		this.hp --;
-		if(hp<=0) 
+	/*	if(hp<=0) 
 		{
 			die();
 			Player.modifyCash(5);
-		}
+		} */
+	}
+	
+	@Override
+	protected void reduceHiddenHealth(int amount)
+	{
+		this.hiddenhealth --;
 	}
 	
 	

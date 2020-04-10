@@ -163,9 +163,7 @@ public class Map extends Sprite {
 		{
 			for(int j=0;j<map[i].length;j++)
 			{
-				//Tile tmp = map[i][j];
 				map[i][j].draw(b);
-			//	b.draw(tmp.getTexture(),tmp.getX(),tmp.getY(),tmp.getHeight(),tmp.getWidth());
 			}
 		}
 		castle.draw(b);

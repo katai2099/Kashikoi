@@ -2,20 +2,29 @@ package com.towerdefense.game;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+	
+
 public class Monster extends Sprite{
+	public static int id;
 	public static float dt ;
+	protected int giveExp;
+	protected int giveGold;
+	int idNumber;
 	float x;
 	float y;
 	float height;
 	float width;
-	int speed;
+	float speed;
 	int atk;
-	int def;
+	float def;
 	int hp;
+	int hiddenhealth;
 	Texture texture;
 	Tile startile;
 	Tile currentTile;
@@ -25,6 +34,13 @@ public class Monster extends Sprite{
 	int dir[] ;
 	ArrayList<Checkpoint> checkpoints;
 	int currentCheckpoint;
+	BitmapFont hpNumber;
+	boolean poison;
+	boolean freeze;
+	boolean burn;
+	float tmpTimeBurn;
+	float tmpTimeFreeze;
+	float tmpTimePoison;
 	
 	public Map getMap() {
 		return map;
@@ -50,8 +66,9 @@ public class Monster extends Sprite{
 		currentTile = map.getTile((int)(this.x/64), (int)(this.y-64)/64);
 	}
 	
-	Monster(Texture texture,Tile startile,Map map,float height,float width,int atk,int speed)
+	Monster(Texture texture,Tile startile,Map map,float height,float width,int atk,float speed)
 	{
+		id = 0 ;
 		this.texture=texture;
 		this.x = startile.getX();
 		this.y = startile.getY();
@@ -72,6 +89,8 @@ public class Monster extends Sprite{
 	 	this.alive = true;
 	 	populateCheckpointList();
 	 	dt = Gdx.graphics.getDeltaTime();
+	 	hpNumber = new BitmapFont();
+	 	hpNumber.setColor(Color.BLACK);
 	}
 	
 	Monster(Tile startile,Map map,float height,float width)
@@ -92,6 +111,14 @@ public class Monster extends Sprite{
 	 	this.currentCheckpoint = 0 ;
 	 	this.alive = true;
 	 	populateCheckpointList();
+	 	hpNumber = new BitmapFont();
+	 	hpNumber.setColor(Color.BLACK);
+	 	poison = false;
+	 	freeze = false;
+	 	burn = false;
+	 	 tmpTimeBurn=0;
+	 	 tmpTimeFreeze=0;
+	 	 tmpTimePoison=0;
 	}
 
 	public float getX() {
@@ -128,7 +155,7 @@ public class Monster extends Sprite{
 		return width;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 
@@ -166,9 +193,9 @@ public class Monster extends Sprite{
 				else
 					currentCheckpoint++;
 			}else {
-				dt = Gdx.graphics.getDeltaTime()*60;
-				if(dt > 1.5) dt = 1.0f;
-				System.out.println(dt);
+				dt = Gdx.graphics.getDeltaTime()*10;
+				if(dt > 0.18f) dt = 0.16f;
+			//	System.out.println(dt);
 			if(checkpoints.get(currentCheckpoint).getX()==1
 					&&checkpoints.get(currentCheckpoint).getY()==0)x+= speed*dt;//x=x+speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==-1
@@ -180,11 +207,42 @@ public class Monster extends Sprite{
 			}
 		}
 		updateCurrentTile();
+		if(burn)
+		{
+			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
+			if(timeincaseScreenFreeze > 0.020f) {
+				System.out.println(timeincaseScreenFreeze);
+			timeincaseScreenFreeze = 0.016f;}
+			tmpTimeBurn += timeincaseScreenFreeze;
+		//	System.out.println(tmpTimeBurn);
+			if(tmpTimeBurn>2)
+			{
+				hp-=2;
+				burn = false;
+				tmpTimeBurn=0;
+			}
+		}
+		if(freeze)
+		{
+			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
+			if(timeincaseScreenFreeze > 0.020f) {
+				System.out.println(timeincaseScreenFreeze);
+			timeincaseScreenFreeze = 0.016f;}
+			tmpTimeFreeze += timeincaseScreenFreeze;
+			speed = 0 ;
+			if(tmpTimeFreeze>1)
+			{
+				speed = 10 ;
+				freeze = false;
+				tmpTimeFreeze=0;
+			}
+		}
 	}
 	
-	public boolean attackYet(Castle castle)
+	public boolean enterCastle()
 	{
-		return castle.getX()==this.getX() && castle.getY()==this.getY();
+		//return map.castle.getX()==this.getX() && map.castle.getY()==this.getY();
+		return this.getmapX() == (int)map.getCastle().getX()/64 && this.getmapY() == (int)((map.getCastle().getY()-64)/64);
 	}
 	
 	protected boolean checkpointReached()
@@ -304,7 +362,7 @@ public class Monster extends Sprite{
 		return alive;
 	}
 	
-	public int getArmor() {
+	public float getArmor() {
 		return def;
 	}
 
@@ -331,8 +389,10 @@ public class Monster extends Sprite{
 	
 	public void draw(Batch b)
 	{
-		if(alive)
+		if(alive) {
 		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
+		hpNumber.draw(b,String.valueOf(hp),getX()+25,getY()+85);
+		}
 	}
 
 	public void current()
@@ -347,11 +407,11 @@ public class Monster extends Sprite{
 	public void damage(int amount)
 	{
 		this.hp -= amount;
-		if(hp<=0) 
+	/*	if(hp<=0) 
 		{
 			die();
-			Player.modifyCash(10);
-		}
+			Player.modifyCash(this.giveGold);
+		}*/
 	}
 	
 	public void die()
@@ -359,8 +419,25 @@ public class Monster extends Sprite{
 		alive = false;
 	}
 	
+	protected int getHiddenHealth()
+	{
+		return hiddenhealth;
+	}
 	
+	protected void reduceHiddenHealth(int amount)
+	{
+		this.hiddenhealth -= amount;
+	}
 	
+	protected void burn()
+	{
+		burn = true; 
+	}
+	
+	protected void freeze()
+	{
+		freeze = true;
+	}
 	
 	
 	

@@ -1,49 +1,46 @@
 package com.towerdefense.game;
 
+import java.util.ArrayList;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class FireTower extends BaseTower{
 
-	private Texture firetexture;
-
-	FireTower(Texture texture, Wave target ,Tile tile, int width, int height) {
-		super(texture, target,tile, width, height);
-		firetexture = new Texture("fire1.png");
-		this.attackSpeed = 4;
-		this.target = target;
-		this.attack = 5;
-	}
-	
-	public void update(Wave m)
-	{
-		timeSinceShoot = ((System.currentTimeMillis()-start)/1000);
-		if(timeSinceShoot-previousShootTime > attackSpeed)
-		{
-			shoot();
-			previousShootTime = timeSinceShoot;
-			//System.out.println(previousSpawnTime);
-			timeSinceShoot = 0;
-			m.getMonsters().get(0).gotShot(5);
-		}
-		for(int i=0;i<ammos.size();i++)
-		{
-			ammos.get(i).update(attackSpeed,previousShootTime);
-		}
-		
-	
+	FireTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> arrayList) {
+		super(texture, tile, width, height, arrayList);
+		this.cannon = new Texture("fireProjectile.png");
+		this.damage = 10;
+		this.tile = tile;
+		this.exp = 98;
+		ammos = new ArrayList<Ammo>();
+		this.timeSinceShoot=0;
+		this.attackSpeed = 3;
+		this.lockOn = false;
+		this.range = 1000;
+		this.cost = 50;
+		dt = Gdx.graphics.getDeltaTime();
+		this.refund = 25;
 	}
 	
 	public void shoot()
-	{
-		//ammos.add(new Ammo(firetexture,target.getMonsters().get(0),x,y,width,height));
+	{	
+		timeSinceShoot = 0;
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,10,this));
+		target.reduceHiddenHealth(damage);
 	}
-//	public void shoot(Wave m)
-//	{
-//		m.getMonsters().get(0).gotShot(this.attack);
-//	}
 
+
+	public void damageMonster(Monster monster)
+	{
+		monster.damage(this.damage);
+		if(monster.getHp()<=0) 
+		{
+			monster.die();
+			Player.modifyCash(monster.giveGold);
+		}
+	}
 	
 	
-	
+
 
 }

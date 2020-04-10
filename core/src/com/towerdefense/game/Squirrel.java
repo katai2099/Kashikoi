@@ -14,14 +14,15 @@ public class Squirrel extends Monster{
 	Squirrel(Tile startile,Map map,float height,float width)
 	{
 		super(startile,map,height,width);
+		Monster.id++;
+		this.idNumber = id;
 		this.texture= new Texture("squirel.png");
-		this.x = startile.getX();
-		this.y = startile.getY();
-		this.height = height;
-		this.width = width;
+		this.giveExp = 2; 
+		this.giveGold = 3;
 		this.atk = 5;
 		this.hp = 10;
-		this.speed = 2;
+		this.speed = 10;
+		this.hiddenhealth = 10;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];
@@ -38,11 +39,11 @@ public class Squirrel extends Monster{
 	public void damage(int amount)
 	{
 		this.hp -= amount;
-		if(hp<=0) 
+	/*	if(hp<=0) 
 		{
 			die();
 			Player.modifyCash(10);
-		}
+		} */
 	}
 	
 
