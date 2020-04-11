@@ -23,7 +23,7 @@ public class Monster extends Sprite{
 	float speed;
 	int atk;
 	float def;
-	int hp;
+	float hp;
 	int hiddenhealth;
 	Texture texture;
 	Tile startile;
@@ -38,9 +38,16 @@ public class Monster extends Sprite{
 	boolean poison;
 	boolean freeze;
 	boolean burn;
+	boolean slow;
+	boolean permanentSlow;
 	float tmpTimeBurn;
 	float tmpTimeFreeze;
 	float tmpTimePoison;
+	float tmpSlowTime;
+	boolean piercethrough;
+	
+	
+	boolean Twice ;
 	
 	public Map getMap() {
 		return map;
@@ -119,6 +126,11 @@ public class Monster extends Sprite{
 	 	 tmpTimeBurn=0;
 	 	 tmpTimeFreeze=0;
 	 	 tmpTimePoison=0;
+	 	 tmpSlowTime = 0 ;
+	 	 slow = false;
+	 	 Twice = false;
+	 	 permanentSlow = false;
+	 	 piercethrough = false;
 	}
 
 	public float getX() {
@@ -209,32 +221,59 @@ public class Monster extends Sprite{
 		updateCurrentTile();
 		if(burn)
 		{
+			
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
 				System.out.println(timeincaseScreenFreeze);
 			timeincaseScreenFreeze = 0.016f;}
 			tmpTimeBurn += timeincaseScreenFreeze;
 		//	System.out.println(tmpTimeBurn);
-			if(tmpTimeBurn>2)
+			if(tmpTimeBurn>1 && !Twice)
 			{
-				hp-=2;
+				hp-=1;
+				Twice = true; 
+				//burn = false;
+				//tmpTimeBurn=0;
+			}
+			if(tmpTimeBurn>2 && Twice)
+			{
+				hp-=1;
+				if(hp<=0) die(); Player.modifyCash(this.giveGold);
 				burn = false;
-				tmpTimeBurn=0;
+				Twice = false;
+				tmpTimeBurn = 0 ;
 			}
 		}
 		if(freeze)
 		{
+			this.speed = 0;
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
 				System.out.println(timeincaseScreenFreeze);
 			timeincaseScreenFreeze = 0.016f;}
 			tmpTimeFreeze += timeincaseScreenFreeze;
-			speed = 0 ;
 			if(tmpTimeFreeze>1)
 			{
-				speed = 10 ;
+				if(slow) this.speed = 9;
+				else this.speed = 10;
+				if(permanentSlow) this.speed = 7;
+				if(permanentSlow && slow) this.speed = 6;
 				freeze = false;
 				tmpTimeFreeze=0;
+			}
+		}
+		if(slow)
+		{
+			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
+			if(timeincaseScreenFreeze > 0.020f) {
+				System.out.println(timeincaseScreenFreeze);
+			timeincaseScreenFreeze = 0.016f;}
+			tmpSlowTime += timeincaseScreenFreeze;
+			if(tmpSlowTime>1)
+			{
+				speed +=1;
+				slow = false;
+				tmpSlowTime=0;
 			}
 		}
 	}
@@ -319,7 +358,6 @@ public class Monster extends Sprite{
 
 	protected int[] findDirection(Tile ntile)
 	{
-		//dir = new int[2];
 		Tile u = map.getTile(ntile.getmapX(),ntile.getmapY()+1);
 		Tile d = map.getTile(ntile.getmapX(),ntile.getmapY()-1);
 		Tile r = map.getTile(ntile.getmapX()+1,ntile.getmapY());
@@ -370,7 +408,7 @@ public class Monster extends Sprite{
 		this.def = armor;
 	}
 
-	public int getHp() {
+	public float getHp() {
 		return hp;
 	}
 
@@ -392,6 +430,9 @@ public class Monster extends Sprite{
 		if(alive) {
 		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
 		hpNumber.draw(b,String.valueOf(hp),getX()+25,getY()+85);
+	//	hpNumber.draw(b,String.valueOf(getX())+" " +String.valueOf(getY()),getX()+25,getY()-32);
+		hpNumber.draw(b,String.valueOf(speed),getX()+25,getY()-32);
+		hpNumber.draw(b,String.valueOf(def),getX()-25,getY()+32);
 		}
 	}
 
@@ -404,14 +445,14 @@ public class Monster extends Sprite{
 		return currentTile;
 	}
 	
-	public void damage(int amount)
+	public void damage(float damage)
 	{
-		this.hp -= amount;
-	/*	if(hp<=0) 
+		this.hp -= damage;
+		if(hp<=0) 
 		{
 			die();
 			Player.modifyCash(this.giveGold);
-		}*/
+		}
 	}
 	
 	public void die()
@@ -436,10 +477,32 @@ public class Monster extends Sprite{
 	
 	protected void freeze()
 	{
+		this.speed=0;
 		freeze = true;
 	}
 	
+	protected void slow()
+	{
+		this.speed -= 3;
+		permanentSlow = true; 
+	}
 	
+	protected void tmpSlow()
+	{
+		this.speed -= 1;
+		slow = true ;
+	}
+	
+	protected void pureDamage(float amount)
+	{
+		this.hp -= amount ;
+	}
+	
+	protected void reduceArmor(float amount)
+	{
+		this.def -= amount;
+		piercethrough = true;
+	}
 	
 
 	

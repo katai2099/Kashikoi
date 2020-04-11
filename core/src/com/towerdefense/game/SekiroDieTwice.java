@@ -23,6 +23,7 @@ public class SekiroDieTwice extends Monster{
 		this.atk = 50;
 		this.hp = 200;
 		this.hiddenhealth = 100;
+		this.def = 10;
 		this.speed = 10;
 		this.currentTile=startile;
 		this.map = map;
@@ -37,17 +38,22 @@ public class SekiroDieTwice extends Monster{
 	 	reviveYet = false;
 	}
 		
-	public void damage(int amount)
+	public void damage(float amount)
 	{
-		this.hp -= amount;
+		if(amount-def<=0)
+		{
+			this.hp-=0.5f;
+		}
+		else
+		this.hp -= (amount-def);
 		if(hp<=0) 
 		{
 			if(!isRevive())
 			{
 				revive();
 			}
-		//	else {die();
-		//	Player.modifyCash(300);}
+			else {die();
+			Player.modifyCash(this.giveGold);}
 		}
 	}
 	
@@ -67,7 +73,7 @@ public class SekiroDieTwice extends Monster{
 	@Override
 	protected void reduceHiddenHealth(int amount)
 	{
-		this.hiddenhealth -= amount;
+		this.hiddenhealth -= (amount-def);
 		if(hiddenhealth<=0)
 		{
 			if(!isRevive())

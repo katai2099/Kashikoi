@@ -108,6 +108,7 @@ public class UI {
 				b.draw(bt.getTexture(), bt.getX(), bt.getY(), bt.getWidth(), bt.getHeight());	
 				font.draw(b,"SELL: "+String.valueOf(player.tmpSelectedTower.getRefund()) +" G",1346,290);
 				font.draw(b, "EXP: "+String.valueOf(player.tmpSelectedTower.getExp()),1345,245);
+				font.draw(b, "EXP: "+String.valueOf(player.tmpSelectedTower.getX()) +" "+ String.valueOf(player.tmpSelectedTower.getY()),1345,500);
 			}
 		}
 	}

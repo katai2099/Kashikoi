@@ -22,6 +22,7 @@ public class Squirrel extends Monster{
 		this.atk = 5;
 		this.hp = 10;
 		this.speed = 10;
+		this.def = 2;
 		this.hiddenhealth = 10;
 		this.currentTile=startile;
 		this.map = map;
@@ -36,14 +37,19 @@ public class Squirrel extends Monster{
 	}
 
 	
-	public void damage(int amount)
+	public void damage(float amount)
 	{
-		this.hp -= amount;
-	/*	if(hp<=0) 
+		if(amount-def<=0)
+		{
+			this.hp-=0.5f;
+		}
+		else 
+		this.hp -= (amount-this.def);
+		if(hp<=0) 
 		{
 			die();
-			Player.modifyCash(10);
-		} */
+			Player.modifyCash(this.giveGold);
+		} 
 	}
 	
 

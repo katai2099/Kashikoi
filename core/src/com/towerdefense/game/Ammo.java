@@ -14,11 +14,11 @@ public class Ammo {
 	int height;
 	Monster target;
 	boolean alive;
-	int damage;
+	float damage;
 	float speed;
 	float dt;
 	BaseTower tower;
-	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,int damage,int speed)
+	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,float damage2,int speed)
 	{
 		this.texture = texture;
 		this.x = x;
@@ -26,7 +26,7 @@ public class Ammo {
 		this.width = width;
 		this.height=height;
 		this.target = target;
-		this.damage = damage;
+		this.damage = damage2;
 		this.xVelocity=0f;
 		this.xVelocity=0f;
 		//calculateDirection() ;
@@ -35,7 +35,7 @@ public class Ammo {
 		dt = Gdx.graphics.getDeltaTime();
 	}
 	
-	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,int damage,int speed,BaseTower tower)
+	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,float damage2,int speed,BaseTower tower)
 	{
 		this.texture = texture;
 		this.x = x;
@@ -43,7 +43,7 @@ public class Ammo {
 		this.width = width;
 		this.height=height;
 		this.target = target;
-		this.damage = damage;
+		this.damage = damage2;
 		this.xVelocity=0f;
 		this.xVelocity=0f;
 		//calculateDirection() ;
@@ -123,7 +123,7 @@ public class Ammo {
 		dt = Gdx.graphics.getDeltaTime()*60;
 		if(dt>1.5f) dt = 1;
 		//if(target.alive) {
-		if(alive) {
+		if(alive && target!=null) {
 			calculateDirection();
 		x += xVelocity*speed*dt;
 		y += yVelocity*speed*dt;

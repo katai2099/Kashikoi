@@ -2,6 +2,7 @@ package com.towerdefense.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -32,15 +33,17 @@ public class Onion extends Monster{
 	 	populateCheckpointList();
 	}
 	
+	
+	
 	@Override
-	public void damage(int amount)
+	public void damage(float amount)
 	{
 		this.hp --;
-	/*	if(hp<=0) 
+		if(hp<=0) 
 		{
 			die();
-			Player.modifyCash(5);
-		} */
+			Player.modifyCash(this.giveGold);
+		} 
 	}
 	
 	@Override

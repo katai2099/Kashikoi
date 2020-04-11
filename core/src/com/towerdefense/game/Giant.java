@@ -17,9 +17,10 @@ public class Giant extends Monster{
 		this.giveExp = 5;
 		this.giveGold = 5;
 		this.atk = 20;
-		this.hp = 30;
+		this.def = 5;
+		this.hp = 20;
 		this.hiddenhealth = 30;
-		this.speed = 10;
+		this.speed = 8;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];
@@ -33,14 +34,18 @@ public class Giant extends Monster{
 	}
 
 	
-	public void damage(int amount)
+	public void damage(float amount)
 	{
-		this.hp -= amount;
-	/*	if(hp<=0) 
+		if(amount-def<=0)
+		{
+			this.hp-=0.5f;
+		}else 
+		this.hp -= (amount-this.def);
+		if(hp<=0) 
 		{
 			die();
-			Player.modifyCash(10);
-		} */
+			Player.modifyCash(this.giveGold);
+		} 
 	}
 	
 	public void die()

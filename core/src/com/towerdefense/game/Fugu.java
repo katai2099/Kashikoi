@@ -18,8 +18,9 @@ public class Fugu extends Monster{
 		this.giveExp = 8; 
 		this.giveGold = 10;
 		this.atk = 10;
-		this.hp = 30;
-		this.hiddenhealth = 30;
+		this.hp = 20;
+		this.hiddenhealth = 20;
+		this.def=0;
 		this.speed = 10;
 		this.currentTile=startile;
 		this.map = map;
@@ -35,15 +36,30 @@ public class Fugu extends Monster{
 
 
 
-	public void damage(int amount)
+	public void damage(float amount)
 	{
-		this.hp -= amount;
-		this.def += 5;
-	/*	if(hp<=0) 
+		if(def<12) {
+			if(amount-def<=0)
+			{
+				this.hp-=0.5f;
+			}
+			else
+		this.hp -= (amount-def);
+		this.def += 3;}
+		else
+		{
+			if(amount-def<amount)
+			{
+				this.hp-=0.5f;
+			}
+			else	
+			this.hp -= (amount-def);
+		}
+		if(hp<=0) 
 		{
 			die();
-			Player.modifyCash(10);
-		} */
+			Player.modifyCash(this.giveGold);
+		} 
 	}
 	
 

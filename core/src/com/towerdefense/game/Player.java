@@ -30,7 +30,7 @@ public class Player {
 		this.map = map;
 		this.leftMousePressed = false;
 		towers = new ArrayList<BaseTower>();
-		cash = 100;
+		cash = 1000;
 		this.holdingTower = false;
 		this.waveManager = waveManager;
 		this.TowerSelected = false;
@@ -157,7 +157,7 @@ public class Player {
 		else if(t instanceof IceTower) 
 			towers.add(new IceTower1(new Texture("iceTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		else if(t instanceof PoisonTower)
-			towers.add(new IceTower1(new Texture("poisonTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			towers.add(new PoisonTower1(new Texture("poisonTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		t = null;
 	}
 	
@@ -178,7 +178,7 @@ public class Player {
 		else if(t instanceof IceTower) 
 			towers.add(new IceTower2(new Texture("iceTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		else if(t instanceof PoisonTower)
-			towers.add(new IceTower2(new Texture("poisonTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			towers.add(new PoisonTower2(new Texture("poisonTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		t = null;
 	} 
 	

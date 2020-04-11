@@ -20,7 +20,7 @@ public class BaseTower extends Sprite{
 	protected int level; 
 	protected int cost; 
 	protected int range; 
-	protected int damage;
+	protected float damage;
 	protected int refund;
 	protected float attackSpeed;
 	protected ArrayList<Ammo> ammos;
@@ -171,7 +171,7 @@ public class BaseTower extends Sprite{
 		float closestDistance = 10000;
 		for(Monster m:monsters)
 		{
-			if (isInRange(m)&&findDistance(m) < closestDistance && m.getHiddenHealth()>0)// m.isAlive())
+			if (isInRange(m)&&findDistance(m) < closestDistance && m.isAlive())//&& m.getHiddenHealth()>0)// m.isAlive())
 			{
 				closestDistance = findDistance(m);
 				closest = m;
@@ -185,9 +185,9 @@ public class BaseTower extends Sprite{
 	
 	public boolean isInRange(Monster m)
 	{
-		float xDistance = Math.abs(m.getX()-this.x);
-		float yDistance = Math.abs(m.getY()-this.y);
-		if(xDistance < range && yDistance < range)
+		float xDistance = Math.abs((m.getX()+32)-(this.x+32));
+		float yDistance = Math.abs((m.getY()+32)-(this.y+32));
+		if(xDistance <= range && yDistance <= range)
 			return true;
 		return false;
 	}
@@ -214,16 +214,17 @@ public class BaseTower extends Sprite{
 		{
 			target = aimTarget();
 		}
-		if(target == null || target.isAlive() == false)
+		if(target == null || target.isAlive() == false || !isInRange(target))
 		{
 			lockOn = false; 
 		}
-		if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100)
+		if(target!=null) {
+		if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive())
 		{
 			this.exp += target.giveExp;
 			if(exp>100) exp = 100;
 			shootOnce = false;
-		}	
+		}	}
 		
 		dt = Gdx.graphics.getDeltaTime();
 		if(dt>1.5f) dt = 1 ;
@@ -245,7 +246,8 @@ public class BaseTower extends Sprite{
 	{	
 		timeSinceShoot = 0;
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5));
-		target.reduceHiddenHealth(damage);
+		
+	//	target.reduceHiddenHealth(damage);
 	}
 
 	

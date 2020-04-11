@@ -30,18 +30,18 @@ public class PoisonTower extends BaseTower{
 		{	
 			timeSinceShoot = 0;
 			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
-			target.reduceHiddenHealth(damage);
+		//	target.reduceHiddenHealth(damage);
 		}
 
 
 		public void damageMonster(Monster monster)
 		{
 			monster.damage(this.damage);
-			if(monster.getHp()<=0) 
+		/*	if(monster.getHp()<=0) 
 			{
 				monster.die();
 				Player.modifyCash(monster.giveGold);
-			}
+			}*/
 		}
 		
 

@@ -15,14 +15,14 @@ public class FireTower2 extends FireTower{
 		this.x = tile.getX();
 		this.y = tile.getY();
 		this.cannon = new Texture("fireProjectile.png");
-		this.damage = 10;
+		this.damage = 7;
 		this.tile = tile;
 		this.exp = 0;
 		ammos = new ArrayList<Ammo>();
 		this.timeSinceShoot=0;
-		this.attackSpeed = 2f;
+		this.attackSpeed = 3f;
 		this.lockOn = false;
-		this.range = 1000;
+		this.range = 256+1;
 		this.refund = 50;
 		dt = Gdx.graphics.getDeltaTime();
 		targets = new ArrayList<Monster>();
@@ -40,16 +40,21 @@ public class FireTower2 extends FireTower{
 			tmp.add(monsters.get(i));
 		}
 		
+		if(targets.size()>0) {
 		for(int i=0;i<targets.size();i++)
 		{
+			if(targets.size()!=0 && tmp.size()!=0) {
 			for(int j=0;j<tmp.size();j++)
 			{
-				if(targets.get(i).idNumber == tmp.get(j).idNumber)
+				if(targets.get(i).idNumber == tmp.get(j).idNumber )
 				{
+					System.out.println("in this loop");
 					//System.out.println("i have remove " +tmp.get(j).idNumber);
 					tmp.remove(j);
 				}
 			}
+			}
+		}
 		}
 		for(int i=0;i<tmp.size();i++)
 		{
@@ -95,12 +100,26 @@ public class FireTower2 extends FireTower{
 		if(monsters.size()!=0)
 		{
 			
-		if(targets.size()<3)
+		if(targets.size()<3) {
+			
+			for(int i=0;i<targets.size();i++)
+			{
+				
+				if(targets.get(i)!=null) {
+				if( !isInRange(targets.get(i)) )
+					{
+					System.out.println("i remove targets id: "+targets.get(i).idNumber);
+					targets.remove(i);
+					}
+				}
+				else targets.remove(i);
+			} 
 		targets.add(aimTarget());
+		}
 			
 		for(int i=0;i<targets.size();i++)
 		{
-			if(targets.get(i) == null || targets.get(i).isAlive() == false )
+			if(targets.get(i) == null || targets.get(i).isAlive() == false || !isInRange(targets.get(i)) )
 			{
 				targets.remove(i);
 			}
@@ -117,6 +136,7 @@ public class FireTower2 extends FireTower{
 		timeSinceShoot += dt;
 		if(timeSinceShoot>attackSpeed)
 		{	
+			//targets.add(aimTarget());
 		System.out.println(targets.size());
 		/*
 		for(int i=0;i<targets.size();i++)
@@ -144,7 +164,7 @@ public class FireTower2 extends FireTower{
 			if(targets.get(i)!=null)
 			{ 
 			ammos.add(new Ammo(cannon,targets.get(i),x,y,40,40,damage,5,this));
-			targets.get(i).reduceHiddenHealth(damage);
+		//	targets.get(i).reduceHiddenHealth(damage);
 			}
 		} 
 		
@@ -152,13 +172,15 @@ public class FireTower2 extends FireTower{
 	
 	public void damageMonster(Monster monster)
 	{
-		monster.damage(this.damage);
+		if(!(monster instanceof Onion))
 		monster.burn();
+		monster.damage(this.damage);
+		/*
 		if(monster.getHp()<=0) 
 		{
 			monster.die();
 			Player.modifyCash(monster.giveGold);
-		}
+		} */
 	}
 	
 }

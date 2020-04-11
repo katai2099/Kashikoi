@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class IceTower extends BaseTower{
 
-		boolean froze;
 
 		IceTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> copyOnWriteArrayList) {
 			super(texture, tile, width, height, copyOnWriteArrayList);
@@ -20,11 +19,10 @@ public class IceTower extends BaseTower{
 			this.timeSinceShoot=0;
 			this.attackSpeed = 3;
 			this.lockOn = false;
-			this.range = 600;
+			this.range = 256+1;
 			dt = Gdx.graphics.getDeltaTime();
 			this.cost = 50;
 			this.refund = 25;
-			froze = false; 
 		}
 		
 		public void update()
@@ -35,15 +33,18 @@ public class IceTower extends BaseTower{
 			{
 				target = aimTarget();
 			}
-			if(target == null || target.isAlive() == false)
+			if(target == null || target.isAlive() == false || !isInRange(target))
 			{
-				lockOn = false; 
+				lockOn = false; 	
+				
 			}
-			if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100)
+			if(target!=null) {
+			if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive())
 			{
 				this.exp += target.giveExp;
 				if(exp>100) exp = 100;
 				shootOnce = false;
+			}
 			}
 			
 			dt = Gdx.graphics.getDeltaTime();
@@ -51,11 +52,9 @@ public class IceTower extends BaseTower{
 			timeSinceShoot += dt;
 			if(timeSinceShoot>attackSpeed)
 			{
-				if(target!=null)
-				{
+				
 				shoot();
 				shootOnce = true ;
-				}
 			}
 			}
 			for(int i=0;i<ammos.size();i++)
@@ -68,24 +67,26 @@ public class IceTower extends BaseTower{
 		public void shoot()
 		{	
 			timeSinceShoot = 0;
+			if(target!=null) {
 			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
-			target.reduceHiddenHealth(damage);
+		//	target.reduceHiddenHealth(damage);
+			}
 		}
 
 
 		public void damageMonster(Monster monster)
 		{
+			if(!(monster instanceof Onion)) {
+			if(!monster.slow)
+			monster.tmpSlow();}
 			monster.damage(this.damage);
-		/*	if(!froze)
-			monster.speed -= 2;
-			froze = true ;*/
-			monster.freeze();
-			if(monster.getHp()<=0) 
+			//monster.freeze();
+		/*	if(monster.getHp()<=0) 
 			{
 				monster.die();
 				froze = false;
 				Player.modifyCash(monster.giveGold);
-			}
+			} */
 		}
 		
 	

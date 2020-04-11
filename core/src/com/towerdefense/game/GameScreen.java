@@ -12,12 +12,19 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class GameScreen extends ScreenAdapter{
 	
-	TextButton k;
 	FileHandle handle;
 	private SpriteBatch batch;
 	Texture texture;
@@ -31,6 +38,10 @@ public class GameScreen extends ScreenAdapter{
 	Monster [] monsterwave ;
 	BaseTower tower;
 	Player player;
+	float nextMap;
+	ButtonStyle b ;
+	Button b12;
+	Stage winner;
 	
 	public GameScreen() throws FileNotFoundException, IOException {
 		
@@ -43,9 +54,32 @@ public class GameScreen extends ScreenAdapter{
 		monsterwave[2] = new Squirrel(map.getTile(3,0),map,64,64);
 		monsterwave[3] = new Onion(map.getTile(3, 0),map,64,64); 
 		//wavemanager = new WaveManager(monsterwave[4],4,5,3);	checking single enemy
-		wavemanager= new WaveManager(monsterwave,3,6,5); //time , perWave , wavenum
+		wavemanager= new WaveManager(monsterwave,3,6,1); //time , perWave , wavenum
 		player = new Player(map,wavemanager);
+		nextMap = 0;
 		setupUI();
+		b = new ButtonStyle();
+		b.up = new TextureRegionDrawable(new TextureRegion(new Texture("logo.png")));
+		b12 = new Button(b);
+		b12.setPosition(0, 0);
+		winner = new Stage();
+		winner.addListener(
+				(Event e) ->
+				{
+					if(!(e instanceof InputEvent) ||
+						!((InputEvent)e).getType().equals(Type.touchDown))
+						return false;
+					
+					try {
+						towerDefense.setActiveScreen(new level1());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					return false;
+				}
+					);
+		winner.addActor(b12);
 	}
 	void setupUI() {
 		towerui = new UI(player);
@@ -66,19 +100,6 @@ public class GameScreen extends ScreenAdapter{
 		boolean tmp = Gdx.input.isButtonJustPressed(0);
 		//System.out.println(tmp);
 		if(tmp) {
-			/*
-		if(towerui.isButtonClicked("fireTower"))
-		{
-			player.pickTower(new BaseTower(new Texture("fire tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,10,wavemanager.getCurrentWave().getMonsters()));
-		}
-		if(towerui.isButtonClicked("iceTower"))
-		{
-			player.pickTower(new BaseTower(new Texture("ice tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,10,wavemanager.getCurrentWave().getMonsters()));
-		}
-		if(towerui.isButtonClicked("poisonTower"))
-		{
-			player.pickTower(new BaseTower(new Texture("poison tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,10,wavemanager.getCurrentWave().getMonsters()));
-		}*/
 			if(towerui.isButtonClicked("fireTower"))
 			{
 				player.pickTower(new FireTower(new Texture("fire tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,wavemanager.getCurrentWave().getMonsters()));
@@ -133,15 +154,36 @@ public class GameScreen extends ScreenAdapter{
 		if(Player.win)
 		{
 			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2,texture.getWidth()/2,texture.getHeight()/2);
-			
+			nextMap += Gdx.graphics.getDeltaTime();
 		}
+		
+		/*
+		if(nextMap > 5) {
+		
+				try {
+					towerDefense.setActiveScreen(new level1());
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+		}*/
 		batch.draw(texture = new Texture("bar-background.png"),0,0,1935,texture.getHeight()); 
 		batch.draw(texture = new Texture("bar.png"),-10,0,map.getCastle().getBarWidth(),texture.getHeight());
 		batch.end();
+	/*	if(Player.win)
+		{
+			winner.act(Gdx.graphics.getDeltaTime());
+			winner.draw();
+			Gdx.input.setInputProcessor(winner);
+		} */
 		
 	}
 
-
+	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
@@ -163,7 +205,9 @@ public class GameScreen extends ScreenAdapter{
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		batch.dispose();
+		//batch.dispose();
+		texture.dispose();
+		Bar.dispose();
 	}
 
 	@Override

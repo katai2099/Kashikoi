@@ -17,7 +17,7 @@ public class PoisonTower1 extends PoisonTower{
 		this.timeSinceShoot=0;
 		this.attackSpeed = 3;
 		this.lockOn = false;
-		this.range = 1000;
+		this.range = 500;
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
 	}
@@ -27,18 +27,20 @@ public class PoisonTower1 extends PoisonTower{
 	{	
 		timeSinceShoot = 0;
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
-		target.reduceHiddenHealth(damage);
+		//target.reduceHiddenHealth(damage);
 	}
 
 
 	public void damageMonster(Monster monster)
 	{
-		monster.hp -= damage;
-		if(monster.getHp()<=0) 
-		{
-			monster.die();
-			Player.modifyCash(monster.giveGold);
-		}
+		if(!(monster instanceof Onion)) {
+			if(!monster.piercethrough)
+			{
+				monster.reduceArmor(2);
+			}
+			}
+		monster.damage(this.damage);
+		
 	}
 	
 	
