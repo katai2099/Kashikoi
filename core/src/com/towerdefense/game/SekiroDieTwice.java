@@ -20,7 +20,7 @@ public class SekiroDieTwice extends Monster{
 		this.texture=new Texture("seki.png");
 		this.giveExp = 20;
 		this.giveGold = 100;
-		this.atk = 50;
+		this.atk = 100;
 		this.hp = 200;
 		this.hiddenhealth = 100;
 		this.def = 10;
@@ -40,12 +40,15 @@ public class SekiroDieTwice extends Monster{
 		
 	public void damage(float amount)
 	{
+		if(amount==0);
+		else {
 		if(amount-def<=0)
 		{
 			this.hp-=0.5f;
 		}
 		else
 		this.hp -= (amount-def);
+		}
 		if(hp<=0) 
 		{
 			if(!isRevive())
@@ -71,7 +74,7 @@ public class SekiroDieTwice extends Monster{
 	}
 	
 	@Override
-	protected void reduceHiddenHealth(int amount)
+	protected void reduceHiddenHealth(float amount)
 	{
 		this.hiddenhealth -= (amount-def);
 		if(hiddenhealth<=0)

@@ -14,12 +14,12 @@ public class Giant extends Monster{
 		Monster.id++;
 		this.idNumber = id;
 		this.texture= new Texture("Giant.png");
-		this.giveExp = 5;
+		this.giveExp = 10;
 		this.giveGold = 5;
 		this.atk = 20;
 		this.def = 5;
 		this.hp = 20;
-		this.hiddenhealth = 30;
+		this.hiddenhealth = 20;
 		this.speed = 8;
 		this.currentTile=startile;
 		this.map = map;
@@ -36,11 +36,14 @@ public class Giant extends Monster{
 	
 	public void damage(float amount)
 	{
+		if(amount==0);
+		else {
 		if(amount-def<=0)
 		{
 			this.hp-=0.5f;
 		}else 
 		this.hp -= (amount-this.def);
+		}
 		if(hp<=0) 
 		{
 			die();

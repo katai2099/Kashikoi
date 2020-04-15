@@ -25,18 +25,65 @@ public class FireTower1 extends FireTower{
 	
 	public void update()
 	{
-		super.update();
+		if(monsters.size()!=0)
+		{
+		if(!lockOn)
+		{
+			target = aimTarget();
+		}
+		if(first && target!=null)
+		{
+			shoot();
+			first = false;
+		}
+		if(target!=null) {
+			if(shootOnce==true && !target.enterCastle() && this.exp <100 && target.getHiddenHealth()<=0 && !earnExp)
+			{
+				this.exp += target.giveExp;
+				if(exp>100) exp = 100;
+				shootOnce = false;
+				earnExp = true;
+			}	}
+		if(target == null || target.isAlive() == false || !isInRange(target))
+		{
+			lockOn = false; 
+			shootOnce = false; 
+			earnExp = false; 
+		}
+		dt = Gdx.graphics.getDeltaTime();
+		if(dt>1.5f) dt = 1 ;
+		timeSinceShoot += dt;
+		if(timeSinceShoot>attackSpeed)
+		{
+			if(target!=null) {
+			shoot();
+			shootOnce = true ;}
+		}
+		}
+		for(int i=0;i<ammos.size();i++)
+		{
+			ammos.get(i).update();
+			if(ammos.get(i).alive==false) ammos.remove(i);
+		}
 	}
 	
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
-		if(target!=null) {
+		if(target!=null ) {
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
-	//	target.reduceHiddenHealth(damage);
+		reduceHiddenhealth(target);
 		}
 	}
-
+	
+	
+	public void reduceHiddenhealth(Monster monster)
+	{
+		if(monster instanceof Onion) ((Onion) monster).reduceHiddenHealth();
+		else
+		monster.hiddenhealth -= this.damage;
+	}
+	
 
 	public void damageMonster(Monster monster)
 	{

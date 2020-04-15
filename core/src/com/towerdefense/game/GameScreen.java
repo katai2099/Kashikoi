@@ -38,11 +38,19 @@ public class GameScreen extends ScreenAdapter{
 	Monster [] monsterwave ;
 	BaseTower tower;
 	Player player;
-	float nextMap;
-	ButtonStyle b ;
-	Button b12;
+	ButtonStyle nextMapstyle ;
+	Button resume;
+	ButtonStyle resumestyle;
+	Button exit; 
+	ButtonStyle exitstyle;
+	Button exitWin;
+	ButtonStyle exitWinstyle;
+	Button nextMap;
+	ButtonStyle losestyle;
+	Button forlose;
 	Stage winner;
-	
+	Stage pauseMenu;
+	Stage Lost;
 	public GameScreen() throws FileNotFoundException, IOException {
 		
 		this.batch = towerDefense.batch;
@@ -54,16 +62,33 @@ public class GameScreen extends ScreenAdapter{
 		monsterwave[2] = new Squirrel(map.getTile(3,0),map,64,64);
 		monsterwave[3] = new Onion(map.getTile(3, 0),map,64,64); 
 		//wavemanager = new WaveManager(monsterwave[4],4,5,3);	checking single enemy
-		wavemanager= new WaveManager(monsterwave,3,6,1); //time , perWave , wavenum
+		wavemanager= new WaveManager(monsterwave,3,6,15); //time , perWave , wavenum
 		player = new Player(map,wavemanager);
-		nextMap = 0;
 		setupUI();
-		b = new ButtonStyle();
-		b.up = new TextureRegionDrawable(new TextureRegion(new Texture("logo.png")));
-		b12 = new Button(b);
-		b12.setPosition(0, 0);
+		nextMapstyle = new ButtonStyle();
+		nextMapstyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("NEXTLEVEL.png")));
+		resumestyle = new ButtonStyle();
+		resumestyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("Resume.png")));
+		exitstyle= new ButtonStyle();
+		exitstyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("EXITpause.png")));
+		exitWinstyle = new ButtonStyle();
+		exitWinstyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("EXITpause.png")));
+		losestyle = new ButtonStyle();
+		losestyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("EXITpause.png")));
+		forlose = new Button(losestyle);
+		forlose.setPosition(1460/2-400,1080/2-200);
+		exitWin = new Button(exitWinstyle);
+		exitWin.setPosition(1460/2-400,1080/2-200);
+		exit = new Button(exitstyle);
+		exit.setPosition(1460/2-400,1080/2-200);
+		resume = new Button(resumestyle);
+		resume.setPosition(1460/2-400, 700-200);
+		nextMap = new Button(nextMapstyle);
+		nextMap.setPosition(1460/2-400, 700-200);
 		winner = new Stage();
-		winner.addListener(
+		pauseMenu = new Stage();
+		Lost = new Stage();
+		nextMap.addListener(
 				(Event e) ->
 				{
 					if(!(e instanceof InputEvent) ||
@@ -79,7 +104,72 @@ public class GameScreen extends ScreenAdapter{
 					return false;
 				}
 					);
-		winner.addActor(b12);
+		resume.addListener(
+				(Event e) ->
+				{
+					if(!(e instanceof InputEvent) ||
+						!((InputEvent)e).getType().equals(Type.touchDown))
+						return false;
+					{
+					pause = !pause;
+					Gdx.input.setInputProcessor(null);
+					}
+					return false;
+				}
+					);
+		exit.addListener(
+				(Event e) ->
+				{
+					if(!(e instanceof InputEvent) ||
+						!((InputEvent)e).getType().equals(Type.touchDown))
+						return false;
+					
+					{
+					towerDefense.setActiveScreen(new MenuScreen());
+					pauseMenu.dispose();
+					winner.dispose();
+					}
+					return false;
+				}
+					);
+		
+		exitWin.addListener(
+				(Event e) ->
+				{
+					if(!(e instanceof InputEvent) ||
+						!((InputEvent)e).getType().equals(Type.touchDown))
+						return false;
+					
+					{
+					towerDefense.setActiveScreen(new MenuScreen());
+					pauseMenu.dispose();
+					winner.dispose();
+					}
+					return false;
+				}
+					);
+		
+		forlose.addListener(
+				(Event e) ->
+				{
+					if(!(e instanceof InputEvent) ||
+						!((InputEvent)e).getType().equals(Type.touchDown))
+						return false;
+					
+					{
+					towerDefense.setActiveScreen(new MenuScreen());
+					pauseMenu.dispose();
+					winner.dispose();
+					Lost.dispose();
+					}
+					return false;
+				}
+					);
+		Lost.addActor(forlose);
+		winner.addActor(nextMap);
+		winner.addActor(exitWin);
+		pauseMenu.addActor(exit);
+		pauseMenu.addActor(resume);
 	}
 	void setupUI() {
 		towerui = new UI(player);
@@ -94,9 +184,11 @@ public class GameScreen extends ScreenAdapter{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		if(!pause) {
 		if(!Player.end) {
 		player.update();
-		if(Gdx.input.isKeyPressed(Keys.SPACE)) pause = ! pause;
+		System.out.println(LevelSelection.selection);
+		
 		boolean tmp = Gdx.input.isButtonJustPressed(0);
 		//System.out.println(tmp);
 		if(tmp) {
@@ -122,22 +214,32 @@ public class GameScreen extends ScreenAdapter{
 			player.sell();
 		}
 		
-		if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.tmpSelectedTower.exp==100)
+		if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.tmpSelectedTower.exp==100 && player.chkLevel(player.tmpSelectedTower))
 		{ 
 			player.upgrade1();
 		}
-		
-		if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && player.tmpSelectedTower.exp==100)
+		else if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		{
+			player.upgrade1();
+			player.cashUpgrade();
+		}
+		if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && player.tmpSelectedTower.exp==100 && player.chkLevel(player.tmpSelectedTower))
 		{
 			player.upgrade2();
 		} 
+		else if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		{
+			player.upgrade2();
+			player.cashUpgrade();
+		}
+		
 		if(!towerui.isTowerClicked() && !towerui.isButtonClicked("levelup1"))
 		{
 			player.tmpSelectedTower = null;
 			player.TowerSelected = false;
 		}
 		}
-		
+		}
 		}
 	//	System.out.println(Gdx.graphics.getDeltaTime()*10);
 		Gdx.gl.glClearColor(162/255f,206/255f ,220/255f , 1);
@@ -154,33 +256,51 @@ public class GameScreen extends ScreenAdapter{
 		if(Player.win)
 		{
 			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2,texture.getWidth()/2,texture.getHeight()/2);
-			nextMap += Gdx.graphics.getDeltaTime();
 		}
-		
-		/*
-		if(nextMap > 5) {
-		
-				try {
-					towerDefense.setActiveScreen(new level1());
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		
-		}*/
+
 		batch.draw(texture = new Texture("bar-background.png"),0,0,1935,texture.getHeight()); 
 		batch.draw(texture = new Texture("bar.png"),-10,0,map.getCastle().getBarWidth(),texture.getHeight());
 		batch.end();
-	/*	if(Player.win)
+		if(pause)
+		{
+			pauseMenu.act(Gdx.graphics.getDeltaTime());
+			pauseMenu.draw();
+			Gdx.input.setInputProcessor(pauseMenu);
+		}
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
+		{
+			pause = !pause;
+			Gdx.input.setInputProcessor(null);
+		}
+		
+		if(Player.win && LevelSelection.selection)
+		{
+			Lost.act(Gdx.graphics.getDeltaTime());
+			Lost.draw();
+			Gdx.input.setInputProcessor(Lost);
+		}
+		else if(Player.lose && LevelSelection.selection)
+		{
+			Lost.act(Gdx.graphics.getDeltaTime());
+			Lost.draw();
+			Gdx.input.setInputProcessor(Lost);
+		}
+		else {
+		
+		if(Player.win)
 		{
 			winner.act(Gdx.graphics.getDeltaTime());
 			winner.draw();
 			Gdx.input.setInputProcessor(winner);
-		} */
+		} 
+		if(Player.lose)
+		{
+			Lost.act(Gdx.graphics.getDeltaTime());
+			Lost.draw();
+			Gdx.input.setInputProcessor(Lost);
+		}
 		
+		}
 	}
 
 	

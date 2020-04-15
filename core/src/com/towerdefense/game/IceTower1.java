@@ -27,7 +27,7 @@ public class IceTower1 extends IceTower {
 	{	
 		timeSinceShoot = 0;
 		if(target!=null) {
-		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 		//target.reduceHiddenHealth(damage);
 		}
 	}
@@ -35,13 +35,14 @@ public class IceTower1 extends IceTower {
 
 	public void damageMonster(Monster monster)
 	{
+		monster.damage(this.damage);
 		if(!(monster instanceof Onion)) {
 		if(!monster.permanentSlow && monster.getSpeed()!=0)
 		{
 			monster.slow();
 		}
 		}
-		monster.damage(this.damage);
+		//monster.damage(this.damage);
 		//monster.hp -= damage;
 		/*if(monster.getHp()<=0) 
 		{

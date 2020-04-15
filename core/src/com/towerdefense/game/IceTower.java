@@ -12,9 +12,9 @@ public class IceTower extends BaseTower{
 		IceTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> copyOnWriteArrayList) {
 			super(texture, tile, width, height, copyOnWriteArrayList);
 			this.cannon = new Texture("iceProjectile.png");
-			this.damage = 10;
+			this.damage = 50;
 			this.tile = tile;
-			this.exp = 95;
+			this.exp = 50;
 			ammos = new ArrayList<Ammo>();
 			this.timeSinceShoot=0;
 			this.attackSpeed = 3;
@@ -33,13 +33,18 @@ public class IceTower extends BaseTower{
 			{
 				target = aimTarget();
 			}
+			if(first && target!=null)
+			{
+				shoot();
+				first = false;
+			}
 			if(target == null || target.isAlive() == false || !isInRange(target))
 			{
 				lockOn = false; 	
 				
 			}
 			if(target!=null) {
-			if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive())
+			if(shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive())
 			{
 				this.exp += target.giveExp;
 				if(exp>100) exp = 100;
@@ -68,7 +73,7 @@ public class IceTower extends BaseTower{
 		{	
 			timeSinceShoot = 0;
 			if(target!=null) {
-			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
+			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 		//	target.reduceHiddenHealth(damage);
 			}
 		}
@@ -76,10 +81,11 @@ public class IceTower extends BaseTower{
 
 		public void damageMonster(Monster monster)
 		{
+			monster.damage(this.damage);
 			if(!(monster instanceof Onion)) {
 			if(!monster.slow)
 			monster.tmpSlow();}
-			monster.damage(this.damage);
+			//monster.damage(this.damage);
 			//monster.freeze();
 		/*	if(monster.getHp()<=0) 
 			{

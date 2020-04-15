@@ -101,6 +101,7 @@ public class UI {
 		}
 		coinFont.draw(b,String.valueOf(Player.cash)+" G",1344,200);
 		numWave.draw(b,"Wave no: "+String.valueOf(player.waveManager.waveNumber),1320,175);
+		numWave.draw(b,"Wave no: "+String.valueOf(player.waveManager.monstersPerWave),1320,145);
 		for(myButton bt:hiddenButtons)
 		{
 			if(player.TowerSelected)

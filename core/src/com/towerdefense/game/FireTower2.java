@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class FireTower2 extends FireTower{
 
 		ArrayList<Monster>targets;
-		
+		int cnt;
 	
 	FireTower2(Texture texture, Tile tile, int width, int height, ArrayList<Monster> monsters) {
 		super(texture, tile, width, height, monsters);
@@ -22,11 +22,11 @@ public class FireTower2 extends FireTower{
 		this.timeSinceShoot=0;
 		this.attackSpeed = 3f;
 		this.lockOn = false;
-		this.range = 256+1;
+		this.range = 1000;
 		this.refund = 50;
 		dt = Gdx.graphics.getDeltaTime();
 		targets = new ArrayList<Monster>();
-		
+		cnt ++;
 	}
 	
 	@Override
@@ -115,8 +115,12 @@ public class FireTower2 extends FireTower{
 				else targets.remove(i);
 			} 
 		targets.add(aimTarget());
+		if(cnt<4) cnt++;
 		}
-			
+		if(first && cnt==4) {
+			shoot();
+			first = false;
+		}
 		for(int i=0;i<targets.size();i++)
 		{
 			if(targets.get(i) == null || targets.get(i).isAlive() == false || !isInRange(targets.get(i)) )
@@ -144,8 +148,9 @@ public class FireTower2 extends FireTower{
 			if(targets!=null)
 			System.out.println("This is targets id: " +targets.get(i).idNumber);
 		} */
+		if(!allnull())
 			shoot();
-			shootOnce = true ;
+		//	shootOnce = true ;
 		}
 		}
 		for(int i=0;i<ammos.size();i++)
@@ -170,11 +175,22 @@ public class FireTower2 extends FireTower{
 		
 	}
 	
+	public boolean allnull()
+	{
+		for(Monster m:targets)
+		{
+			if(m!=null)
+				return false;
+		}
+		return true;
+	}
+	
 	public void damageMonster(Monster monster)
 	{
+		monster.damage(this.damage);
 		if(!(monster instanceof Onion))
 		monster.burn();
-		monster.damage(this.damage);
+		//monster.damage(this.damage);
 		/*
 		if(monster.getHp()<=0) 
 		{

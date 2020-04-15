@@ -39,12 +39,14 @@ public class Squirrel extends Monster{
 	
 	public void damage(float amount)
 	{
+		if(amount==0);
+		else {
 		if(amount-def<=0)
 		{
 			this.hp-=0.5f;
 		}
 		else 
-		this.hp -= (amount-this.def);
+		this.hp -= (amount-this.def);}
 		if(hp<=0) 
 		{
 			die();
