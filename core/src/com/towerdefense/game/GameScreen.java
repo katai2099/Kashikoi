@@ -176,6 +176,7 @@ public class GameScreen extends ScreenAdapter{
 		towerui.addButton("fireTower", new Texture("fire tower.jpg"), 1344 , 896); 
 		towerui.addButton("iceTower",new Texture("ice tower.jpg"), 1344 , 768);
 		towerui.addButton("poisonTower",new Texture("poison tower.jpg"), 1344, 640);
+		towerui.addButton("pause",new Texture("pause.png"), 1400, 1000);
 		towerui.addHiddenButton("Sell", new Texture("canvas.png"), 1376-35, 264);
 		towerui.addHiddenButton("levelup1", new Texture("levelup1Edit.png"), 1280+20, 328);
 		towerui.addHiddenButton("levelup2", new Texture("levelup2Edit.png"), 1368+20, 328);
@@ -203,6 +204,11 @@ public class GameScreen extends ScreenAdapter{
 			if(towerui.isButtonClicked("poisonTower"))
 			{
 				player.pickTower(new PoisonTower(new Texture("poison tower.jpg"),map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)),64,64,wavemanager.getCurrentWave().getMonsters()));
+			}
+			if(towerui.isButtonClicked("pause"))
+			{
+				pause = !pause;
+				Gdx.input.setInputProcessor(null);
 			}
 		if(towerui.isTowerClicked())
 		{
