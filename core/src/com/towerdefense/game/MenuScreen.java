@@ -6,13 +6,16 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
@@ -20,12 +23,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 
 public class MenuScreen extends ScreenAdapter{
 
@@ -37,7 +44,8 @@ public class MenuScreen extends ScreenAdapter{
 	Button exit;
 	LabelStyle helpstyle;
 	Label help;
-	
+	ImageButton musicBtn;
+
 	Texture logoTexture;
 	SpriteBatch batch;
 	TextButton startGame;
@@ -142,6 +150,23 @@ public class MenuScreen extends ScreenAdapter{
 					return false;
 				}
 					);
+
+		musicBtn = new ImageButton(new SpriteDrawable((new Sprite(
+				new Texture("Music On.png")))));
+		musicBtn.setPosition( 44, 44, Align.bottomLeft);
+		musicBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (MusicManager.getInstance().isMusicon()) {
+					MusicManager.getInstance().setMusicon(false);
+					MusicManager.getInstance().stopMusic();
+				} else {
+					MusicManager.getInstance().setMusicon(true);
+					MusicManager.getInstance().playMusic();
+				}
+			}
+		});
+
 		helpstyle = new LabelStyle(font,Color.RED);
 		help = new Label("Note:Press ESC in game to pause",helpstyle);
 		help.setPosition(1100, 100 );
@@ -150,11 +175,11 @@ public class MenuScreen extends ScreenAdapter{
 		stage.addActor(levelselection);
 		stage.addActor(image);
 		stage.addActor(exit);
+		stage.addActor(musicBtn);
 		Gdx.input.setInputProcessor(stage);
 		
 	}
-	
-	
+
 	@Override
 	public void render(float delta)
 	{
