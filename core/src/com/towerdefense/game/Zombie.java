@@ -9,10 +9,11 @@ public class Zombie extends Monster{
 	Zombie(Texture texture, Tile startile, int height, int width, int atk, int speed) {
 		super(texture, startile, height, width, atk, speed);
 		isRevive = false; 
-		originalHp = this.hp;
+		originalHp = (int) this.hp;
 		this.hp = 10;
 	}
 
+	/*
 	public void revive()
 	{
 		if(isDead()&&!(isRevive))
@@ -21,5 +22,7 @@ public class Zombie extends Monster{
 			isRevive = true;
 		}
 	}
-	
+	 */
+
+
 }

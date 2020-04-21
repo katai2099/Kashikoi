@@ -8,8 +8,10 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,7 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 
 public class LevelSelection extends ScreenAdapter{
 	
@@ -34,6 +40,7 @@ public class LevelSelection extends ScreenAdapter{
 	Button level04;
 	ButtonStyle levelDevstyle;
 	Button levelDev;
+	ImageButton backBtn;
 	public static boolean selection;
 	
 	public LevelSelection() throws FileNotFoundException, IOException {
@@ -69,8 +76,10 @@ public class LevelSelection extends ScreenAdapter{
 		levelDevstyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("leveldevedit.png")));
 		levelDev = new Button(levelDevstyle);
 		levelDev.setPosition(1472/2+300, 231);
-		
-		
+
+		backBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Back.png"))));
+		backBtn.setPosition(50, 50, Align.bottomLeft);
+
 		level01.addListener(
 				(Event e) ->
 				{
@@ -163,15 +172,29 @@ public class LevelSelection extends ScreenAdapter{
 					return false;
 				}
 					);
-	
-		
-		
+
+		backBtn.addListener(
+				(Event e) ->
+				{
+					if(!(e instanceof InputEvent) ||
+							!((InputEvent)e).getType().equals(Type.touchDown))
+						return false;
+					{
+						selection = true;
+
+						towerDefense.setActiveScreen(new MenuScreen());
+					}
+					return false;
+				}
+		);
+
 		stage.addActor(levelselection);
 		stage.addActor(level01);
 		stage.addActor(level02);
 		stage.addActor(level03);
 		stage.addActor(level04);
 		stage.addActor(levelDev);
+		stage.addActor(backBtn);
 		Gdx.input.setInputProcessor(stage);
 	}
 

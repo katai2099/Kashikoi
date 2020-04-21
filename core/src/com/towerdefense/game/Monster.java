@@ -48,7 +48,10 @@ public class Monster extends Sprite{
 	
 	
 	boolean Twice ;
-	
+
+	public Monster(Texture texture, Tile startile, int height, int width, int atk, int speed) {
+	}
+
 	public Map getMap() {
 		return map;
 	}
