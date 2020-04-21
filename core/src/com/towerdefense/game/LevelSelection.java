@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -66,9 +67,15 @@ public class LevelSelection extends ScreenAdapter{
 		level3.up = new TextureRegionDrawable(new TextureRegion(new Texture("level3.png")));
 		level03 = new Button(level3);
 		level03.setPosition(1472/2-450,230);
-		
+
+		Pixmap pixLevel04 = new Pixmap(Gdx.files.internal("level04.png"));
+		Pixmap pixResizedLevel04 = new Pixmap(291, 201, pixLevel04.getFormat());
+		pixResizedLevel04.drawPixmap(pixLevel04,
+				0, 0, pixLevel04.getWidth(), pixLevel04.getHeight(),
+				0, 0, pixResizedLevel04.getWidth(), pixResizedLevel04.getHeight()
+		);
 		level4 = new ButtonStyle();
-		level4.up = new TextureRegionDrawable(new TextureRegion(new Texture("level4.png")));
+		level4.up = new TextureRegionDrawable(new TextureRegion(new Texture(pixResizedLevel04)));
 		level04 = new Button(level4);
 		level04.setPosition(1472/2-80,230);
 		

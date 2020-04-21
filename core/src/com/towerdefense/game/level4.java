@@ -15,7 +15,7 @@ public class level4 extends ScreenAdapter{
 	
 	public level4() throws FileNotFoundException, IOException {
 		this.batch = towerDefense.batch;
-		map = new Map("level01.txt");
+		map = new Map("level04.txt");
 	}
 	
 	@Override
