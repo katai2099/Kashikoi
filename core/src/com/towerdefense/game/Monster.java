@@ -231,17 +231,20 @@ public class Monster extends Sprite{
 			if(tmpTimeBurn>1 && !Twice)
 			{
 				hp-=1;
+				if(hp<=0) {die(); Player.modifyCash(this.giveGold);}
 				Twice = true; 
 				//burn = false;
 				//tmpTimeBurn=0;
 			}
-			if(tmpTimeBurn>2 && Twice)
+			if(tmpTimeBurn>2 && Twice && alive)
 			{
 				hp-=1;
-				if(hp<=0) die(); Player.modifyCash(this.giveGold);
+				if(hp<=0) {die(); Player.modifyCash(this.giveGold);}
 				burn = false;
 				Twice = false;
 				tmpTimeBurn = 0 ;
+				
+				hpNumber.setColor(Color.BLACK);
 			}
 		}
 		if(freeze)
@@ -260,6 +263,7 @@ public class Monster extends Sprite{
 				if(permanentSlow && slow) this.speed = 6;
 				freeze = false;
 				tmpTimeFreeze=0;
+				hpNumber.setColor(Color.BLACK);
 			}
 		}
 		if(slow)
@@ -274,6 +278,7 @@ public class Monster extends Sprite{
 				speed +=1;
 				slow = false;
 				tmpSlowTime=0;
+				hpNumber.setColor(Color.BLACK);
 			}
 		}
 	}
@@ -465,32 +470,32 @@ public class Monster extends Sprite{
 		return hiddenhealth;
 	}
 	
-	protected void reduceHiddenHealth(int amount)
-	{
-		this.hiddenhealth -= amount;
-	}
 	
 	protected void burn()
 	{
 		burn = true; 
+		hpNumber.setColor(Color.RED);
 	}
 	
 	protected void freeze()
 	{
 		this.speed=0;
 		freeze = true;
+		hpNumber.setColor(Color.BLUE);
 	}
 	
 	protected void slow()
 	{
 		this.speed -= 3;
 		permanentSlow = true; 
+		hpNumber.setColor(Color.BLUE);
 	}
 	
 	protected void tmpSlow()
 	{
 		this.speed -= 1;
 		slow = true ;
+		hpNumber.setColor(Color.BLUE);
 	}
 	
 	protected void pureDamage(float amount)
@@ -502,6 +507,11 @@ public class Monster extends Sprite{
 	{
 		this.def -= amount;
 		piercethrough = true;
+	}
+
+	protected void reduceHiddenHealth(float amount) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

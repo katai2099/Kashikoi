@@ -12,7 +12,7 @@ public class WaveManager extends Sprite {
 	Monster monster;
 	Monster monsters[];
 	Wave currentWave;
-	
+	boolean increase;
 	public WaveManager(Monster monster,float timeBetweenMonster,int monstersPerWave,int numberOfWave)
 	{
 		this.numberOfWave = numberOfWave;
@@ -35,6 +35,7 @@ public class WaveManager extends Sprite {
 		this.waveNumber = 0;
 		this.currentWave = null;
 		newWave();
+		increase = false;
 	}
 	
 	public void update()
@@ -44,6 +45,8 @@ public class WaveManager extends Sprite {
 			Player.win = true;
 			Player.end = true;
 		}else {
+			if(waveNumber % 3 == 0 && !increase) {monstersPerWave++; increase = true;} 
+			if(waveNumber % 3 != 0) increase = false;
 		if(!currentWave.isCompleted())
 		{
 			currentWave.Update();

@@ -26,20 +26,22 @@ public class PoisonTower1 extends PoisonTower{
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
-		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
+		if(target!=null)
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 		//target.reduceHiddenHealth(damage);
 	}
 
 
 	public void damageMonster(Monster monster)
 	{
+		monster.damage(this.damage);
 		if(!(monster instanceof Onion)) {
 			if(!monster.piercethrough)
 			{
-				monster.reduceArmor(2);
+				monster.reduceArmor(3);
 			}
 			}
-		monster.damage(this.damage);
+		//monster.damage(this.damage);
 		
 	}
 	

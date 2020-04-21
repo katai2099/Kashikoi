@@ -46,8 +46,7 @@ public class Onion extends Monster{
 		} 
 	}
 	
-	@Override
-	protected void reduceHiddenHealth(int amount)
+	protected void reduceHiddenHealth()
 	{
 		this.hiddenhealth --;
 	}

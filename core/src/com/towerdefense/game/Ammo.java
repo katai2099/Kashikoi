@@ -3,6 +3,7 @@ package com.towerdefense.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class Ammo {
 	
@@ -18,6 +19,7 @@ public class Ammo {
 	float speed;
 	float dt;
 	BaseTower tower;
+	boolean getExp;
 	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,float damage2,int speed)
 	{
 		this.texture = texture;
@@ -33,6 +35,7 @@ public class Ammo {
 		this.alive = true;
 		this.speed = speed;
 		dt = Gdx.graphics.getDeltaTime();
+		getExp = false;
 	}
 	
 	public Ammo(Texture texture,Monster target,float x,float y,int width,int height,float damage2,int speed,BaseTower tower)
@@ -135,7 +138,10 @@ public class Ammo {
 		{
 			if(target.alive)
 		//	target.damage(damage);
+			{
 			tower.damageMonster(target);
+			//tower.shootOnce = true;
+			}
 			this.alive = false;
 		}
 		}

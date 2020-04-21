@@ -23,7 +23,7 @@ public class towerDefense extends BaseGame {
 			e.printStackTrace();
 		}	*/
 	
-			try {
+		/*	try {
 				setActiveScreen(new GameScreen());
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -31,8 +31,8 @@ public class towerDefense extends BaseGame {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		
+			}*/
+			setActiveScreen(new MenuScreen());
 	/*	try {
 			setActiveScreen(new LevelSelection());
 		} catch (IOException e) {

@@ -35,6 +35,8 @@ public class BaseTower extends Sprite{
 	protected float dt;
 	protected boolean shootOnce;
 	protected BitmapFont attackValue;
+	protected boolean earnExp;
+	protected boolean first;
 	
 
 	
@@ -78,6 +80,8 @@ public class BaseTower extends Sprite{
 		this.shootOnce = false; 
 		attackValue = new BitmapFont();
 		attackValue.setColor(Color.RED);
+		earnExp = false;
+		first = true;
 		
 	}
 	
@@ -214,6 +218,11 @@ public class BaseTower extends Sprite{
 		{
 			target = aimTarget();
 		}
+		if(first && target!=null)
+		{
+			shoot();
+			first = false;
+		}
 		if(target == null || target.isAlive() == false || !isInRange(target))
 		{
 			lockOn = false; 
@@ -245,7 +254,8 @@ public class BaseTower extends Sprite{
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
-		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5));
+		if(target!=null)
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12));
 		
 	//	target.reduceHiddenHealth(damage);
 	}
@@ -254,7 +264,10 @@ public class BaseTower extends Sprite{
 	public void draw(Batch b)
 	{
 		b.draw(this.getTexture(),getX(),getY(),getWidth(),getHeight());
-		attackValue.draw(b, String.valueOf(this.damage),getX()+25,getY()+80);
+		attackValue.draw(b,"Dm: " +  String.valueOf(this.damage),getX()+25,getY()+80);
+		attackValue.draw(b, "Exp: " + String.valueOf(this.exp),getX()-30,getY()+40);
+		attackValue.draw(b,"L: " +  String.valueOf(this.lockOn),getX()-26,getY()+12);
+		attackValue.draw(b,"S:" + String.valueOf(this.shootOnce),getX()+80,getY()+12);
 		for(int i=0;i<ammos.size();i++)
 		{
 			ammos.get(i).draw(b);
@@ -270,6 +283,11 @@ public class BaseTower extends Sprite{
 	}
 	
 	public void damageMonster(Monster monster)
+	{
+		
+	}
+	
+	public void reduceHiddenhealth(Monster monster)
 	{
 		
 	}

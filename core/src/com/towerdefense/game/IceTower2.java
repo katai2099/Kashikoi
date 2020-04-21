@@ -22,7 +22,7 @@ public class IceTower2 extends IceTower{
 		this.range = 256+1;
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
-		cd = 0;
+		cd = 3;
 		frozen = false ;
 	}
 	
@@ -34,6 +34,11 @@ public class IceTower2 extends IceTower{
 		if(!lockOn)
 		{
 			target = aimTarget();
+		}
+		if(first && target!=null)
+		{
+			shoot();
+			first = false;
 		}
 		if(target == null || target.isAlive() == false || !isInRange(target))
 		{
@@ -67,7 +72,7 @@ public class IceTower2 extends IceTower{
 	{	
 		timeSinceShoot = 0;
 		if(target!=null) {
-		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,5,this));
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 	//	target.reduceHiddenHealth(damage);
 		}
 	}
@@ -75,14 +80,15 @@ public class IceTower2 extends IceTower{
 
 	public void damageMonster(Monster monster)
 	{
+		monster.damage(this.damage);
 		if(!(monster instanceof Onion)) {
-		if(cd>3.0f)
+		if(cd>=3.0f)
 		{
 		monster.freeze();
 		cd = 0 ;
 		}
 		}
-		monster.damage(this.damage);
+		//monster.damage(this.damage);
 		
 		
 	}

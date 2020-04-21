@@ -34,9 +34,11 @@ public class LevelSelection extends ScreenAdapter{
 	Button level04;
 	ButtonStyle levelDevstyle;
 	Button levelDev;
+	public static boolean selection;
 	
 	public LevelSelection() throws FileNotFoundException, IOException {
 		
+		selection = false; 
 		this.batch = towerDefense.batch;
 		this.stage = new Stage();
 		levelselection = new Image(new Texture("levelSelection.png"));
@@ -75,7 +77,8 @@ public class LevelSelection extends ScreenAdapter{
 					if(!(e instanceof InputEvent) ||
 						!((InputEvent)e).getType().equals(Type.touchDown))
 						return false;
-					
+					{
+					selection = true; 
 					try {
 						towerDefense.setActiveScreen(new level1());
 					} catch (IOException e1) {
@@ -84,6 +87,7 @@ public class LevelSelection extends ScreenAdapter{
 					}
 					return false;
 				}
+				}
 					);
 		level02.addListener(
 				(Event e) ->
@@ -91,12 +95,14 @@ public class LevelSelection extends ScreenAdapter{
 					if(!(e instanceof InputEvent) ||
 						!((InputEvent)e).getType().equals(Type.touchDown))
 						return false;
-					
+					{
+					selection = true;
 					try {
 						towerDefense.setActiveScreen(new level2());
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					}
 					}
 					return false;
 				}
@@ -107,12 +113,14 @@ public class LevelSelection extends ScreenAdapter{
 					if(!(e instanceof InputEvent) ||
 						!((InputEvent)e).getType().equals(Type.touchDown))
 						return false;
-					
+					{
+						selection = true;
 					try {
 						towerDefense.setActiveScreen(new level3());
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					}
 					}
 					return false;
 				}
@@ -123,12 +131,15 @@ public class LevelSelection extends ScreenAdapter{
 					if(!(e instanceof InputEvent) ||
 						!((InputEvent)e).getType().equals(Type.touchDown))
 						return false;
+					{
+						selection = true;
 					
 					try {
 						towerDefense.setActiveScreen(new level4());
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					}
 					}
 					return false;
 				}
@@ -139,12 +150,15 @@ public class LevelSelection extends ScreenAdapter{
 					if(!(e instanceof InputEvent) ||
 						!((InputEvent)e).getType().equals(Type.touchDown))
 						return false;
+					{	
+						selection = true;
 					
 					try {
 						towerDefense.setActiveScreen(new GameScreen());
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					}
 					}
 					return false;
 				}

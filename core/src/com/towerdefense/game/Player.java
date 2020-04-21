@@ -199,6 +199,11 @@ public class Player {
 	public ArrayList<BaseTower> getTowers() {
 		return towers;
 	}
+	
+	public void cashUpgrade()
+	{
+		this.cash -= 100 ;
+	}
 
 
 	public void draw(Batch b)
@@ -219,6 +224,13 @@ public class Player {
 
 	public Boolean isTowerSelected() {
 		return TowerSelected;
+	}
+	
+	public boolean chkLevel(BaseTower t)
+	{
+		if(t instanceof FireTower1 || t instanceof IceTower1 || t instanceof PoisonTower1 ||
+				t instanceof FireTower2 || t instanceof IceTower2 || t instanceof PoisonTower2 ) return false;
+		return true;
 	}
 
 	
