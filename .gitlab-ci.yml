@@ -1,34 +1,19 @@
-image: gradle:alpine
-
-variables:
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+image: gradle:jdk11
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-stages:
-  - build
-  - test
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
 
-build:
-   stage: build
-   script:
-      - gradle --build-cache assemble
-   allow_failure: false
-   cache:
-      key: "$CI_COMMIT_REF_NAME"
-      policy: push
-      paths:
-        - build
-        - .gradle
+package:
+  stage: build
+  script:
+    - ./gradlew assemble
 
 test:
-   stage: test
-   script:
-      - gradle check
-   cache:
-     key: "$CI_COMMIT_REF_NAME"
-     policy: pull
-     paths:
-        - build
-        - .gradle
+  stage: test
+  script:
+    - ./gradlew check
