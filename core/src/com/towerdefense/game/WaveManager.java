@@ -62,7 +62,10 @@ public class WaveManager extends Sprite {
 	{
 		if(waveNumber==numberOfWave-1)
 		{
+			if(monsters.length==5)
 			currentWave = new Wave(0,monsters[4],1);
+			else if(monsters.length==10)
+				currentWave = new Wave(0,monsters[4],monsters[9],2);
 		}
 		else
 		currentWave = new Wave(timeBetweenMonster,monsters,monstersPerWave);

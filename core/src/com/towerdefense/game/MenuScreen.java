@@ -165,7 +165,7 @@ public class MenuScreen extends ScreenAdapter{
 					MusicManager.getInstance().playMusic();
 				}
 			}
-		});
+		});  
 
 		helpstyle = new LabelStyle(font,Color.RED);
 		help = new Label("Note:Press ESC in game to pause",helpstyle);

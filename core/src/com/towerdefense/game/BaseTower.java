@@ -38,7 +38,10 @@ public class BaseTower extends Sprite{
 	protected boolean earnExp;
 	protected boolean first;
 	
-
+	BaseTower()
+	{
+		
+	}
 	
 	BaseTower(Texture texture,Tile tile,int width,int height,int damage,ArrayList<Monster>monsters)
 	{

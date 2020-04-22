@@ -29,6 +29,41 @@ public class PoisonTower2 extends PoisonTower {
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 	//	target.reduceHiddenHealth(damage);
 	}
+	
+	public void update()
+	{
+		if(monsters.size()!=0)
+		{
+		if(!lockOn)
+		{
+			target = aimTarget();
+		}
+		if(first && target!=null)
+		{
+			shoot();
+			first = false;
+		}
+		if(target == null || target.isAlive() == false || !isInRange(target))
+		{
+			lockOn = false; 
+		}
+		
+		
+		dt = Gdx.graphics.getDeltaTime();
+		if(dt>1.5f) dt = 1 ;
+		timeSinceShoot += dt;
+		if(timeSinceShoot>attackSpeed)
+		{
+			shoot();
+		
+		}
+		}
+		for(int i=0;i<ammos.size();i++)
+		{
+			ammos.get(i).update();
+			if(ammos.get(i).alive==false) ammos.remove(i);
+		}
+	}
 
 
 	public void damageMonster(Monster monster)

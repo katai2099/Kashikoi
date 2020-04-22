@@ -128,13 +128,7 @@ public class FireTower2 extends FireTower{
 				targets.remove(i);
 			}
 		}
-	/*	if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100)
-		{
-			this.exp += target.giveExp;
-			if(exp>100) exp = 100;
-			shootOnce = false;
-		}	*/
-		
+	
 		dt = Gdx.graphics.getDeltaTime();
 		if(dt>1.5f) dt = 1 ;
 		timeSinceShoot += dt;
@@ -150,7 +144,7 @@ public class FireTower2 extends FireTower{
 		} */
 		if(!allnull())
 			shoot();
-		//	shootOnce = true ;
+		
 		}
 		}
 		for(int i=0;i<ammos.size();i++)

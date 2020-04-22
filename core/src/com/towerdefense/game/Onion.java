@@ -32,7 +32,10 @@ public class Onion extends Monster{
 	 	this.alive = true;
 	 	populateCheckpointList();
 	}
-	
+	Onion()
+	{
+		this.hp = 3;
+	}
 	
 	
 	@Override

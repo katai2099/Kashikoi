@@ -36,18 +36,11 @@ public class FireTower1 extends FireTower{
 			shoot();
 			first = false;
 		}
-		if(target!=null) {
-			if(shootOnce==true && !target.enterCastle() && this.exp <100 && target.getHiddenHealth()<=0 && !earnExp)
-			{
-				this.exp += target.giveExp;
-				if(exp>100) exp = 100;
-				shootOnce = false;
-				earnExp = true;
-			}	}
+		
 		if(target == null || target.isAlive() == false || !isInRange(target))
 		{
 			lockOn = false; 
-			shootOnce = false; 
+		
 			earnExp = false; 
 		}
 		dt = Gdx.graphics.getDeltaTime();
@@ -57,7 +50,7 @@ public class FireTower1 extends FireTower{
 		{
 			if(target!=null) {
 			shoot();
-			shootOnce = true ;}
+			}
 		}
 		}
 		for(int i=0;i<ammos.size();i++)

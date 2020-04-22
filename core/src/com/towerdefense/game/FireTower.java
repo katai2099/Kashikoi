@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class FireTower extends BaseTower{
 
+	FireTower()
+	{
+		this.damage = 5;
+	}
+	
 	FireTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> arrayList) {
 		super(texture, tile, width, height, arrayList);
 		this.cannon = new Texture("fireProjectile.png");
@@ -22,6 +27,7 @@ public class FireTower extends BaseTower{
 		this.refund = 25;
 	}
 	
+	
 	public void update()
 	{
 		if(monsters.size()!=0)
@@ -36,7 +42,7 @@ public class FireTower extends BaseTower{
 			first = false;
 		}
 		if(target!=null) {
-			if(shootOnce==true && !target.enterCastle() && this.exp <100 && target.getHiddenHealth()<=0 && !earnExp)
+			if(shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive() && !earnExp)
 			{
 				this.exp += target.giveExp;
 				if(exp>100) exp = 100;
@@ -54,7 +60,7 @@ public class FireTower extends BaseTower{
 		timeSinceShoot += dt;
 		if(timeSinceShoot>attackSpeed)
 		{
-			if(target!=null) {
+			if(target!=null ) {
 			shoot();
 			shootOnce = true ;}
 		}
@@ -74,7 +80,6 @@ public class FireTower extends BaseTower{
 		
 		//target.reduceHiddenHealth(damage);
 		reduceHiddenhealth(target);
-		
 	}
 	
 	public void reduceHiddenhealth(Monster monster)

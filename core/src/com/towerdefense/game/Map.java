@@ -116,7 +116,7 @@ public class Map extends Sprite {
 				}
 				else if(file=='2')
 				{
-					map[x][y] = new Tile(texture = new Texture("grass.png"),TileType.Grass,x*64,(y+1)*64,64,64);
+					map[x][y] = new Tile(texture = new Texture("grass.png"),TileType.Castle,x*64,(y+1)*64,64,64);
 					castle = new Castle(texture = new Texture("castle3.png"),x*64,(y+1)*64,70,70);
 				}
                 y++;
