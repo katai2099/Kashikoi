@@ -1,17 +1,19 @@
-image: openjdk:11
+image: gradle:alpine
 
-stages:
-  - build
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 before_script:
-  - apt-get update -yqq
-  - apt-get install -yqq ant junit4
-  
-# Build
-build_game:
-  stage: build
-  script:
-    - ant compile
-    - ant jar
+  - export GRADLE_USER_HOME=`pwd`/.gradle
 
-   
+build:
+  stage: build
+  script: gradle --build-cache assemble
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
