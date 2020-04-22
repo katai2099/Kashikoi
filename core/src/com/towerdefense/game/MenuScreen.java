@@ -58,7 +58,7 @@ public class MenuScreen extends ScreenAdapter{
 	
 	public MenuScreen()
 	{
-		Image image = new Image(new Texture("logo.png"));
+		Image image = new Image(new Texture("Logo.png"));
 		image.setX(1472/2-100);
 		image.setY(1024/2+150);
 		font = new BitmapFont();

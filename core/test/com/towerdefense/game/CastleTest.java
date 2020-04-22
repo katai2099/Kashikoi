@@ -22,7 +22,7 @@ public class CastleTest {
 		k.damageMonster(t); 
 		
 		float hp = t.getHp();
-		float expected = 2.0f;
+		float expected = 1.0f;
 		assertEquals(expected,hp,0.0f);
 	}
 
