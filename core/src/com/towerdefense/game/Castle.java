@@ -15,6 +15,13 @@ public class Castle extends Sprite{
 	float barWidth ;
 	
 	
+	public Castle()
+	{
+		this.hp = 100;
+		this.barWidth = 2680;
+	}
+	
+	
 /*	public Castle(Texture texture,Tile startTile,int width,int height)
 	{
 		this.hp = 100;

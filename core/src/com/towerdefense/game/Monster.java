@@ -53,6 +53,11 @@ public class Monster extends Sprite{
 		
 	}
 	
+	public Monster(int atk)
+	{
+		this.atk = atk;
+	}
+	
 	public Monster(Texture texture, Tile startile, int height, int width, int atk, int speed) {
 	}
 
