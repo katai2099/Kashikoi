@@ -1,34 +1,18 @@
-image: gradle:alpine
+image: maven:latest
 
 variables:
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
-before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-
-stages:
-  - build
-  - test
+cache:
+  key: maven-build
+  paths:
+    - .m2/repository
 
 build:
-   stage: build
-   script:
-      - gradle --build-cache assemble
-   allow_failure: false
-   cache:
-      key: "$CI_COMMIT_REF_NAME"
-      policy: push
-      paths:
-        - build
-        - .gradle
-
+  stage: build
+  script:
+    - mvn compile
 test:
-   stage: test
-   script:
-      - gradle check
-   cache:
-     key: "$CI_COMMIT_REF_NAME"
-     policy: pull
-     paths:
-        - build
-        - .gradle
+  stage: test
+  script:
+    - mvn test
