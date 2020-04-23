@@ -1,9 +1,7 @@
 package com.towerdefense.game;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import static org.junit.Assert.*;
 
 public class CastleTest {
 
@@ -18,4 +16,5 @@ public class CastleTest {
 	
 
 	
+
 }
