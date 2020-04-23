@@ -3,6 +3,7 @@ package com.towerdefense.game;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class CastleTest {
 
@@ -14,17 +15,7 @@ public class CastleTest {
 		assertEquals(90,test.getHp());
 	}
 	
-	@Test
-	public void testDamageMonster() {
-		Onion t = new Onion();
-		FireTower k = new FireTower();
-		
-		k.damageMonster(t); 
-		
-		float hp = t.getHp();
-		float expected = 1.0f;
-		assertEquals(expected,hp,0.0f);
-	}
+	
 
 	
 
