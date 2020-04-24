@@ -19,8 +19,9 @@ build:
       key: "$CI_COMMIT_REF_NAME"
       policy: push
       paths:
-        - build
-        - .gradle
+        - build/libs/*.jar
+        - .gradle 
+     expire_in: 1 week
 
 test:
    stage: test
