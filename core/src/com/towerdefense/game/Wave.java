@@ -55,8 +55,8 @@ public class Wave extends Sprite {
 		this.waveCompleted = false;
 		cnt = monstersPerWave;
 		cntEnemySpawn = monstersPerWave-1;
-		//dt = Gdx.graphics.getDeltaTime();
-		//Spawn();
+		dt = Gdx.graphics.getDeltaTime();
+		Spawn();
 	}
 	
 	public Wave(float spawnTime,Monster boss1,Monster boss2,int monstersPerWave)
