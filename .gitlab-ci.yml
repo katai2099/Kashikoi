@@ -21,8 +21,7 @@ build:
       paths:
         - build
         - .gradle 
-    artifacts:
-        enabled:true
+   
    
 
 test:
