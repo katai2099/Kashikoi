@@ -507,7 +507,7 @@ public class Monster extends Sprite{
 	{
 		this.speed -= 1;
 		slow = true ;
-		hpNumber.setColor(Color.BLUE);
+		//hpNumber.setColor(Color.BLUE);  commented out for testing purpose
 	}
 	
 	protected void pureDamage(float amount)

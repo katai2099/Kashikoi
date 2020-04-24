@@ -2,8 +2,10 @@ package com.towerdefense.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Giant extends Monster{
@@ -33,7 +35,15 @@ public class Giant extends Monster{
 	 	populateCheckpointList();
 	}
 
-	
+	//For Testing Purpose
+	public Giant() {
+		this.atk = 20;
+		this.def = 5;
+		this.hp = 20;
+		this.speed = 8;
+	}
+
+
 	public void damage(float amount)
 	{
 		if(amount==0);

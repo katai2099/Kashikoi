@@ -9,6 +9,7 @@ public class FireTower extends BaseTower{
 	FireTower()
 	{
 		this.damage = 5;
+		this.exp = 0;
 	}
 	
 	FireTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> arrayList) {

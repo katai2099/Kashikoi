@@ -47,7 +47,9 @@ public class Player {
 	public static int getCash() {
 		return cash;
 	}
-
+	
+	//modifyCash function used when buying or selling tower or killing monsters
+	
 	public static boolean modifyCash(int cost)
 	{
 		if(cash + cost>= 0)
@@ -67,23 +69,13 @@ public class Player {
 	
 	public void update()
 	{
-		/*
-		for(int i =0;i<waveManager.getCurrentWave().getMonsters().size();i++)
-		{
-			System.out.println(waveManager.getCurrentWave().getMonsters().get(i).idNumber);
-		}*/
 		if(map.getCastle().isDestroy()) {Player.lose = true; Player.end = true;}
 		waveManager.update();
-		//if(waveManager.currentWave.getMonsters().size()!=0) 
-		//{
 		for(BaseTower t:towers)
 		{
 			t.update();
 			t.updateMonsterList(waveManager.getCurrentWave().getMonsters());
 		}
-	//	}
-		
-		
 		if(holdingTower)
 		{
 			tmpTower.setX(map.getTile(Gdx.input.getX()/64,(((Gdx.graphics.getHeight()-Gdx.input.getY())-64)/64)).getX());
@@ -142,8 +134,6 @@ public class Player {
 	public void upgrade1()
 	{
 		BaseTower t = tmpSelectedTower;
-			//towers.add(new FireTower1(new Texture("fire tower.jpg"),map.getTile(3, 3),64,64,waveManager.currentWave.getMonsters()));
-			//tmp become null
 		for(int i=0;i<towers.size();i++)
 		{
 			if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
@@ -202,7 +192,7 @@ public class Player {
 	
 	public void cashUpgrade()
 	{
-		this.cash -= 100 ;
+		Player.cash -= 100 ;
 	}
 
 
@@ -221,10 +211,12 @@ public class Player {
 			tmpTower.draw(b);
 		}
 	}
-
+	
 	public Boolean isTowerSelected() {
 		return TowerSelected;
 	}
+	
+	//Check whether the selected tower is not a special tower (for upgrade)
 	
 	public boolean chkLevel(BaseTower t)
 	{
@@ -232,7 +224,16 @@ public class Player {
 				t instanceof FireTower2 || t instanceof IceTower2 || t instanceof PoisonTower2 ) return false;
 		return true;
 	}
-
+	
+	public boolean lose()
+	{
+		if( map.getCastle().isDestroy())
+		{
+			Player.lose = true;
+			return map.getCastle().isDestroy();
+		}
+		else return false; 
+	}
 	
 	
 }

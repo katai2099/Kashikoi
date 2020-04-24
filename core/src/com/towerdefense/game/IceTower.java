@@ -25,6 +25,11 @@ public class IceTower extends BaseTower{
 			this.refund = 25;
 		}
 		
+		public IceTower() {
+				this.damage = 5;
+				this.exp = 0;
+		}
+
 		public void update()
 		{
 			if(monsters.size()!=0)
