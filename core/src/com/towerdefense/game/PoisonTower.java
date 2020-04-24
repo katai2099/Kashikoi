@@ -1,8 +1,6 @@
 package com.towerdefense.game;
 
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -27,7 +25,10 @@ public class PoisonTower extends BaseTower{
 		
 		public PoisonTower()
 		{
-			
+			this.exp = 0;
+			this.damage = 10;
+			this.cost = 50; 
+			this.refund = 25;
 		}
 		
 		public void shoot()

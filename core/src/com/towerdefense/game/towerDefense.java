@@ -1,7 +1,4 @@
 package com.towerdefense.game;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class towerDefense extends BaseGame {

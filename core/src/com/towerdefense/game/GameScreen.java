@@ -4,7 +4,6 @@ package com.towerdefense.game;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
@@ -54,7 +52,7 @@ public class GameScreen extends ScreenAdapter{
 	public GameScreen() throws FileNotFoundException, IOException {
 		
 		this.batch = towerDefense.batch;
-		map = new Map("level.txt");
+		map = new Map("level1.txt");
 		monsterwave = new Monster[5];
 		monsterwave[4] = new SekiroDieTwice(map.getTile(3, 0),map,64,64);
 		monsterwave[0] = new Giant(map.getTile(3, 0),map,64,64);
@@ -224,7 +222,7 @@ public class GameScreen extends ScreenAdapter{
 		{ 
 			player.upgrade1();
 		}
-		else if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		else if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && Player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
 		{
 			player.upgrade1();
 			player.cashUpgrade();
@@ -233,7 +231,7 @@ public class GameScreen extends ScreenAdapter{
 		{
 			player.upgrade2();
 		} 
-		else if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		else if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && Player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
 		{
 			player.upgrade2();
 			player.cashUpgrade();
@@ -247,7 +245,6 @@ public class GameScreen extends ScreenAdapter{
 		}
 		}
 		}
-	//	System.out.println(Gdx.graphics.getDeltaTime()*10);
 		Gdx.gl.glClearColor(162/255f,206/255f ,220/255f , 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.enableBlending();

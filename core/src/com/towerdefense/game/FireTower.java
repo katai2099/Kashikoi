@@ -6,11 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class FireTower extends BaseTower{
 
-	FireTower()
-	{
-		this.damage = 5;
-		this.exp = 0;
-	}
 	
 	FireTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> arrayList) {
 		super(texture, tile, width, height, arrayList);
@@ -27,6 +22,15 @@ public class FireTower extends BaseTower{
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 25;
 	}
+	
+	//For testing purpose
+		FireTower()
+		{
+			this.damage = 5;
+			this.exp = 0;
+			this.refund = 25;
+			this.cost = 50;
+		}
 	
 	
 	public void update()

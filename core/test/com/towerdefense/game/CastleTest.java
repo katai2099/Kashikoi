@@ -3,7 +3,6 @@ package com.towerdefense.game;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 public class CastleTest {
 

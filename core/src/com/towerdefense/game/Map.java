@@ -26,17 +26,7 @@ public class Map extends Sprite {
 		loadMapInternal(level);
 	}
 	
-	/*public Map()
-	{
-		map = new Tile[20][15];
-		for(int i=0;i<map.length;i++)
-		{
-			for(int j=0;j<map[i].length;j++)
-			{
-				map[i][j]= new Tile(texture = new Texture("grass.png"),i*68,j*68,68,68);
-			}
-		}
-	}
+	//For testing purpose
 	
 	public Map(int [][] newmap)
 	{
@@ -47,20 +37,25 @@ public class Map extends Sprite {
 			{
 				if(newmap[i][j]==0)
 				{
-				map[i][j]= new Tile(texture = new Texture("concrete.png"),i*64,(j+1)*64,64,64);
+				map[i][j]= new Tile(texture = new Texture("concrete.png"),TileType.Concrete,i*64,(j+1)*64,64,64);
 				}
 				else if(newmap[i][j]==1)
 				{
-					map[i][j] = new Tile(texture = new Texture("grass.png"),i*64,(j+1)*64,64,64);
+					map[i][j] = new Tile(texture = new Texture("grass.png"),TileType.Grass,i*64,(j+1)*64,64,64);
 				}
 				else if(newmap[i][j]==2)
 				{
-					map[i][j] = new Tile(texture = new Texture("castle2.png"),i*64,j*64,64,64);
+					map[i][j] = new Tile(texture = new Texture("grass.png"),TileType.Castle,i*64,(j+1)*64,64,64);
+					castle = new Castle(texture = new Texture("castle3.png"),i*64,(j+1)*64,70,70);
 				}
 			}
 		}
-	}*/
+	}
 	
+	public Map() {
+		castle = new Castle();
+	}
+
 	public void loadMap(String Level) throws FileNotFoundException, IOException
 	{
 		map = new Tile[20][15];

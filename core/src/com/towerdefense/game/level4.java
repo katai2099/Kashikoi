@@ -4,7 +4,6 @@ package com.towerdefense.game;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
@@ -230,7 +228,7 @@ public class level4 extends ScreenAdapter{
 		{ 
 			player.upgrade1();
 		}
-		else if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		else if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && Player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
 		{
 			player.upgrade1();
 			player.cashUpgrade();
@@ -239,7 +237,7 @@ public class level4 extends ScreenAdapter{
 		{
 			player.upgrade2();
 		} 
-		else if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		else if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && Player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
 		{
 			player.upgrade2();
 			player.cashUpgrade();

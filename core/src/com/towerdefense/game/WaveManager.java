@@ -22,7 +22,7 @@ public class WaveManager extends Sprite {
 		this.timeSinceLastWave = 0;
 		this.waveNumber = 0;
 		this.currentWave = null;
-		newWave();
+		newWaveSingle();
 	} 
 	
 	public WaveManager(Monster monsters[],float timeBetweenMonster,int monstersPerWave,int numberOfWave)
@@ -72,14 +72,14 @@ public class WaveManager extends Sprite {
 		waveNumber++;
 		System.out.println("wave " +waveNumber);
 	}
-	/*
+	
 	//single enemy
-	public void newWave()
+	public void newWaveSingle()
 	{
 		currentWave = new Wave(timeBetweenMonster,monster,monstersPerWave);
 		waveNumber++;
 		System.out.println("wave " +waveNumber);
-	}*/
+	}
 	
 	public void draw(Batch b)
 	{

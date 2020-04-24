@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Player {
 	
 	public static boolean win;
 	public static boolean lose;
 	public static boolean end;
-	private Map map;
+	public Map map;
 	private boolean leftMousePressed;
 	ArrayList<BaseTower>towers;
 	BaseTower tmpTower;
@@ -22,7 +20,6 @@ public class Player {
 	WaveManager waveManager;
 	boolean TowerSelected;
 	BaseTower tmpSelectedTower;
-	boolean yesSell;
 	boolean build;
 	
 	public Player(Map map,WaveManager waveManager)
@@ -35,11 +32,22 @@ public class Player {
 		this.waveManager = waveManager;
 		this.TowerSelected = false;
 		tmpSelectedTower = null;
-		yesSell = false;
 		lose = false;
 		win = false;
 		end = false;
 		build = false;
+	}
+	
+	//for Testing purpose
+	//public Player(int k[][])
+	public Player()
+	{
+		//map = new Map(k);
+		map = new Map();
+		cash = 100;
+		tmpSelectedTower = null;
+		TowerSelected=false;
+		towers = new ArrayList<BaseTower>();
 	}
 	
 	
@@ -131,6 +139,8 @@ public class Player {
 			}
 	}
 	
+	//First Upgrade Option
+	
 	public void upgrade1()
 	{
 		BaseTower t = tmpSelectedTower;
@@ -142,8 +152,9 @@ public class Player {
 		tmpSelectedTower = null;
 		TowerSelected = false ;
 		
-		if(t instanceof FireTower)
+		if(t instanceof FireTower) {
 			towers.add(new FireTower1(new Texture("fireTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+		}
 		else if(t instanceof IceTower) 
 			towers.add(new IceTower1(new Texture("iceTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		else if(t instanceof PoisonTower)
@@ -151,11 +162,11 @@ public class Player {
 		t = null;
 	}
 	
+	//Second Upgrade Option
+	
 	public void upgrade2()
 	{
 		BaseTower t = tmpSelectedTower;
-		//towers.add(new FireTower1(new Texture("fire tower.jpg"),map.getTile(3, 3),64,64,waveManager.currentWave.getMonsters()));
-		//tmp become null
 		for(int i=0;i<towers.size();i++)
 		{
 		if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
@@ -174,7 +185,6 @@ public class Player {
 	
 	public void sell()
 	{
-		//yesSell = true;
 		for(int i=0;i<towers.size();i++)
 		{
 			if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())

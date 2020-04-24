@@ -3,12 +3,9 @@ package com.towerdefense.game;
 import java.util.ArrayList;
 
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 public class Wave extends Sprite {
@@ -58,8 +55,8 @@ public class Wave extends Sprite {
 		this.waveCompleted = false;
 		cnt = monstersPerWave;
 		cntEnemySpawn = monstersPerWave-1;
-		dt = Gdx.graphics.getDeltaTime();
-		Spawn();
+		//dt = Gdx.graphics.getDeltaTime();
+		//Spawn();
 	}
 	
 	public Wave(float spawnTime,Monster boss1,Monster boss2,int monstersPerWave)
