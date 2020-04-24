@@ -21,6 +21,14 @@ public class PoisonTower1 extends PoisonTower{
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
 	}
+	
+	//For testing purpose
+	
+	PoisonTower1()
+	{
+		this.damage = 10;
+		this.refund = 50; 
+	}
 
 	
 	public void shoot()

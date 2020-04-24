@@ -25,13 +25,16 @@ public class PoisonTower extends BaseTower{
 			this.refund = 25;
 		}
 		
+		public PoisonTower()
+		{
+			
+		}
 		
 		public void shoot()
 		{	
 			timeSinceShoot = 0;
 			if(target!=null)
 			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
-		//	target.reduceHiddenHealth(damage);
 		}
 
 

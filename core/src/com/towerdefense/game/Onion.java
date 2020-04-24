@@ -35,6 +35,9 @@ public class Onion extends Monster{
 	Onion()
 	{
 		this.hp = 3;
+		this.speed = 10;
+		this.giveGold = 5;
+		this.giveExp = 3;
 	}
 	
 	

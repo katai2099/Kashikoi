@@ -486,21 +486,21 @@ public class Monster extends Sprite{
 	protected void burn()
 	{
 		burn = true; 
-		hpNumber.setColor(Color.RED);
+	//	hpNumber.setColor(Color.RED); commented out for testing purpose
 	}
 	
 	protected void freeze()
 	{
 		this.speed=0;
 		freeze = true;
-		hpNumber.setColor(Color.BLUE);
+	//	hpNumber.setColor(Color.BLUE); commented out for testing purpose
 	}
 	
 	protected void slow()
 	{
 		this.speed -= 3;
 		permanentSlow = true; 
-		hpNumber.setColor(Color.BLUE);
+	//	hpNumber.setColor(Color.BLUE); commented out for testing purpose
 	}
 	
 	protected void tmpSlow()

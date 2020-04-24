@@ -21,6 +21,10 @@ public class IceTower1 extends IceTower {
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
 	}
+	
+	public IceTower1() {
+		this.damage = 10;
+	}
 
 	
 	public void update()

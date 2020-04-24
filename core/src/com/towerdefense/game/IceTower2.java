@@ -25,7 +25,13 @@ public class IceTower2 extends IceTower{
 		cd = 3;
 		frozen = false ;
 	}
-	
+	//for Testing purpose
+	public IceTower2() {
+		this.damage = 5;
+		this.cd = 3;
+		this.frozen = false;
+	}
+
 	public void update()
 	{
 		if(monsters.size()!=0)

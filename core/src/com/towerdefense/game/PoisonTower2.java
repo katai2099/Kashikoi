@@ -21,13 +21,20 @@ public class PoisonTower2 extends PoisonTower {
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
 	}
+	
+	//For testing purpose
+	PoisonTower2()
+	{
+		this.damage = 8;
+		this.refund = 50; 
+	}
 			
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
 		if(target!=null)
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
-	//	target.reduceHiddenHealth(damage);
+		
 	}
 	
 	public void update()

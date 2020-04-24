@@ -95,7 +95,7 @@ public class Map extends Sprite {
 	public void loadMapInternal(String Level)
 	{
 		map = new Tile[20][15];
-		FileHandle handle = Gdx.files.internal(Level);
+		FileHandle handle = Gdx.files.internal(Level); 
 		String line = handle.readString();
 		Scanner sc = new Scanner(line);
 		int x=0;
