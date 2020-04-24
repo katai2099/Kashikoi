@@ -34,6 +34,15 @@ public class SekiroDieTwice extends Monster{
 	 	populateCheckpointList();
 	 	reviveYet = false;
 	}
+	
+	//for testing
+	public SekiroDieTwice()
+	{
+		this.hp = 10;
+		this.alive = true;
+		reviveYet = false;
+		this.def = 0;
+	}
 		
 	public void damage(float amount)
 	{

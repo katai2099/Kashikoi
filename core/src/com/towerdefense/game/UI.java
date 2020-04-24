@@ -19,6 +19,9 @@ public class UI {
 	BitmapFont coinFont;
 	Player player;
 	Button button;
+	Texture Bar ;
+	Texture barBackground;
+	
 	public UI(Player player)
 	{
 		
@@ -36,12 +39,14 @@ public class UI {
 		buttons = new ArrayList<myButton>();
 		this.player = player;
 		hiddenButtons = new ArrayList<myButton>();
+	    Bar = new Texture("bar.png");
+	    barBackground = new Texture("bar-background.png");
 	}
 	
 	public void addButton(String name,Texture texture,int x,int y)
 	{
 		buttons.add(new myButton(name,texture,x,y));
-	}
+	} 
 	
 	public void addHiddenButton(String name,Texture texture,int x,int y)
 	{
@@ -101,6 +106,9 @@ public class UI {
 		}
 		coinFont.draw(b,String.valueOf(Player.cash)+" G",1344,200);
 		numWave.draw(b,"Wave no: "+String.valueOf(player.waveManager.waveNumber),1320,175);
+		if(player.waveManager.waveNumber !=0 && player.waveManager.waveNumber %3 ==0)
+			numWave.draw(b,"Monster no: "+String.valueOf(player.waveManager.monstersPerWave-1),1320,145);
+		else
 		numWave.draw(b,"Monster no: "+String.valueOf(player.waveManager.monstersPerWave),1320,145);
 		for(myButton bt:hiddenButtons)
 		{
@@ -112,6 +120,8 @@ public class UI {
 				font.draw(b, "EXP: "+String.valueOf(player.tmpSelectedTower.getX()) +" "+ String.valueOf(player.tmpSelectedTower.getY()),1345,500);
 			}
 		}
+		b.draw(barBackground,0,0,1935,barBackground.getHeight()); 
+		b.draw(Bar,-10,0,player.map.getCastle().getBarWidth(),Bar.getHeight());
 	}
 	
 

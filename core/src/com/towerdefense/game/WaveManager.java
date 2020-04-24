@@ -45,7 +45,12 @@ public class WaveManager extends Sprite {
 			Player.win = true;
 			Player.end = true;
 		}else {
-			if(waveNumber % 3 == 0 && !increase) {monstersPerWave++; increase = true;} 
+			if(waveNumber % 3 == 0 && !increase) {
+				if(monsters.length==5) {
+				monstersPerWave++; increase = true;}
+				else if(monsters.length==10) {
+					monstersPerWave+=2; increase = true;}
+				} 
 			if(waveNumber % 3 != 0) increase = false;
 		if(!currentWave.isCompleted())
 		{
@@ -70,7 +75,6 @@ public class WaveManager extends Sprite {
 		else
 		currentWave = new Wave(timeBetweenMonster,monsters,monstersPerWave);
 		waveNumber++;
-		System.out.println("wave " +waveNumber);
 	}
 	
 	//single enemy
@@ -78,7 +82,6 @@ public class WaveManager extends Sprite {
 	{
 		currentWave = new Wave(timeBetweenMonster,monster,monstersPerWave);
 		waveNumber++;
-		System.out.println("wave " +waveNumber);
 	}
 	
 	public void draw(Batch b)

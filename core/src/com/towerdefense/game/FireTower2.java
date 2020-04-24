@@ -55,8 +55,6 @@ public class FireTower2 extends FireTower{
 			{
 				if(targets.get(i).idNumber == tmp.get(j).idNumber )
 				{
-					System.out.println("in this loop");
-					//System.out.println("i have remove " +tmp.get(j).idNumber);
 					tmp.remove(j);
 				}
 			}
@@ -71,9 +69,7 @@ public class FireTower2 extends FireTower{
 						closestDistance = findDistance(tmp.get(i));
 						closest = tmp.get(i);						
 					}
-			//	System.out.println(tmp.get(i).idNumber);
 		}
-		//if (closest != null) // System.out.println("I have take this ID " +closest.idNumber +" into targets lists");
 		return closest;
 	}
 		
@@ -115,7 +111,7 @@ public class FireTower2 extends FireTower{
 				if(targets.get(i)!=null) {
 				if( !isInRange(targets.get(i)) )
 					{
-					System.out.println("i remove targets id: "+targets.get(i).idNumber);
+					
 					targets.remove(i);
 					}
 				}
@@ -141,14 +137,6 @@ public class FireTower2 extends FireTower{
 		timeSinceShoot += dt;
 		if(timeSinceShoot>attackSpeed)
 		{	
-			//targets.add(aimTarget());
-		System.out.println(targets.size());
-		/*
-		for(int i=0;i<targets.size();i++)
-		{
-			if(targets!=null)
-			System.out.println("This is targets id: " +targets.get(i).idNumber);
-		} */
 		if(!allnull())
 			shoot();
 		
@@ -170,7 +158,6 @@ public class FireTower2 extends FireTower{
 			if(targets.get(i)!=null)
 			{ 
 			ammos.add(new Ammo(cannon,targets.get(i),x,y,40,40,damage,5,this));
-		//	targets.get(i).reduceHiddenHealth(damage);
 			}
 		} 
 		
@@ -191,13 +178,6 @@ public class FireTower2 extends FireTower{
 		monster.damage(this.damage);
 		if(!(monster instanceof Onion))
 		monster.burn();
-		//monster.damage(this.damage);
-		/*
-		if(monster.getHp()<=0) 
-		{
-			monster.die();
-			Player.modifyCash(monster.giveGold);
-		} */
 	}
 	
 }

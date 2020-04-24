@@ -88,11 +88,6 @@ public class FireTower1 extends FireTower{
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);
-	/*	if(monster.getHp()<=0) 
-		{
-			monster.die();
-			Player.modifyCash(monster.giveGold);
-		} */
 	}
 	
 }

@@ -16,7 +16,6 @@ public class Wave extends Sprite {
 	private Monster monster1;
 	private Monster boss2;
 	private ArrayList<Monster> monsters;
-	 long start = System.currentTimeMillis();
 	float dt;
 	float previousSpawnTime=0;
 	Random random = new Random();

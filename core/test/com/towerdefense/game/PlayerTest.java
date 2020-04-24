@@ -11,6 +11,11 @@ public class PlayerTest {
 	IceTower iceTower = new IceTower();
 	PoisonTower poisonTower = new PoisonTower(); 
 	FireTower1 fireTower1 = new FireTower1();
+	Onion test = new Onion ();
+	Fugu test1 = new Fugu();
+	Giant test2 = new Giant();
+	Squirrel test3 = new Squirrel();
+	
 
 	@Test
 	public void testSellBaseTower() {
@@ -58,8 +63,20 @@ public class PlayerTest {
 	} 
 	
 	@Test
-	public void upgrade1()
+	public void upgrade1UsingCash()
 	{
+		Player.cash=100;
+		player.tmpSelectedTower=fireTower;
+		player.towers.add(fireTower);
+		player.upgrade1Test();
+		assertTrue(player.towers.get(0) instanceof FireTower1);
+	}
+	
+	@Test
+	public void upgrade1whenTowerReach100Exp()
+	{
+		fireTower.exp=100;
+		Player.cash=0;
 		player.tmpSelectedTower=fireTower;
 		player.towers.add(fireTower);
 		player.upgrade1Test();
@@ -73,6 +90,55 @@ public class PlayerTest {
 		player.towers.add(fireTower);
 		player.upgrade2Test();
 		assertTrue(player.towers.get(0) instanceof FireTower2);
+	}
+	
+	@Test
+	public void upgrade2whenTowerReach100Exp()
+	{
+		fireTower.exp=100;
+		Player.cash=0;
+		player.tmpSelectedTower=fireTower;
+		player.towers.add(fireTower);
+		player.upgrade2Test();
+		assertTrue(player.towers.get(0) instanceof FireTower2);
+	}
+	
+	@Test 
+	public void testCashAfterusingCashUpgrade()
+	{
+		Player.cash=100;
+		fireTower.exp =0;
+		player.tmpSelectedTower=fireTower;
+		player.towers.add(fireTower);
+		player.upgrade1Test();
+		assertEquals(0,Player.cash);
+	}
+	
+	@Test
+	public void earnCashWhenMonsterKilled()
+	{
+		Player.cash =0 ;
+		fireTower.damageMonster(test);
+		fireTower.damageMonster(test);
+		fireTower.damageMonster(test);
+		assertEquals(test.giveGold,Player.cash);
+	}
+	
+	@Test
+	public void earnCashWhenDifferentKindOfMonstersKilled()
+	{
+		test2.def = 2;
+		Player.cash=0;
+		test.hp=1;
+		test1.hp=1;
+		test2.hp=1;
+		test3.hp=1;
+		fireTower.damageMonster(test);
+		fireTower.damageMonster(test1);
+		fireTower.damageMonster(test2);
+		fireTower.damageMonster(test3);
+		assertEquals(test.giveGold+test1.giveGold+test2.giveGold+test3.giveGold,Player.cash);
+		
 	}
 	
 	

@@ -28,7 +28,6 @@ public class BaseTower extends Sprite{
 	protected Tile tile;
 	protected float timeSinceShoot;
 	protected float previousShootTime;
-	long start = System.currentTimeMillis();
 	protected Monster target;
 	protected boolean lockOn;
 	protected Texture cannon;
@@ -40,7 +39,10 @@ public class BaseTower extends Sprite{
 	
 	BaseTower()
 	{
-		
+		monsters = new ArrayList<Monster>();
+		lockOn = false;
+		this.x=0;
+		this.y=0;
 	}
 	
 	BaseTower(Texture texture,Tile tile,int width,int height,int damage,ArrayList<Monster>monsters)
@@ -178,7 +180,7 @@ public class BaseTower extends Sprite{
 		float closestDistance = 10000;
 		for(Monster m:monsters)
 		{
-			if (isInRange(m)&&findDistance(m) < closestDistance && m.isAlive())//&& m.getHiddenHealth()>0)// m.isAlive())
+			if (isInRange(m)&&findDistance(m) < closestDistance && m.isAlive())
 			{
 				closestDistance = findDistance(m);
 				closest = m;
@@ -188,6 +190,7 @@ public class BaseTower extends Sprite{
 			lockOn = true;
 		return closest;
 	}
+	
 	
 	
 	public boolean isInRange(Monster m)
@@ -231,7 +234,7 @@ public class BaseTower extends Sprite{
 			lockOn = false; 
 		}
 		if(target!=null) {
-		if(lockOn == false && shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive())
+		if( shootOnce==true && !target.enterCastle && this.exp <100 && !target.isAlive())
 		{
 			this.exp += target.giveExp;
 			if(exp>100) exp = 100;

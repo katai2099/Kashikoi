@@ -13,7 +13,7 @@ public class OnionTest {
 	PoisonTower2 poison2 = new PoisonTower2();
 	
 	@Test
-	public void IceTower1Test() {
+	public void IceTower1Test() { 
 		icy1.damageMonster(onion);
 		assertFalse(onion.permanentSlow);
 	}

@@ -31,6 +31,14 @@ public class Fugu extends Monster{
 	 	populateCheckpointList();
 	}
 
+	//for testing
+	public Fugu() {
+		this.def=0;
+		this.piercethrough=false;
+		this.hp=20;
+		this.alive = true;
+		this.giveGold = 10;
+	}
 
 
 	public void damage(float amount)

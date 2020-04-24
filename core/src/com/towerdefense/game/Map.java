@@ -22,7 +22,6 @@ public class Map extends Sprite {
 	
 	public Map(String level) throws FileNotFoundException, IOException
 	{
-		//loadMap(level);
 		loadMapInternal(level);
 	}
 	

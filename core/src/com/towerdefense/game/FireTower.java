@@ -49,7 +49,7 @@ public class FireTower extends BaseTower{
 			first = false;
 		}
 		if(target!=null) {
-			if(shootOnce==true && !target.enterCastle() && this.exp <100 && !target.isAlive() && !earnExp)
+			if(shootOnce==true && !target.enterCastle && this.exp <100 && !target.isAlive() && !earnExp)
 			{
 				this.exp += target.giveExp;
 				if(exp>100) exp = 100;
@@ -85,25 +85,14 @@ public class FireTower extends BaseTower{
 		 
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 		
-		//target.reduceHiddenHealth(damage);
-		reduceHiddenhealth(target);
 	}
 	
-	public void reduceHiddenhealth(Monster monster)
-	{
-		if(monster instanceof Onion) ((Onion) monster).reduceHiddenHealth();
-		else
-		monster.hiddenhealth -= (this.damage-monster.def);
-	}
+
 
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);
-	/*	if(monster.getHp()<=0) 
-		{
-			monster.die();
-			Player.modifyCash(monster.giveGold);
-		} */
+	
 	}
 	
 	

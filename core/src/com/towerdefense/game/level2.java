@@ -26,7 +26,6 @@ public class level2 extends ScreenAdapter{
 	FileHandle handle;
 	private SpriteBatch batch;
 	Texture texture;
-	Texture Bar = new Texture("bar.png");
 	WaveManager wavemanager;
 	UI towerui;
 	Map map;
@@ -186,10 +185,10 @@ public class level2 extends ScreenAdapter{
 		if(!pause) {
 		if(!Player.end) {
 		player.update();
-		System.out.println(LevelSelection.selection);
+		
 		
 		boolean tmp = Gdx.input.isButtonJustPressed(0);
-		//System.out.println(tmp);
+	
 		if(tmp) {
 			if(towerui.isButtonClicked("fireTower"))
 			{
@@ -211,37 +210,31 @@ public class level2 extends ScreenAdapter{
 		if(towerui.isTowerClicked())
 		{
 			player.saveTower();
-			System.out.println("tower click" + Gdx.input.getX() +" "+ Gdx.input.getY());
+			
 		}
 		if(towerui.isButtonClicked("Sell") && player.isTowerSelected())
 		{
 			player.sell();
 		}
 		
-		if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.tmpSelectedTower.exp==100 && player.chkLevel(player.tmpSelectedTower))
+		if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && player.chkLevel(player.tmpSelectedTower))
 		{ 
 			player.upgrade1();
 		}
-		else if(towerui.isButtonClicked("levelup1") && player.isTowerSelected() && Player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
-		{
-			player.upgrade1();
-			player.cashUpgrade();
-		}
-		if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && player.tmpSelectedTower.exp==100 && player.chkLevel(player.tmpSelectedTower))
+		if(towerui.isButtonClicked("levelup2") && player.isTowerSelected()  && player.chkLevel(player.tmpSelectedTower))
 		{
 			player.upgrade2();
 		} 
-		else if(towerui.isButtonClicked("levelup2") && player.isTowerSelected() && Player.cash>=100 && player.chkLevel(player.tmpSelectedTower))
+		if(!towerui.isTowerClicked())
 		{
-			player.upgrade2();
-			player.cashUpgrade();
-		}
-		
-		if(!towerui.isTowerClicked() && !towerui.isButtonClicked("levelup1"))
-		{
+			if(!towerui.isButtonClicked("levelup1")&&towerui.isButtonClicked("levelup2"));
+			else if(towerui.isButtonClicked("levelup1")&&!towerui.isButtonClicked("levelup2"));
+			else {
 			player.tmpSelectedTower = null;
 			player.TowerSelected = false;
+			}
 		}
+		
 		}
 		}
 		}
@@ -262,8 +255,6 @@ public class level2 extends ScreenAdapter{
 			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2,texture.getWidth()/2,texture.getHeight()/2);
 		}
 
-		batch.draw(texture = new Texture("bar-background.png"),0,0,1935,texture.getHeight()); 
-		batch.draw(texture = new Texture("bar.png"),-10,0,map.getCastle().getBarWidth(),texture.getHeight());
 		batch.end();
 		if(pause)
 		{
@@ -330,8 +321,8 @@ public class level2 extends ScreenAdapter{
 	public void hide() {
 		// TODO Auto-generated method stub
 		//batch.dispose();
-		texture.dispose();
-		Bar.dispose();
+		//texture.dispose();
+		
 	}
 
 	@Override

@@ -34,6 +34,13 @@ public class Squirrel extends Monster{
 	}
 
 	
+	public Squirrel() {
+		this.alive = true;
+		this.atk = 5;
+		this.giveGold = 3;
+	}
+
+
 	public void damage(float amount)
 	{
 		if(amount==0);

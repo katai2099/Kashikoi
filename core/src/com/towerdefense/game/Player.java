@@ -143,6 +143,7 @@ public class Player {
 	
 	public void upgrade1()
 	{
+		if(tmpSelectedTower.getExp()==100) {
 		BaseTower t = tmpSelectedTower;
 		for(int i=0;i<towers.size();i++)
 		{
@@ -160,11 +161,34 @@ public class Player {
 		else if(t instanceof PoisonTower)
 			towers.add(new PoisonTower1(new Texture("poisonTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		t = null;
+		}
+		else if(Player.cash>=100)
+		{
+			modifyCash(-100);
+			BaseTower t = tmpSelectedTower;
+			for(int i=0;i<towers.size();i++)
+			{
+				if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
+					towers.remove(i);
+			} 
+			tmpSelectedTower = null;
+			TowerSelected = false ;
+			
+			if(t instanceof FireTower) {
+				towers.add(new FireTower1(new Texture("fireTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			}
+			else if(t instanceof IceTower) 
+				towers.add(new IceTower1(new Texture("iceTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			else if(t instanceof PoisonTower)
+				towers.add(new PoisonTower1(new Texture("poisonTowerEdit1.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			t = null;
+		}
 	}
 	
 	//forTesting
 	public void upgrade1Test()
 	{
+		if(tmpSelectedTower.getExp()==100) {
 		BaseTower t = tmpSelectedTower;
 		for(int i=0;i<towers.size();i++)
 		{
@@ -182,12 +206,34 @@ public class Player {
 		else if(t instanceof PoisonTower)
 			towers.add(new PoisonTower1());
 		t = null;
+		}
+		else if(Player.cash>=100) {
+			modifyCash(-100);
+			BaseTower t = tmpSelectedTower;
+			for(int i=0;i<towers.size();i++)
+			{
+				if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
+					towers.remove(i);
+			} 
+			tmpSelectedTower = null;
+			TowerSelected = false ;
+			
+			if(t instanceof FireTower) {
+				towers.add(new FireTower1());
+			}
+			else if(t instanceof IceTower) 
+				towers.add(new IceTower1());
+			else if(t instanceof PoisonTower)
+				towers.add(new PoisonTower1());
+			t = null;
+		}
 	}
 	
 	//Second Upgrade Option
 	
 	public void upgrade2()
 	{
+		if(tmpSelectedTower.getExp()==100) {
 		BaseTower t = tmpSelectedTower;
 		for(int i=0;i<towers.size();i++)
 		{
@@ -203,28 +249,73 @@ public class Player {
 		else if(t instanceof PoisonTower)
 			towers.add(new PoisonTower2(new Texture("poisonTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
 		t = null;
+		}
+		else if(Player.cash>=100)
+		{
+			modifyCash(-100);
+			BaseTower t = tmpSelectedTower;
+			for(int i=0;i<towers.size();i++)
+			{
+			if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
+				towers.remove(i);
+			} 
+			tmpSelectedTower = null;
+			TowerSelected = false ;
+			if(t instanceof FireTower)
+				towers.add(new FireTower2(new Texture("fireTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			else if(t instanceof IceTower) 
+				towers.add(new IceTower2(new Texture("iceTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			else if(t instanceof PoisonTower)
+				towers.add(new PoisonTower2(new Texture("poisonTowerEdit2.png"),t.getTile(),64,64,this.waveManager.getCurrentWave().getMonsters()));
+			t = null;
+		}
+
 	} 
 	
 	//forTesting
 		public void upgrade2Test()
 		{
-			BaseTower t = tmpSelectedTower;
-			for(int i=0;i<towers.size();i++)
+			if(tmpSelectedTower.getExp()==100)
 			{
-				if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
-					towers.remove(i);
-			} 
-			tmpSelectedTower = null;
-			TowerSelected = false ;
-			
-			if(t instanceof FireTower) {
-				towers.add(new FireTower2());
+				BaseTower t = tmpSelectedTower;
+				for(int i=0;i<towers.size();i++)
+				{
+					if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
+						towers.remove(i);
+				} 
+				tmpSelectedTower = null;
+				TowerSelected = false ;
+				
+				if(t instanceof FireTower) {
+					towers.add(new FireTower2());
+				}
+				else if(t instanceof IceTower) 
+					towers.add(new IceTower2());
+				else if(t instanceof PoisonTower)
+					towers.add(new PoisonTower2());
+				t = null;
 			}
-			else if(t instanceof IceTower) 
-				towers.add(new IceTower2());
-			else if(t instanceof PoisonTower)
-				towers.add(new PoisonTower2());
-			t = null;
+			else if(Player.cash>=100)
+			{
+				modifyCash(-100);
+				BaseTower t = tmpSelectedTower;
+				for(int i=0;i<towers.size();i++)
+				{
+					if(tmpSelectedTower.getmapX() == towers.get(i).getmapX() && tmpSelectedTower.getmapY() == towers.get(i).getmapY())
+						towers.remove(i);
+				} 
+				tmpSelectedTower = null;
+				TowerSelected = false ;
+				
+				if(t instanceof FireTower) {
+					towers.add(new FireTower2());
+				}
+				else if(t instanceof IceTower) 
+					towers.add(new IceTower2());
+				else if(t instanceof PoisonTower)
+					towers.add(new PoisonTower2());
+				t = null;
+			}
 		}
 	
 	public void sell()
@@ -244,10 +335,6 @@ public class Player {
 		return towers;
 	}
 	
-	public void cashUpgrade()
-	{
-		Player.cash -= 100 ;
-	}
 
 
 	public void draw(Batch b)

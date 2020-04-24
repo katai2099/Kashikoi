@@ -37,6 +37,8 @@ public class Giant extends Monster{
 		this.def = 5;
 		this.hp = 20;
 		this.speed = 8;
+		this.alive = true;
+		this.giveGold = 5;
 	}
 
 

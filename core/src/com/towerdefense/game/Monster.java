@@ -45,6 +45,7 @@ public class Monster extends Sprite{
 	float tmpTimePoison;
 	float tmpSlowTime;
 	boolean piercethrough;
+	boolean enterCastle;
 	
 	
 	boolean Twice ;
@@ -59,7 +60,7 @@ public class Monster extends Sprite{
 	}
 	
 	public Monster(Texture texture, Tile startile, int height, int width, int atk, int speed) {
-	}
+	} 
 
 	public Map getMap() {
 		return map;
@@ -143,6 +144,7 @@ public class Monster extends Sprite{
 	 	 Twice = false;
 	 	 permanentSlow = false;
 	 	 piercethrough = false;
+	 	 enterCastle = false;
 	}
 
 	public float getX() {
@@ -213,13 +215,14 @@ public class Monster extends Sprite{
 				{
 					map.castle.decreasehp(atk);
 					die();
+					enterCastle = true;
 				}
 				else
 					currentCheckpoint++;
 			}else {
 				dt = Gdx.graphics.getDeltaTime()*10;
 				if(dt > 0.18f) dt = 0.16f;
-			//	System.out.println(dt);
+			
 			if(checkpoints.get(currentCheckpoint).getX()==1
 					&&checkpoints.get(currentCheckpoint).getY()==0)x+= speed*dt;//x=x+speed;
 			else if (checkpoints.get(currentCheckpoint).getX()==-1
@@ -236,22 +239,19 @@ public class Monster extends Sprite{
 			
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
-				System.out.println(timeincaseScreenFreeze);
+				
 			timeincaseScreenFreeze = 0.016f;}
 			tmpTimeBurn += timeincaseScreenFreeze;
-		//	System.out.println(tmpTimeBurn);
+		
 			if(tmpTimeBurn>1 && !Twice)
 			{
-				hp-=1;
-				if(hp<=0) {die(); Player.modifyCash(this.giveGold);}
+				damage(-1);
 				Twice = true; 
-				//burn = false;
-				//tmpTimeBurn=0;
+				
 			}
 			if(tmpTimeBurn>2 && Twice && alive)
 			{
-				hp-=1;
-				if(hp<=0) {die(); Player.modifyCash(this.giveGold);}
+				damage(-1);
 				burn = false;
 				Twice = false;
 				tmpTimeBurn = 0 ;
@@ -264,7 +264,7 @@ public class Monster extends Sprite{
 			this.speed = 0;
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
-				System.out.println(timeincaseScreenFreeze);
+				
 			timeincaseScreenFreeze = 0.016f;}
 			tmpTimeFreeze += timeincaseScreenFreeze;
 			if(tmpTimeFreeze>1)
@@ -282,7 +282,7 @@ public class Monster extends Sprite{
 		{
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
-				System.out.println(timeincaseScreenFreeze);
+				
 			timeincaseScreenFreeze = 0.016f;}
 			tmpSlowTime += timeincaseScreenFreeze;
 			if(tmpSlowTime>1)
@@ -293,12 +293,6 @@ public class Monster extends Sprite{
 				hpNumber.setColor(Color.BLACK);
 			}
 		}
-	}
-	
-	public boolean enterCastle()
-	{
-		//return map.castle.getX()==this.getX() && map.castle.getY()==this.getY();
-		return this.getmapX() == (int)map.getCastle().getX()/64 && this.getmapY() == (int)((map.getCastle().getY()-64)/64);
 	}
 	
 	protected boolean checkpointReached()
@@ -328,7 +322,7 @@ public class Monster extends Sprite{
 			if(currentD[0]==2 || cnt == 20 || currentD[1]==2)
 			{
 				continuee = false;
-			//	System.out.println(currentD[0]+" "+currentD[1]+" "+cnt);
+			
 			}
 			else
 			{
@@ -453,10 +447,7 @@ public class Monster extends Sprite{
 		}
 	}
 
-	public void current()
-	{
-		System.out.println(currentTile.getmapX()+ " " + currentTile.getmapY() );
-	}
+	
 	
 	public Tile getCurrentTile() {
 		return currentTile;
