@@ -14,7 +14,7 @@ public class FireTowertestt {
 		k.damageMonster(t); 
 		
 		float hp = t.getHp();
-		float expected = 1.0f;
+		float expected = 2.0f;
 		assertEquals(expected,hp,0.0f);
 	}
 
