@@ -20,7 +20,9 @@ build:
       policy: push
       paths:
         - build
-        - .gradle
+        - .gradle 
+   
+   
 
 test:
    stage: test
