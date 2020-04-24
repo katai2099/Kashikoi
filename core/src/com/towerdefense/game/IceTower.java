@@ -30,6 +30,8 @@ public class IceTower extends BaseTower{
 				this.exp = 0;
 				this.cost = 50;
 				this.refund = 25;
+				this.x=0;
+				this.y=0;
 		}
 
 		public void update()

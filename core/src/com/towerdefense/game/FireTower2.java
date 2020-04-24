@@ -28,7 +28,14 @@ public class FireTower2 extends FireTower{
 		targets = new ArrayList<Monster>();
 		cnt ++;
 	}
-	
+	//for Testing
+	public FireTower2() {
+		this.refund = 50;
+		this.damage = 7;
+		this.x=0;
+		this.y=0;
+	}
+
 	@Override
 	Monster aimTarget()
 	{

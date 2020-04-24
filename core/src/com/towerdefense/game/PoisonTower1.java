@@ -28,6 +28,8 @@ public class PoisonTower1 extends PoisonTower{
 	{
 		this.damage = 10;
 		this.refund = 50; 
+		this.x=0;
+		this.y=0;
 	}
 
 	

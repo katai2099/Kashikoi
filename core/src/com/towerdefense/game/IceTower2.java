@@ -30,6 +30,9 @@ public class IceTower2 extends IceTower{
 		this.damage = 5;
 		this.cd = 3;
 		this.frozen = false;
+		this.x=0;
+		this.y=0;
+		this.refund=50;
 	}
 
 	public void update()

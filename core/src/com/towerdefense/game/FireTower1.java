@@ -22,7 +22,14 @@ public class FireTower1 extends FireTower{
 		this.refund = 50;
 		dt = Gdx.graphics.getDeltaTime();
 	}
-	
+	//for testing 
+	public FireTower1() {
+		this.damage = 0.5f;
+		this.refund = 50;
+		this.x = 0;
+		this.y=0;
+	}
+
 	public void update()
 	{
 		if(monsters.size()!=0)

@@ -23,12 +23,15 @@ public class PoisonTower extends BaseTower{
 			this.refund = 25;
 		}
 		
+		//for testing
 		public PoisonTower()
 		{
 			this.exp = 0;
 			this.damage = 10;
 			this.cost = 50; 
 			this.refund = 25;
+			this.x=0;
+			this.y=0;
 		}
 		
 		public void shoot()

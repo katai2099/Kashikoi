@@ -30,6 +30,8 @@ public class FireTower extends BaseTower{
 			this.exp = 0;
 			this.refund = 25;
 			this.cost = 50;
+			this.x=0;
+			this.y=0;
 		}
 	
 	

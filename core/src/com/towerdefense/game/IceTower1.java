@@ -22,8 +22,12 @@ public class IceTower1 extends IceTower {
 		this.refund = 50; 
 	}
 	
+	//for Testing
 	public IceTower1() {
 		this.damage = 10;
+		this.x=0;
+		this.y=0;
+		this.refund = 50;
 	}
 
 	

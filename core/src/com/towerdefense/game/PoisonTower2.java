@@ -27,6 +27,8 @@ public class PoisonTower2 extends PoisonTower {
 	{
 		this.damage = 8;
 		this.refund = 50; 
+		this.x=0;
+		this.y=0;
 	}
 			
 	public void shoot()
