@@ -21,7 +21,7 @@ build:
       paths:
         - build/libs/*.jar
         - .gradle 
-     expire_in: 1 week
+      expire_in: 1 week
 
 test:
    stage: test
