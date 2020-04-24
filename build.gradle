@@ -8,9 +8,14 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
         google()
+        
+       
+        
     }
     dependencies {
+    
     	
+		
     }
 
     
@@ -55,10 +60,13 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
 
+	sourceSets.test.java.srcDirs = ["test/"]
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 		testImplementation 'junit:junit:4.12'
+		testImplementation 'org.hamcrest:hamcrest:2.2'
     }
 }
+
