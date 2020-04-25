@@ -6,6 +6,7 @@ import org.junit.Test;
 
 public class OnionTest {
 	
+
 	Onion onion = new Onion();
 	IceTower1 icy1 = new IceTower1();
 	IceTower2 icy2 = new IceTower2();
@@ -35,6 +36,7 @@ public class OnionTest {
 		poison2.damageMonster(onion);
 		assertEquals(2,onion.getHp(),0.0f);
 	}
+	
 	
 
 }

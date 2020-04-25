@@ -21,6 +21,7 @@ public class Monster extends Sprite{
 	float height;
 	float width;
 	float speed;
+	float originalSpeed;
 	int atk;
 	float def;
 	float hp;
@@ -46,9 +47,8 @@ public class Monster extends Sprite{
 	float tmpSlowTime;
 	boolean piercethrough;
 	boolean enterCastle;
-	
-	
 	boolean Twice ;
+	
 	public Monster()
 	{
 		
@@ -145,6 +145,8 @@ public class Monster extends Sprite{
 	 	 permanentSlow = false;
 	 	 piercethrough = false;
 	 	 enterCastle = false;
+	 	 this.speed = 10;
+	 	 this.originalSpeed = this.speed;
 	}
 
 	public float getX() {
@@ -236,7 +238,7 @@ public class Monster extends Sprite{
 		updateCurrentTile();
 		if(burn)
 		{
-			
+			hpNumber.setColor(Color.RED);
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
 				
@@ -245,22 +247,22 @@ public class Monster extends Sprite{
 		
 			if(tmpTimeBurn>1 && !Twice)
 			{
-				damage(-1);
+				damage(1);
 				Twice = true; 
 				
 			}
 			if(tmpTimeBurn>2 && Twice && alive)
 			{
-				damage(-1);
+				damage(1);
 				burn = false;
 				Twice = false;
 				tmpTimeBurn = 0 ;
-				
 				hpNumber.setColor(Color.BLACK);
 			}
 		}
 		if(freeze)
 		{
+			hpNumber.setColor(Color.BLUE);
 			this.speed = 0;
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
@@ -269,10 +271,10 @@ public class Monster extends Sprite{
 			tmpTimeFreeze += timeincaseScreenFreeze;
 			if(tmpTimeFreeze>1)
 			{
-				if(slow) this.speed = 9;
-				else this.speed = 10;
-				if(permanentSlow) this.speed = 7;
-				if(permanentSlow && slow) this.speed = 6;
+				if(slow) this.speed = originalSpeed-1;
+				else this.speed = originalSpeed;
+				if(permanentSlow) this.speed = originalSpeed-3;
+				if(permanentSlow && slow) this.speed = originalSpeed-4;
 				freeze = false;
 				tmpTimeFreeze=0;
 				hpNumber.setColor(Color.BLACK);
@@ -280,6 +282,7 @@ public class Monster extends Sprite{
 		}
 		if(slow)
 		{
+			hpNumber.setColor(Color.BLUE);
 			float timeincaseScreenFreeze = Gdx.graphics.getDeltaTime();
 			if(timeincaseScreenFreeze > 0.020f) {
 				
@@ -293,6 +296,9 @@ public class Monster extends Sprite{
 				hpNumber.setColor(Color.BLACK);
 			}
 		}
+		if(permanentSlow)hpNumber.setColor(Color.BLUE); 
+		if(piercethrough)hpNumber.setColor(Color.FOREST);
+		if(piercethrough && permanentSlow) hpNumber.setColor(Color.PURPLE); 
 	}
 	
 	protected boolean checkpointReached()
@@ -328,7 +334,7 @@ public class Monster extends Sprite{
 			{
 				
 				checkpoints.add(findNextC(checkpoints.get(cnt).getTile(),currentD));
-					//	dir=findDirection(checkpoints.get(cnt).getTile())));
+					
 			}
 			cnt++;
 		}
@@ -477,28 +483,26 @@ public class Monster extends Sprite{
 	protected void burn()
 	{
 		burn = true; 
-	//	hpNumber.setColor(Color.RED); commented out for testing purpose
 	}
 	
 	protected void freeze()
 	{
 		this.speed=0;
 		freeze = true;
-	//	hpNumber.setColor(Color.BLUE); commented out for testing purpose
+	
 	}
 	
 	protected void slow()
 	{
 		this.speed -= 3;
 		permanentSlow = true; 
-	//	hpNumber.setColor(Color.BLUE); commented out for testing purpose
 	}
 	
 	protected void tmpSlow()
 	{
 		this.speed -= 1;
 		slow = true ;
-		//hpNumber.setColor(Color.BLUE);  commented out for testing purpose
+		
 	}
 	
 	protected void pureDamage(float amount)

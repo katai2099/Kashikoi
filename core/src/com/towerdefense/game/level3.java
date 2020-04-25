@@ -65,7 +65,7 @@ public class level3 extends ScreenAdapter{
 		monsterwave[7] = new Squirrel(map.getTile(0,11),map,64,64);
 		monsterwave[8] = new Onion(map.getTile(0, 11),map,64,64); 
 		//wavemanager = new WaveManager(monsterwave[4],4,5,3);	checking single enemy
-		wavemanager= new WaveManager(monsterwave,3,4,9); //time , perWave , wavenum
+		wavemanager= new WaveManager(monsterwave,3,4,10); //time , perWave , wavenum
 		player = new Player(map,wavemanager);
 		setupUI();
 		nextMapstyle = new ButtonStyle();

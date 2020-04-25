@@ -49,9 +49,6 @@ public class Onion extends Monster{
 		this.map = map;
 		this.height=64;
 		this.width = 64;
-		//Monster.id++;
-	//	this.idNumber = id;
-		//this.texture=new Texture("seki.png");
 		this.giveExp = 20;
 		this.giveGold = 100;
 		this.atk = 100;

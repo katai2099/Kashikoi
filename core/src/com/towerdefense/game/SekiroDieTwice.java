@@ -22,6 +22,7 @@ public class SekiroDieTwice extends Monster{
 		this.hiddenhealth = 100;
 		this.def = 10;
 		this.speed = 10;
+		this.originalSpeed=this.speed;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];
@@ -81,6 +82,7 @@ public class SekiroDieTwice extends Monster{
 	public void damage(float amount)
 	{
 		if(amount==0);
+		else if(amount==1) this.hp -= amount;
 		else {
 		if(amount-def<=0)
 		{

@@ -17,7 +17,7 @@ public class IceTower1 extends IceTower {
 		this.timeSinceShoot=0;
 		this.attackSpeed = 3;
 		this.lockOn = false;
-		this.range = 1000;
+		this.range = 320+1;
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
 	}

@@ -10,9 +10,9 @@ public class IceTower extends BaseTower{
 		IceTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> copyOnWriteArrayList) {
 			super(texture, tile, width, height, copyOnWriteArrayList);
 			this.cannon = new Texture("iceProjectile.png");
-			this.damage = 50;
+			this.damage = 10;
 			this.tile = tile;
-			this.exp = 50;
+			this.exp = 0;
 			ammos = new ArrayList<Ammo>();
 			this.timeSinceShoot=0;
 			this.attackSpeed = 3;
@@ -66,9 +66,7 @@ public class IceTower extends BaseTower{
 			timeSinceShoot += dt;
 			if(timeSinceShoot>attackSpeed)
 			{
-				
 				shoot();
-				shootOnce = true ;
 			}
 			}
 			for(int i=0;i<ammos.size();i++)
@@ -89,6 +87,7 @@ public class IceTower extends BaseTower{
 
 		public void damageMonster(Monster monster)
 		{
+			shootOnce = true;
 			monster.damage(this.damage);
 			if(!(monster instanceof Onion)) {
 			if(!monster.slow)

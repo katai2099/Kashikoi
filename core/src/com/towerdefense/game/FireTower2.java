@@ -15,14 +15,14 @@ public class FireTower2 extends FireTower{
 		this.x = tile.getX();
 		this.y = tile.getY();
 		this.cannon = new Texture("fireProjectile.png");
-		this.damage = 7;
+		this.damage = 0;
 		this.tile = tile;
 		this.exp = 0;
 		ammos = new ArrayList<Ammo>();
 		this.timeSinceShoot=0;
 		this.attackSpeed = 3f;
 		this.lockOn = false;
-		this.range = 1000;
+		this.range = 256+1;
 		this.refund = 50;
 		dt = Gdx.graphics.getDeltaTime();
 		targets = new ArrayList<Monster>();

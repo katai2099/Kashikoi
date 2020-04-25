@@ -19,6 +19,7 @@ public class Squirrel extends Monster{
 		this.atk = 5;
 		this.hp = 10;
 		this.speed = 10;
+		this.originalSpeed = this.speed;
 		this.def = 2;
 		this.hiddenhealth = 10;
 		this.currentTile=startile;
@@ -76,13 +77,15 @@ public class Squirrel extends Monster{
 	public void damage(float amount)
 	{
 		if(amount==0);
+		else if (amount ==1) this.hp-= amount ;
 		else {
 		if(amount-def<=0)
 		{
 			this.hp-=0.5f;
 		}
 		else 
-		this.hp -= (amount-this.def);}
+		this.hp -= (amount-this.def);
+		}
 		if(hp<=0) 
 		{
 			die();

@@ -17,7 +17,7 @@ public class PoisonTower2 extends PoisonTower {
 		this.timeSinceShoot=0;
 		this.attackSpeed = 3;
 		this.lockOn = false;
-		this.range = 500;
+		this.range = 320+1;
 		dt = Gdx.graphics.getDeltaTime();
 		this.refund = 50; 
 	}

@@ -12,12 +12,12 @@ public class PoisonTower extends BaseTower{
 			this.cannon = new Texture("poisonProjectile.png");
 			this.damage = 10;
 			this.tile = tile;
-			this.exp = 95;
+			this.exp = 0;
 			ammos = new ArrayList<Ammo>();
 			this.timeSinceShoot=0;
 			this.attackSpeed = 3;
 			this.lockOn = false;
-			this.range = 1000;
+			this.range = 256+1;
 			dt = Gdx.graphics.getDeltaTime();
 			this.cost = 50; 
 			this.refund = 25;
@@ -70,7 +70,7 @@ public class PoisonTower extends BaseTower{
 			{
 				
 				shoot();
-				shootOnce = true ;
+				
 			}
 			}
 			for(int i=0;i<ammos.size();i++)
@@ -90,6 +90,7 @@ public class PoisonTower extends BaseTower{
 
 		public void damageMonster(Monster monster)
 		{
+			shootOnce = true;
 			monster.damage(this.damage);
 		
 		}

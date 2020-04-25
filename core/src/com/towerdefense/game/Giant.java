@@ -16,9 +16,10 @@ public class Giant extends Monster{
 		this.giveGold = 5;
 		this.atk = 20;
 		this.def = 5;
-		this.hp = 20;
+		this.hp = 30;
 		this.hiddenhealth = 20;
-		this.speed = 8;
+		this.speed = 7;
+		this.originalSpeed=this.speed;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];
@@ -51,9 +52,6 @@ public class Giant extends Monster{
 		this.map = map;
 		this.height=64;
 		this.width = 64;
-		//Monster.id++;
-	//	this.idNumber = id;
-		//this.texture=new Texture("seki.png");
 		this.giveExp = 20;
 		this.giveGold = 100;
 		this.atk = 100;
@@ -74,9 +72,11 @@ public class Giant extends Monster{
 	}
 
 
+	//Basic damage monster (defense - attackDamage)
 	public void damage(float amount)
 	{
 		if(amount==0);
+		else if(amount == 1) this.hp-=amount;
 		else {
 		if(amount-def<=0)
 		{
@@ -91,10 +91,7 @@ public class Giant extends Monster{
 		} 
 	}
 	
-	public void die()
-	{
-		alive = false;
-	}
+	
 	
 	
 	

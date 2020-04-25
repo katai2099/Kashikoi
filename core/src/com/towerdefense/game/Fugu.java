@@ -15,10 +15,11 @@ public class Fugu extends Monster{
 		this.giveExp = 8; 
 		this.giveGold = 10;
 		this.atk = 10;
-		this.hp = 50;
+		this.hp = 20;
 		this.hiddenhealth = 50;
 		this.def=0;
 		this.speed = 10;
+		this.originalSpeed=this.speed;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];
@@ -50,9 +51,6 @@ public class Fugu extends Monster{
 		this.map = map;
 		this.height=64;
 		this.width = 64;
-		//Monster.id++;
-	//	this.idNumber = id;
-		//this.texture=new Texture("seki.png");
 		this.giveExp = 20;
 		this.giveGold = 100;
 		this.atk = 100;
@@ -72,7 +70,7 @@ public class Fugu extends Monster{
 	 	populateCheckpointList();
 	}
 
-
+	//Damage monster increase armor of this monster
 	public void damage(float amount)
 	{
 		if(amount == 0)
@@ -82,6 +80,7 @@ public class Fugu extends Monster{
 				this.def+=3;
 			}
 		}
+		else if(amount==1)this.hp-=amount;
 		else {
 		if(def<12) {
 			if(amount-def<=0)

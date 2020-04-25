@@ -148,7 +148,7 @@ public class Map extends Sprite {
 	{
 		if(x<20 && y <15 && x >-1 && y >-1) 
 			return map[x][y];
-		else return new Tile(texture=new Texture("badlogic.jpg"),TileType.Outsider,0,0,0,0);
+		else return new Tile(TileType.Outsider,0,0,0,0);
 	}
 	
 	//for Testing (Texture is not needed)

@@ -10,9 +10,9 @@ public class FireTower extends BaseTower{
 	FireTower(Texture texture, Tile tile, int width, int height, ArrayList<Monster> arrayList) {
 		super(texture, tile, width, height, arrayList);
 		this.cannon = new Texture("fireProjectile.png");
-		this.damage = 5;
+		this.damage = 12;
 		this.tile = tile;
-		this.exp = 50;
+		this.exp = 0;
 		ammos = new ArrayList<Ammo>();
 		this.timeSinceShoot=0;
 		this.attackSpeed = 3;
@@ -69,7 +69,7 @@ public class FireTower extends BaseTower{
 		{
 			if(target!=null ) {
 			shoot();
-			shootOnce = true ;}
+			}
 		}
 		}
 		for(int i=0;i<ammos.size();i++)
@@ -92,7 +92,7 @@ public class FireTower extends BaseTower{
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);
-	
+		shootOnce = true; 
 	}
 	
 	
