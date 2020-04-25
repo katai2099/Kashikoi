@@ -43,6 +43,8 @@ public class BaseTower extends Sprite{
 		lockOn = false;
 		this.x=0;
 		this.y=0;
+		this.exp=0;
+		shootOnce = false;
 	}
 	
 	BaseTower(Texture texture,Tile tile,int width,int height,int damage,ArrayList<Monster>monsters)
@@ -236,10 +238,9 @@ public class BaseTower extends Sprite{
 		if(target!=null) {
 		if( shootOnce==true && !target.enterCastle && this.exp <100 && !target.isAlive())
 		{
-			this.exp += target.giveExp;
-			if(exp>100) exp = 100;
-			shootOnce = false;
-		}	}
+			increaseExp(target.giveExp);
+		}	
+		}
 		
 		dt = Gdx.graphics.getDeltaTime();
 		if(dt>1.5f) dt = 1 ;
@@ -262,8 +263,6 @@ public class BaseTower extends Sprite{
 		timeSinceShoot = 0;
 		if(target!=null)
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12));
-		
-	//	target.reduceHiddenHealth(damage);
 	}
 
 	
@@ -300,6 +299,13 @@ public class BaseTower extends Sprite{
 
 	public int getRefund() {
 		return refund;
+	}
+	
+	public void increaseExp(int exp)
+	{
+		if(this.exp<100) this.exp+=exp;
+		if(this.exp>100) this.exp=100;
+		shootOnce=false ;
 	}
 
 	

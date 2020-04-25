@@ -14,25 +14,25 @@ public class Castle extends Sprite{
 	Tile startTile;
 	float barWidth ;
 	
-	
+	//for testing
 	public Castle()
 	{
 		this.hp = 100;
 		this.barWidth = 2680;
 	}
 	
-	
-/*	public Castle(Texture texture,Tile startTile,int width,int height)
+	//for map testing
+	public Castle(int x, int y, int width,int height)
 	{
 		this.hp = 100;
-		this.texture = texture;
-		this.x = startTile.getX();
-		this.y = startTile.getY();
-		this.width = width;
-		this.height = height;
 		this.barWidth = 2680;
-	} */
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height= height;
+	} 
 
+	//Program Constructor
 	public Castle(Texture texture, int x, int y, int width, int height) {	
 		this.hp = 100;
 		this.barWidth = 2680;

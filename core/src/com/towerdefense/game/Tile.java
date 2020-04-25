@@ -12,11 +12,25 @@ public class Tile extends Sprite{
 	private Texture texture; 
 	private TileType tiletype;
 	
+	
 	public Tile(Texture texture,TileType tiletype,int x,int y,int width,int height)
-	//public Tile(Texture texture,int x,int y,int width,int height,)
+
 	{
 		super(texture);
 		this.texture = texture;
+		this.x = x;
+		this.y = y;
+		this.width = width; 
+		this.height = height;
+		this.tiletype = tiletype;
+	
+	}
+	
+	
+	//for testing (Texture is not needed)
+	
+	public Tile(TileType tiletype,int x,int y,int width,int height)
+	{
 		this.x = x;
 		this.y = y;
 		this.width = width; 

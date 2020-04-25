@@ -138,7 +138,6 @@ public class PlayerTest {
 		fireTower.damageMonster(test2);
 		fireTower.damageMonster(test3);
 		assertEquals(test.giveGold+test1.giveGold+test2.giveGold+test3.giveGold,Player.cash);
-		
 	}
 	
 	

@@ -36,16 +36,16 @@ public class Map extends Sprite {
 			{
 				if(newmap[i][j]==0)
 				{
-				map[i][j]= new Tile(texture = new Texture("concrete.png"),TileType.Concrete,i*64,(j+1)*64,64,64);
+				map[i][j]= new Tile(TileType.Concrete,i*64,(j+1)*64,64,64);
 				}
 				else if(newmap[i][j]==1)
 				{
-					map[i][j] = new Tile(texture = new Texture("grass.png"),TileType.Grass,i*64,(j+1)*64,64,64);
+					map[i][j] = new Tile(TileType.Grass,i*64,(j+1)*64,64,64);
 				}
 				else if(newmap[i][j]==2)
 				{
-					map[i][j] = new Tile(texture = new Texture("grass.png"),TileType.Castle,i*64,(j+1)*64,64,64);
-					castle = new Castle(texture = new Texture("castle3.png"),i*64,(j+1)*64,70,70);
+					map[i][j] = new Tile(TileType.Castle,i*64,(j+1)*64,64,64);
+					castle = new Castle(i*64,(j+1)*64,70,70);
 				}
 			}
 		}
@@ -149,6 +149,14 @@ public class Map extends Sprite {
 		if(x<20 && y <15 && x >-1 && y >-1) 
 			return map[x][y];
 		else return new Tile(texture=new Texture("badlogic.jpg"),TileType.Outsider,0,0,0,0);
+	}
+	
+	//for Testing (Texture is not needed)
+	public Tile getTileTest(int x,int y)
+	{
+		if(x<20 && y <15 && x >-1 && y >-1) 
+			return map[x][y];
+		else return new Tile(TileType.Outsider,0,0,0,0);
 	}
 	
 	public void draw(Batch b)
