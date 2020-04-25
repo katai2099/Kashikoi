@@ -103,7 +103,7 @@ public class MenuScreen extends ScreenAdapter{
 						return false;
 					
 					try {
-						towerDefense.setActiveScreen(new GameScreen());
+						towerDefense.setActiveScreen(new level1());
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

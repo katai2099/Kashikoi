@@ -51,7 +51,7 @@ public class GameScreen extends ScreenAdapter{
 	public GameScreen() throws FileNotFoundException, IOException {
 		
 		this.batch = towerDefense.batch;
-		map = new Map("level1.txt");
+		map = new Map("leveldev.txt");
 		monsterwave = new Monster[5];
 		monsterwave[4] = new SekiroDieTwice(map.getTile(3, 0),map,64,64);
 		monsterwave[0] = new Giant(map.getTile(3, 0),map,64,64);
