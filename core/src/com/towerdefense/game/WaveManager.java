@@ -45,6 +45,7 @@ public class WaveManager extends Sprite {
 			Player.win = true;
 			Player.end = true;
 		}else {
+			//every 3rd wave we will increase number of monster per wave by one (2 in two entry map)
 			if(waveNumber % 3 == 0 && !increase) {
 				if(monsters.length==5) {
 				monstersPerWave++; increase = true;}
@@ -65,6 +66,10 @@ public class WaveManager extends Sprite {
 	//Multiple enemies
 	public void newWave()
 	{
+		/*check if waveNumber is the last wave 
+		if so we spawn boss 
+		else we spawn normal monster
+		*/
 		if(waveNumber==numberOfWave-1)
 		{
 			if(monsters.length==5)
@@ -77,7 +82,7 @@ public class WaveManager extends Sprite {
 		waveNumber++;
 	}
 	
-	//single enemy
+	//single enemy used to spawn boss
 	public void newWaveSingle()
 	{
 		currentWave = new Wave(timeBetweenMonster,monster,monstersPerWave);

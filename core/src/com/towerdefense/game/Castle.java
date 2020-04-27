@@ -44,6 +44,45 @@ public class Castle extends Sprite{
 		
 	}
 
+
+	
+	public boolean gotattacked(Monster monster)
+	{
+		return this.x/64==monster.getCurrentTile().getmapX() && (this.y-64)/64 == monster.getCurrentTile().getmapY();
+	}
+	
+	//decreaseHp of castle base on monster atkpoint 
+	public void decreasehp(int atk)
+	{
+		this.hp -= atk;
+		barWidth -= (atk*2680)/100;
+	}
+	
+	//check whether castle is destroy or not
+	public boolean isDestroy()
+	{
+		return hp <= 0;
+	}
+	
+	//draw method 
+	public void draw(Batch b)
+	{
+		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	
+	public float getBarWidth()
+	{
+		return barWidth;
+	}
+	
 	public Texture getTexture() {
 		return texture;
 	}
@@ -90,49 +129,6 @@ public class Castle extends Sprite{
 
 	public void setStartTile(Tile startTile) {
 		this.startTile = startTile;
-	}
-	
-	public boolean gotattacked(Monster monster)
-	{
-		/*return this.x <= monster.getX()
-				&& monster.getX()+monster.getWidth() < this.x+this.width 
-				&& this.y <= monster.getY()
-				&& monster.getY()+monster.getHeight() < this.y+this.height;*/
-	/*	return (int)(this.x/64)-1 == monster.getCurrentTile().getmapX()&&(int)(this.y-64)/64==monster.getCurrentTile().getmapY()
-				|| (int) ((this.y/64)-64)-1 == monster.getCurrentTile().getmapY()  && (int) (this.x/64) == monster.getCurrentTile().getmapX() 
-				|| (int) (this.x/64)+1 == monster.getCurrentTile().getmapX() && (int) ((this.y)-64/64) == monster.getCurrentTile().getmapX() 
-				|| (int)((this.y-64)/64)+1 == monster.getCurrentTile().getmapY() && (int) (this.x/64) == monster.getCurrentTile().getmapX() ;*/
-		return this.x/64==monster.getCurrentTile().getmapX() && (this.y-64)/64 == monster.getCurrentTile().getmapY();
-	}
-	
-	public void decreasehp(int atk)
-	{
-		this.hp -= atk;
-		barWidth -= (atk*2680)/100;
-	}
-	
-	public boolean isDestroy()
-	{
-		return hp <= 0;
-	}
-	
-	
-	public void draw(Batch b)
-	{
-		b.draw(getTexture(),getX(),getY(),getWidth(),getHeight());
-	}
-
-	public int getHp() {
-		return hp;
-	}
-
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-	
-	public float getBarWidth()
-	{
-		return barWidth;
 	}
 
 	

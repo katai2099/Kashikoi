@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * IceTower2 can temporary freeze monster for 1 second 
+ * this effect has 3 second cooldown
+ */
+
 public class IceTower2 extends IceTower{
 		float cd;
 		boolean frozen;
@@ -79,7 +84,7 @@ public class IceTower2 extends IceTower{
 		}
 	}
 
-
+	//freeze monster for 1 second and effect has 3 seconds cooldown
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);

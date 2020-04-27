@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * IceTower1 can permanently decrease monster speed by 3 points 
+ */
+
 public class IceTower1 extends IceTower {
 
 	IceTower1(Texture texture, Tile tile, int width, int height, ArrayList<Monster> monsters) {
@@ -66,6 +70,7 @@ public class IceTower1 extends IceTower {
 		}
 	}
 	
+	//add ammo to list of ammos
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
@@ -75,7 +80,7 @@ public class IceTower1 extends IceTower {
 		}
 	}
 
-
+	//permanently decrese monster speed by 3 points 
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);
@@ -85,13 +90,6 @@ public class IceTower1 extends IceTower {
 			monster.slow();
 		}
 		}
-		//monster.damage(this.damage);
-		//monster.hp -= damage;
-		/*if(monster.getHp()<=0) 
-		{
-			monster.die();
-			Player.modifyCash(monster.giveGold);
-		}*/
 	}
 	
 	

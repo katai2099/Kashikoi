@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/*	fireTower1 attack speed is fastest in the game 
+	but least in damage 
+*/
 public class FireTower1 extends FireTower{
 
 	FireTower1(Texture texture, Tile tile, int width, int height, ArrayList<Monster> monsters) {
@@ -66,7 +69,7 @@ public class FireTower1 extends FireTower{
 			if(ammos.get(i).alive==false) ammos.remove(i);
 		}
 	}
-	
+	//add ammo to list of ammos
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
@@ -76,7 +79,6 @@ public class FireTower1 extends FireTower{
 		}
 	}
 	
-	
 	public void reduceHiddenhealth(Monster monster)
 	{
 		if(monster instanceof Onion) ((Onion) monster).reduceHiddenHealth();
@@ -84,7 +86,7 @@ public class FireTower1 extends FireTower{
 		monster.hiddenhealth -= this.damage;
 	}
 	
-
+	//damage monster when ammo reached monster position
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);

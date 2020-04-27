@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
+//User Interface of the game 
+
 public class UI {
 	
 	ArrayList <myButton> buttons;
@@ -52,7 +54,7 @@ public class UI {
 	{
 		hiddenButtons.add(new myButton(name,texture,x,y));
 	}
-	
+	//check if the button is clicked by user
 	public boolean isButtonClicked(String buttonname)
 	{
 		myButton b = getButton(buttonname);
@@ -62,7 +64,7 @@ public class UI {
 				MouseY > b.getY() && MouseY < b.getY() + b.getHeight()) return true;
 		else return false; 
 	}
-	
+	//check if the tower is clicked by user 
 	public boolean isTowerClicked()
 	{
 		float MouseX = Gdx.input.getX();

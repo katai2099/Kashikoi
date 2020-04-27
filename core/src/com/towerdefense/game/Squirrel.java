@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * Squirrel is basic monster with fastest speed
+ */
+
 public class Squirrel extends Monster{
 	
 
@@ -73,7 +77,7 @@ public class Squirrel extends Monster{
 	 	populateCheckpointList();
 	}
 
-
+	//Receive from external source
 	public void damage(float amount)
 	{
 		if(amount==0);

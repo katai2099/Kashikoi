@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * Giant has most HP in the game but has slow speed
+ */
+
 public class Giant extends Monster{
 	
 	Giant(Tile startile,Map map,float height,float width)

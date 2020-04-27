@@ -10,32 +10,7 @@ public class towerDefense extends BaseGame {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-	/*	try {
-			setActiveScreen(new GameScreen());
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	*/
-	
-		/*	try {
-				setActiveScreen(new GameScreen());
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			setActiveScreen(new MenuScreen());
-	/*	try {
-			setActiveScreen(new LevelSelection());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */
 	}
 
 	@Override

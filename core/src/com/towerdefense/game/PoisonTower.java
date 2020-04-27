@@ -43,12 +43,20 @@ public class PoisonTower extends BaseTower{
 			{
 				target = aimTarget();
 			}
+			/*
+			check if it has been placed on the map on for the first time
+			if the target is not null then shoot */
 			if(first && target!=null)
 			{
 				shoot();
 				first = false;
 			}
+			//only check if target is not null
 			if(target!=null ) {
+				/*
+				check if monster is alive and been shot by tower once and monster is not entering castle
+				if so increase its exp by monster giveEXP
+				*/
 			if(shootOnce==true && !target.enterCastle && this.exp <100 && !target.isAlive())
 			{
 				this.exp += target.giveExp;
@@ -56,6 +64,7 @@ public class PoisonTower extends BaseTower{
 				shootOnce = false;
 			}
 			}
+			//check if target is null,dead,not in range of attack if so need to aimNewTarget by changing lockOn to false
 			if(target == null || target.isAlive() == false || !isInRange(target))
 			{
 				lockOn = false; 
@@ -68,9 +77,7 @@ public class PoisonTower extends BaseTower{
 			timeSinceShoot += dt;
 			if(timeSinceShoot>attackSpeed)
 			{
-				
 				shoot();
-				
 			}
 			}
 			for(int i=0;i<ammos.size();i++)
@@ -80,6 +87,7 @@ public class PoisonTower extends BaseTower{
 			}
 		}
 		
+		//change timeSinceshoot to 0 and add ammo to list of ammo
 		public void shoot()
 		{	
 			timeSinceShoot = 0;
@@ -87,12 +95,11 @@ public class PoisonTower extends BaseTower{
 			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 		}
 
-
+		//Damage monster when ammo position reached monster position  
 		public void damageMonster(Monster monster)
 		{
 			shootOnce = true;
 			monster.damage(this.damage);
-		
 		}
 		
 

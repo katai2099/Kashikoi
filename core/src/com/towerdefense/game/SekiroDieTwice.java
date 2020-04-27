@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * SekiroDieTwice is boss monster it can revive with half
+ * of its original HP
+ */
+
 public class SekiroDieTwice extends Monster{
 	
 	boolean reviveYet;
@@ -78,7 +83,7 @@ public class SekiroDieTwice extends Monster{
 	 	reviveYet = false;
 	}
 	
-		
+	//receive damage from external source 
 	public void damage(float amount)
 	{
 		if(amount==0);
@@ -102,13 +107,12 @@ public class SekiroDieTwice extends Monster{
 		}
 	}
 	
-
-	
+	//check whether it has been revived once or not
 	private boolean isRevive()
 	{
 		return reviveYet;
 	}
-	
+	//call when it die and has not been revive once
 	private void revive()
 	{
 		hp = 100;

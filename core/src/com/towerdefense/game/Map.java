@@ -54,7 +54,8 @@ public class Map extends Sprite {
 	public Map() {
 		castle = new Castle();
 	}
-
+	
+	
 	public void loadMap(String Level) throws FileNotFoundException, IOException
 	{
 		map = new Tile[20][15];
@@ -85,7 +86,7 @@ public class Map extends Sprite {
 	}
 		br.close();
 	}
-	
+	//use to load map from textfile
 	public void loadMapInternal(String Level)
 	{
 		map = new Tile[20][15];

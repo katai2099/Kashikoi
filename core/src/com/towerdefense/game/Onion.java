@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * Onion is special monster it cannot be effected by any 
+ * effect of the tower. it need 3 hits from tower to kill 
+ * no matter how much atk point tower has
+ */
+
 public class Onion extends Monster{
 	
 	Onion(Tile startile,Map map,float height,float width)
@@ -68,7 +74,7 @@ public class Onion extends Monster{
 	 	populateCheckpointList();
 	}
 	
-	
+	//hp decrease by 1 when being attacked 
 	@Override
 	public void damage(float amount)
 	{

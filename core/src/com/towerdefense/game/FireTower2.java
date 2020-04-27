@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ 	FireTower2 can attack multiple monsters MAX = 3 monsters
+ 	and also burn monster for 2 seconds
+*/
+
 public class FireTower2 extends FireTower{
 
 		ArrayList<Monster>targets;
@@ -35,7 +40,11 @@ public class FireTower2 extends FireTower{
 		this.x=0;
 		this.y=0;
 	}
-
+	
+	/*
+	 * aim for closest target in the wave 
+	 * max is 3 targets
+	 */
 	@Override
 	Monster aimTarget()
 	{
@@ -74,7 +83,7 @@ public class FireTower2 extends FireTower{
 	}
 		
 	
-	
+	//check whether monster is in range of attack
 	public boolean isInRange(Monster m)
 	{
 		float xDistance = Math.abs(m.getX()-this.x);
@@ -83,21 +92,19 @@ public class FireTower2 extends FireTower{
 			return true;
 		return false;
 	}
-	
+	//find distance from tower to monster 
 	public float findDistance(Monster m)
 	{
 		float xDistance = Math.abs(m.getX()-this.x);
 		float yDistance = Math.abs(m.getY()-this.y);
 		return xDistance + yDistance;
 	}
-	
+	//update list of monster in the wave 
 	public void updateMonsterList(ArrayList<Monster>list)
 	{
 		monsters = list;
 	}
-	
-	
-	
+		
 	public void update()
 	{
 		if(monsters.size()!=0)
@@ -120,6 +127,10 @@ public class FireTower2 extends FireTower{
 		targets.add(aimTarget());
 		if(cnt<4) cnt++;
 		}
+		/*
+			if tower has been place on the map for first time and aim target for 3 times
+			and target is not null then attack 
+		*/
 		if(first && cnt==4) {
 			shoot();
 			first = false;
@@ -139,7 +150,6 @@ public class FireTower2 extends FireTower{
 		{	
 		if(!allnull())
 			shoot();
-		
 		}
 		}
 		for(int i=0;i<ammos.size();i++)
@@ -149,6 +159,7 @@ public class FireTower2 extends FireTower{
 		}
 	}
 	
+	//add ammo to list of ammos 
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
@@ -163,6 +174,7 @@ public class FireTower2 extends FireTower{
 		
 	}
 	
+	//check if targets are all null or not 
 	public boolean allnull()
 	{
 		for(Monster m:targets)
@@ -173,6 +185,7 @@ public class FireTower2 extends FireTower{
 		return true;
 	}
 	
+	//damage monster when ammo reach monster position and trigger burn effect on monster
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);

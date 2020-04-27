@@ -1,10 +1,15 @@
 package com.towerdefense.game;
 
+//this class use to store checkpoint of monster 
+
 public class Checkpoint {
 	
 	private Tile tile;
 	private int x ;
 	private int y;
+	
+	//x is x direction
+	//y is y direction
 	
 	public Checkpoint(Tile tile,int x,int y)
 	{

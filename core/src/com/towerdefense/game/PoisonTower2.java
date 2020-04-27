@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * PoisonTower 2 can attack without calculate the difference 
+ * between monster defense and its atkpoint
+ */
+
 public class PoisonTower2 extends PoisonTower {
 
 	PoisonTower2(Texture texture, Tile tile, int width, int height, ArrayList<Monster> monsters) {
@@ -30,7 +35,7 @@ public class PoisonTower2 extends PoisonTower {
 		this.x=0;
 		this.y=0;
 	}
-			
+	//add ammo to list of ammo	
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
@@ -74,7 +79,7 @@ public class PoisonTower2 extends PoisonTower {
 		}
 	}
 
-
+	//attack without calculate the difference between its attackpoint and monster defense
 	public void damageMonster(Monster monster)
 	{
 		if(monster instanceof Onion)

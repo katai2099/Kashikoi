@@ -6,6 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+/*
+ * Player class used to manipulate gameplay
+ */
+
 public class Player {
 	
 	public static boolean win;
@@ -57,7 +61,6 @@ public class Player {
 	}
 	
 	//modifyCash function used when buying or selling tower or killing monsters
-	
 	public static boolean modifyCash(int cost)
 	{
 		if(cash + cost>= 0)
@@ -68,7 +71,7 @@ public class Player {
 		return false;
 		
 	}
-	
+	//pick tower on the map 
 	public void pickTower(BaseTower t)
 	{
 		tmpTower = t;
@@ -125,6 +128,7 @@ public class Player {
 		leftMousePressed = Gdx.input.isButtonJustPressed(0);
 	}
 	
+	//pickTower base on where the mouse position is 
 	public void saveTower()
 	{
 		tmpSelectedTower = null;
@@ -318,6 +322,7 @@ public class Player {
 			}
 		}
 	
+	//sell tower method
 	public void sell()
 	{
 		for(int i=0;i<towers.size();i++)

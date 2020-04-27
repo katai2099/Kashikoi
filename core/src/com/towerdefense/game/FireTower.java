@@ -79,16 +79,14 @@ public class FireTower extends BaseTower{
 		}
 	}
 	
+	//add ammo to list of ammos
 	public void shoot()
 	{	
 		timeSinceShoot = 0;
-		 
 		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 		
 	}
-	
-
-
+	//damage monster when ammo reached monster position 
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);

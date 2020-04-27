@@ -3,6 +3,10 @@ package com.towerdefense.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/*
+ * Button class, used in game 
+ */
+
 public class myButton extends Sprite{
 	
 	Texture texture;

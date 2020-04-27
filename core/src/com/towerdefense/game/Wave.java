@@ -43,7 +43,7 @@ public class Wave extends Sprite {
 		
 		
 	} 
-	
+	//use to spawn boss type of monster
 	public Wave(float spawnTime,Monster monster,int monstersPerWave)
 	{
 		this.spawnTime = spawnTime;
@@ -57,7 +57,7 @@ public class Wave extends Sprite {
 		dt = Gdx.graphics.getDeltaTime();
 		Spawn();
 	}
-	
+	//use to spawn boss type of monster in map with 2 entry
 	public Wave(float spawnTime,Monster boss1,Monster boss2,int monstersPerWave)
 	{
 		this.spawnTime = spawnTime;
@@ -83,6 +83,7 @@ public class Wave extends Sprite {
 		timeSinceLastSpawn += dt;
 		if(monsters.size()<monstersPerWave && cntEnemySpawn>0) 
 		{
+			//spawn enemy and reduce number of enemy needed per wave
 			if(timeSinceLastSpawn > spawnTime )
 			{
 			if(monster.length==5)	cntEnemySpawn--;
@@ -103,10 +104,11 @@ public class Wave extends Sprite {
 				{monsters.remove(i);cnt--;}
 		
 		}
+		//if all monsters are dead and number of monster needed per wave is reached then wave is completed
 		if(cnt==0 && allDead) waveCompleted = true;
 	}
 	
-	//multiple enemies
+	//spawn multiple enemies randomly
 	public void Spawn()
 	{
 		

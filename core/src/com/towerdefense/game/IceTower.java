@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+//IceTower has slow effect, decrease monster speed by 1 point for 1 second
+
 public class IceTower extends BaseTower{
 
 
@@ -42,12 +44,20 @@ public class IceTower extends BaseTower{
 			{
 				target = aimTarget();
 			}
+			/*
+			check if it has been placed on the map on for the first time
+			if the target is not null then shoot */
 			if(first && target!=null)
 			{
 				shoot();
 				first = false;
-			}			
+			}
+			//only check if target is not null 
 			if(target!=null) {
+				/*
+				check if monster is alive and been shot by tower once and monster is not entering castle
+				if so increase its exp by monster giveEXP
+				*/
 			if(shootOnce==true && !target.enterCastle && this.exp <100 && !target.isAlive())
 			{
 				this.exp += target.giveExp;
@@ -55,6 +65,7 @@ public class IceTower extends BaseTower{
 				shootOnce = false;
 			}
 			}
+			//check if target is null,dead,not in range of attack if so need to aimNewTarget by changing lockOn to false
 			if(target == null || target.isAlive() == false || !isInRange(target))
 			{
 				lockOn = false; 	
@@ -76,6 +87,7 @@ public class IceTower extends BaseTower{
 			}
 		}
 		
+		//change timeSinceshoot to 0 and add ammo to list of ammo
 		public void shoot()
 		{	
 			timeSinceShoot = 0;
@@ -83,8 +95,8 @@ public class IceTower extends BaseTower{
 			ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
 			}
 		}
-
-
+		
+		//Damage monster when ammo position reached monster position  
 		public void damageMonster(Monster monster)
 		{
 			shootOnce = true;

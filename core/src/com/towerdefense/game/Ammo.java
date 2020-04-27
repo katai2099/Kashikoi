@@ -4,6 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+/*
+	Ammo class stores in Every Tower Class generated when 
+	shoot function in Tower class has been called 
+*/
+
 public class Ammo {
 	
 	protected Texture texture;
@@ -55,6 +60,7 @@ public class Ammo {
 		this.tower = tower;
 	} 	
 
+	//calculateDirection of ammo base on monster coordinate
 	public void calculateDirection() 
 	{
 		float totalAllowedMovement = 1.0f;
@@ -72,6 +78,40 @@ public class Ammo {
 			yVelocity *= -1;
 		}
 	}
+	
+	public void update()
+	{
+		dt = Gdx.graphics.getDeltaTime()*60;
+		if(dt>1.5f) dt = 1;
+		//if(target.alive) {
+		if(alive && target!=null) {
+			calculateDirection();
+		x += xVelocity*speed*dt;
+		y += yVelocity*speed*dt;
+		
+		if(this.x + this.width >= target.getX()
+				&& target.getX()+target.getWidth() >= this.x
+				&& this.y + this.height >= target.getY()
+				&& target.getY()+target.getHeight() > this.y )
+		{
+			//if target is alive then attack base on tower atkPoint
+			if(target.alive)
+			{
+			tower.damageMonster(target);
+			}
+			this.alive = false;
+		}
+		}
+	}
+	
+	//draw method 
+	public void draw(Batch b)
+	{
+		if(this.alive)
+		b.draw(getTexture(),getX()+30,getY()+25,getWidth()/2,getHeight()/2);
+	}
+
+
 	
 	public Texture getTexture() {
 		return texture;
@@ -100,54 +140,7 @@ public class Ammo {
 	public int getHeight() {
 		return height;
 	}
-	//old version
-	/*
-	public void update(float speed,float timeSinceShoot)
-	{
-		if(alive) {
-			calculateDirection();
-		x += xVelocity*speed*timeSinceShoot;
-		y += yVelocity*speed*timeSinceShoot;
-		
-		if(this.x + this.width >= target.getX()
-				&& target.getX()+target.getWidth() >= this.x
-				&& this.y + this.height >= target.getY()
-				&& target.getY()+target.getHeight() > this.y )
-		{
-			target.damage(damage);
-			this.alive = false;
-		}}
-		
-	} */
 	
-	public void update()
-	{
-		dt = Gdx.graphics.getDeltaTime()*60;
-		if(dt>1.5f) dt = 1;
-		//if(target.alive) {
-		if(alive && target!=null) {
-			calculateDirection();
-		x += xVelocity*speed*dt;
-		y += yVelocity*speed*dt;
-		
-		if(this.x + this.width >= target.getX()
-				&& target.getX()+target.getWidth() >= this.x
-				&& this.y + this.height >= target.getY()
-				&& target.getY()+target.getHeight() > this.y )
-		{
-			if(target.alive)
-		//	target.damage(damage);
-			{
-			tower.damageMonster(target);
-			//tower.shootOnce = true;
-			}
-			this.alive = false;
-		}
-		}
-		//}
-		//else this.alive = false;
-	}
-
 	public float getxVelocity() {
 		return xVelocity;
 	}
@@ -167,18 +160,9 @@ public class Ammo {
 	public Monster getTarget() {
 		return target;
 	}
-
-	
 		
 	public boolean isAlive() {
 		return alive;
-	}
-
-
-	public void draw(Batch b)
-	{
-		if(this.alive)
-		b.draw(getTexture(),getX()+30,getY()+25,getWidth()/2,getHeight()/2);
 	}
 
 }

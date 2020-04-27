@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+ /*
+ 	PoisonTower1 can permanently decrease monster defense by 3 unit
+ 	and monster cannot recover its defense
+ */
 public class PoisonTower1 extends PoisonTower{
 
 	PoisonTower1(Texture texture, Tile tile, int width, int height, ArrayList<Monster> monsters) {
@@ -32,14 +36,6 @@ public class PoisonTower1 extends PoisonTower{
 		this.y=0;
 	}
 
-	
-	public void shoot()
-	{	
-		timeSinceShoot = 0;
-		if(target!=null)
-		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
-		//target.reduceHiddenHealth(damage);
-	}
 	
 	public void update()
 	{
@@ -74,8 +70,16 @@ public class PoisonTower1 extends PoisonTower{
 			if(ammos.get(i).alive==false) ammos.remove(i);
 		}
 	}
+	
+	//add ammo to list of ammos
+	public void shoot()
+	{	
+		timeSinceShoot = 0;
+		if(target!=null)
+		ammos.add(new Ammo(cannon,target,x,y,40,40,damage,12,this));
+	}
 
-
+	//Damage monster when ammo position reached monster position  
 	public void damageMonster(Monster monster)
 	{
 		monster.damage(this.damage);
@@ -84,9 +88,7 @@ public class PoisonTower1 extends PoisonTower{
 			{
 				monster.reduceArmor(3);
 			}
-			}
-		//monster.damage(this.damage);
-		
+			}		
 	}
 	
 	

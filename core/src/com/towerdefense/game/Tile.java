@@ -23,7 +23,6 @@ public class Tile extends Sprite{
 		this.width = width; 
 		this.height = height;
 		this.tiletype = tiletype;
-	
 	}
 	
 	

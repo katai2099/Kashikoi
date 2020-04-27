@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * fugu can increase its defense by 3 points when being hit by tower
+ * maximum defense is 12 
+ */
+
 public class Fugu extends Monster{
 		
 	Fugu(Tile startile,Map map,float height,float width)
