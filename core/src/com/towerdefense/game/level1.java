@@ -60,7 +60,7 @@ public class level1 extends ScreenAdapter{
 		monsterwave[2] = new Squirrel(map.getTile(2,14),map,64,64);
 		monsterwave[3] = new Onion(map.getTile(2, 14),map,64,64); 
 		//wavemanager = new WaveManager(monsterwave[4],4,5,3);	checking single enemy
-		wavemanager= new WaveManager(monsterwave,3,6,15); //time , perWave , wavenum
+		wavemanager= new WaveManager(monsterwave,3,6,10); //time , perWave , wavenum
 		player = new Player(map,wavemanager);
 		setupUI();
 		nextMapstyle = new ButtonStyle();
@@ -94,7 +94,10 @@ public class level1 extends ScreenAdapter{
 						return false;
 					
 					try {
-						towerDefense.setActiveScreen(new level1());
+						towerDefense.setActiveScreen(new level2());
+						pauseMenu.dispose();
+						winner.dispose();
+						Lost.dispose();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -249,11 +252,11 @@ public class level1 extends ScreenAdapter{
 		player.draw(batch);
 		if(Player.lose)
 		{
-			batch.draw(texture = new Texture("gameOver.png"),1280/2,960/2,texture.getWidth()/2,texture.getHeight()/2);
+			batch.draw(texture = new Texture("gameOver.png"),1280/2,960/2+100,texture.getWidth()/2,texture.getHeight()/2);
 		}
 		if(Player.win)
 		{
-			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2,texture.getWidth()/2,texture.getHeight()/2);
+			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2+250,texture.getWidth()/2,texture.getHeight()/2);
 		}
 
 		batch.end();

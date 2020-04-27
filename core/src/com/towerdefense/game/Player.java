@@ -31,7 +31,7 @@ public class Player {
 		this.map = map;
 		this.leftMousePressed = false;
 		towers = new ArrayList<BaseTower>();
-		cash = 1000;
+		cash = 100;
 		this.holdingTower = false;
 		this.waveManager = waveManager;
 		this.TowerSelected = false;

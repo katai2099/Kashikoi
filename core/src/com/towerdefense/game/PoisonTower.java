@@ -77,6 +77,7 @@ public class PoisonTower extends BaseTower{
 			timeSinceShoot += dt;
 			if(timeSinceShoot>attackSpeed)
 			{
+				if(target!=null)
 				shoot();
 			}
 			}

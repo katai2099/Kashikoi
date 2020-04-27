@@ -59,7 +59,7 @@ public class IceTower1 extends IceTower {
 		timeSinceShoot += dt;
 		if(timeSinceShoot>attackSpeed)
 		{
-			
+			if(target!=null)
 			shoot();
 		}
 		}

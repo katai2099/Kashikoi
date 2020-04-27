@@ -23,10 +23,10 @@ public class SekiroDieTwice extends Monster{
 		this.giveExp = 20;
 		this.giveGold = 100;
 		this.atk = 100;
-		this.hp = 200;
+		this.hp = 150;
 		this.hiddenhealth = 100;
-		this.def = 10;
-		this.speed = 10;
+		this.def = 8;
+		this.speed = 8;
 		this.originalSpeed=this.speed;
 		this.currentTile=startile;
 		this.map = map;

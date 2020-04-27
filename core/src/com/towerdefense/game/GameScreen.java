@@ -94,7 +94,10 @@ public class GameScreen extends ScreenAdapter{
 						return false;
 					
 					try {
-						towerDefense.setActiveScreen(new level1());
+						towerDefense.setActiveScreen(new level3());
+						pauseMenu.dispose();
+						winner.dispose();
+						Lost.dispose();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -249,11 +252,11 @@ public class GameScreen extends ScreenAdapter{
 		player.draw(batch);
 		if(Player.lose)
 		{
-			batch.draw(texture = new Texture("gameOver.png"),1280/2,960/2,texture.getWidth()/2,texture.getHeight()/2);
+			batch.draw(texture = new Texture("gameOver.png"),1280/2,960/2+100,texture.getWidth()/2,texture.getHeight()/2);
 		}
 		if(Player.win)
 		{
-			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2,texture.getWidth()/2,texture.getHeight()/2);
+			batch.draw(texture = new Texture("unnamed.png"),(1280/2)-200,960/2+250,texture.getWidth()/2,texture.getHeight()/2);
 		}
 
 		

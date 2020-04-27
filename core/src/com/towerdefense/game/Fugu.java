@@ -20,10 +20,10 @@ public class Fugu extends Monster{
 		this.giveExp = 8; 
 		this.giveGold = 10;
 		this.atk = 10;
-		this.hp = 20;
+		this.hp = 23;
 		this.hiddenhealth = 50;
 		this.def=0;
-		this.speed = 10;
+		this.speed = 8;
 		this.originalSpeed=this.speed;
 		this.currentTile=startile;
 		this.map = map;
@@ -56,8 +56,8 @@ public class Fugu extends Monster{
 		this.map = map;
 		this.height=64;
 		this.width = 64;
-		this.giveExp = 20;
-		this.giveGold = 100;
+		this.giveExp = 10;
+		this.giveGold = 10;
 		this.atk = 100;
 		this.hp = 200;
 		this.hiddenhealth = 100;

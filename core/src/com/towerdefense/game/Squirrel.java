@@ -18,8 +18,8 @@ public class Squirrel extends Monster{
 		Monster.id++;
 		this.idNumber = id;
 		this.texture= new Texture("squirel.png");
-		this.giveExp = 2; 
-		this.giveGold = 3;
+		this.giveExp = 5; 
+		this.giveGold = 8;
 		this.atk = 5;
 		this.hp = 10;
 		this.speed = 10;

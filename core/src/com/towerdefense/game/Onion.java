@@ -19,11 +19,11 @@ public class Onion extends Monster{
 		this.idNumber = id;
 		this.texture= new Texture("Onion.png");
 		this.giveGold = 5;
-		this.giveExp = 3;
+		this.giveExp = 5;
 		this.atk = 10;
 		this.hp = 3;
 		this.hiddenhealth = 3;
-		this.speed = 10;
+		this.speed = 8;
 		this.currentTile=startile;
 		this.map = map;
 		this.dir = new int[2];

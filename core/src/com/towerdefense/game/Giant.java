@@ -17,7 +17,7 @@ public class Giant extends Monster{
 		this.idNumber = id;
 		this.texture= new Texture("Giant.png");
 		this.giveExp = 10;
-		this.giveGold = 5;
+		this.giveGold = 10;
 		this.atk = 20;
 		this.def = 5;
 		this.hp = 30;
